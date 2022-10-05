@@ -173,6 +173,7 @@ public class Local_Host extends Base_Class {
 				implicitWait(30, TimeUnit.SECONDS);
 				WebElement choosepatient = driver
 						.findElement(By.xpath("(//td[text()='" + hkpid + "'])[2]//parent::td"));
+				visbility(driver, choosepatient, 25);
 				ww.until(ExpectedConditions.elementToBeClickable(choosepatient));
 				actions("click", choosepatient);
 
