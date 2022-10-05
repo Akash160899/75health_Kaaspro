@@ -62,6 +62,13 @@ public class Local_Host extends Base_Class {
 				ConfigManager.getconfigManager().getInstanceConfigReader().getEmail());
 		sendkeys(pom.getInstanceLoginPage().pass, ConfigManager.getconfigManager().getInstanceConfigReader().getpass());
 		click(pom.getInstanceLoginPage().login);
+
+		while (true) {
+			if (!driver.getCurrentUrl().equals("https://localhost:8443/health/#home")) {
+				click(pom.getInstanceLoginPage().login);
+				break;
+			}
+		}
 		sleep(3000);
 
 		try {
@@ -79,6 +86,8 @@ public class Local_Host extends Base_Class {
 	private void HomeModule() throws InterruptedException {
 
 		WebElement ata = driver.findElement(By.xpath("(//span[contains(text(),'New Pa')])[4]//parent::button"));
+		visbility(driver, ata, 25);
+		ww.until(ExpectedConditions.elementToBeClickable(ata));
 
 		j.executeScript("arguments[0].click();", ata);
 		sendkeys(pom.getInstanceNewPatient().firstName, "sam");
@@ -97,13 +106,10 @@ public class Local_Host extends Base_Class {
 		} // Acc gets Created..
 		click(pom.getInstanceNewPatient().CreatePatient);
 
-		sleep(4000);
 		String hkpid = driver.findElement(By.xpath("//td[@id='val-kpid']")).getText();
 		// driver.navigate().to("https://www.75health.com/health/#home");
 		driver.navigate().to("https://localhost:8443/health/#home");
 		// //localhost:8443/health/#home
-
-		sleep(4000);
 
 		// calendar appointment...
 
@@ -136,9 +142,8 @@ public class Local_Host extends Base_Class {
 					.findElements(By.xpath("(//div[@id='date-data'][" + i + "]/div[2]/div/div[1]/div[1]/div[1])"));
 			int avaiable = rchange.size();
 
-			System.out.println("avaiable count for the present row:" + avaiable);
 			for (int b = 1; b <= avaiable; b++) {
-				System.out.println("hello");
+
 				WebElement tp = driver.findElement(
 						// represent the row change and time..
 						By.xpath("(//div[@id='date-data'][" + i + "]/div[2]/div[" + b + "]/div[1]/div[1]/div[1])"));
@@ -153,7 +158,7 @@ public class Local_Host extends Base_Class {
 						By.xpath("(//div[@id='date-data'])[" + i + "]/div[2]/div[" + b + "]/div/div[2]/span[2]"));
 
 				if (kp.getText().isEmpty() && tp.isDisplayed()) {
-					System.out.println(tp.getAttribute("id"));
+					// System.out.println(tp.getAttribute("id"));
 					cond = true;
 					// System.out.println("condtion is true");
 					javascriptclick(tp);
@@ -168,18 +173,21 @@ public class Local_Host extends Base_Class {
 				implicitWait(30, TimeUnit.SECONDS);
 				WebElement choosepatient = driver
 						.findElement(By.xpath("(//td[text()='" + hkpid + "'])[2]//parent::td"));
+				ww.until(ExpectedConditions.elementToBeClickable(choosepatient));
 				actions("click", choosepatient);
-				sleep(3000);
 
 				WebElement ut = driver.findElement(By.xpath("(//select[@id='triage-appointment'])[" + i + "]"));
+				visbility(driver, ut, 30);
 				// ut.click();
 				dropDown("text", ut, "Emergency");
 
 				WebElement qt = driver.findElement(By.xpath("(//textarea[@id='description'])[" + i + "]"));
+				visbility(driver, qt, 30);
 				qt.sendKeys("no worries...");
 				WebElement utt = driver.findElement(By.xpath("(//button[@id='statusId_dropdown'])[" + i + "]"));
+				clickble(driver, utt, 25);
 				j.executeScript("arguments[0].click();", utt);
-				sleep(3000);
+
 				List<WebElement> lop = driver.findElements(By.xpath("(//ul[@id='statusIdDropdown'])[" + i + "]/li"));
 				for (WebElement w : lop) {
 					if (w.getText().trim().equals("In Progress")) {
@@ -188,19 +196,23 @@ public class Local_Host extends Base_Class {
 					}
 
 				}
-				sleep(5000);
+
 				WebElement vcv = driver.findElement(By.xpath("(//button[@id='accept-btn'])[1]"));
+				clickble(driver, vcv, 25);
 				j.executeScript("arguments[0].click();", vcv);
-				sleep(5000);
+
 				WebElement pip = driver.findElement(By.xpath("//span[text()='" + hkpid + "']"));
+				visbility(driver, pip, 25);
 				j.executeScript("arguments[0].click();", pip);
 
-				sleep(3000);
+				sleep(2000);
 				WebElement wtw = driver.findElement(By.xpath("(//span[@id='del-btn'])[" + i + "]"));
+				clickble(driver, wtw, 25);
 				j.executeScript("arguments[0].click();", wtw);
-				sleep(3000);
+
 				WebElement delapp = driver
 						.findElement(By.xpath("//div[@id='AppointmentCreateMessage']/div[2]/div[2]/button[2]"));
+				clickble(driver, delapp, 25);
 				javascriptclick(delapp);
 
 				/*
@@ -225,6 +237,7 @@ public class Local_Host extends Base_Class {
 		driver.findElement(By.xpath("(//input[@id='patientPartyName'])[3]")).sendKeys(hkpid);
 		implicitWait(20, TimeUnit.SECONDS);
 		WebElement cli = driver.findElement(By.xpath("(//td[text()='" + hkpid + "'])[2]"));
+		clickble(driver, cli, 25);
 		javascriptclick(cli);
 		sleep(2000);
 		ScriptExecutor(pom.getInstanceNewPatient().deletePatient);
@@ -239,8 +252,10 @@ public class Local_Host extends Base_Class {
 		implicitWait(20, TimeUnit.SECONDS);
 
 		WebElement pit = driver.findElement(By.xpath("//td[text()='Patient']"));
+		visbility(driver, pit, 25);
 		j.executeScript("arguments[0].click();", pit);
 		WebElement ata = driver.findElement(By.xpath("(//button[@title='Add new Patient'])[1]"));
+		visbility(driver, ata, 25);
 		j.executeScript("arguments[0].click();", ata);
 		sendkeys(pom.getInstanceNewPatient().firstName, "sam");
 		sendkeys(pom.getInstanceNewPatient().lastname, "n");
@@ -260,20 +275,19 @@ public class Local_Host extends Base_Class {
 		// Acc gets Created..
 
 		click(pom.getInstanceNewPatient().CreatePatient);
-		sleep(3000);
-
-		sleep(4000);
+		sleep(2000);
 		kpid = driver.findElement(By.xpath("//td[@id='val-kpid']")).getText();
 		System.out.println(kpid);
-		// System.out.println(kpid);
-		sleep(3000);
 
 		driver.findElement(By.xpath("//td[text()='Patient']")).click();
+		WebElement s = driver.findElement(By.xpath("(//input[@id='patientPartyName'])[2]"));
+		visbility(driver, s, 25);
+		s.sendKeys(kpid);
 
-		sleep(4000);
+		WebElement ki = driver.findElement(By.xpath("//div[text()=" + "'" + kpid + "']"));
+		visbility(driver, ki, 25);
+		javascriptclick(ki);
 
-		driver.findElement(By.xpath("//div[text()=" + "'" + kpid + "']")).click();
-		// System.out.println("okay done...");
 		sleep(2000);
 
 		// med info..
@@ -322,12 +336,12 @@ public class Local_Host extends Base_Class {
 		 * ww.until(ExpectedConditions.elementToBeClickable(sav)); javascriptclick(sav);
 		 * sleep(2000);
 		 */
-		sleep(2000);
 
 		// contact info
 
 		WebElement cnin = driver.findElement(
 				By.xpath("//div[@id='p-address-phone']/div/div/div[1]/div[1]//following::div[1]/div[1]/div"));
+		visbility(driver, cnin, 25);
 		javascriptclick(cnin);
 
 		driver.findElement(By.xpath("//div[@id='p-address-phone']/div/div/div[2]/div/div[1]/div[2]/input[4]"))
@@ -347,21 +361,23 @@ public class Local_Host extends Base_Class {
 
 		WebElement savecon = driver.findElement(
 				By.xpath("//div[@id='p-address-phone']/div/div/div[2]/div/div[2]/div[1]/div[1]/button[2]"));
+		visbility(driver, savecon, 25);
 
 		javascriptclick(savecon);
-		sleep(2000);
+
 		// alternate contact info...
 
 		WebElement ad = driver.findElement(
 				By.xpath("(//div[@id='family-health-patient']/div/div/div[1]/div[1]//following::div[1]/div[1])[1]"));
+		visbility(driver, ad, 25);
 		javascriptclick(ad);
 		driver.findElement(By.xpath("(//span[text()='Alternate Contact'])[2]//following::input[1]")).sendKeys("Hope");
 		driver.findElement(By.xpath("(//span[text()='Alternate Contact'])[2]//following::input[2]"))
 				.sendKeys("2013550367");
 		WebElement sa = driver
 				.findElement(By.xpath("(//span[text()='Alternate Contact'])[2]//following::div[1]/img[1]"));
+		visbility(driver, sa, 25);
 		actions("click", sa);
-		sleep(2000);
 
 		// care tream member..
 
@@ -371,6 +387,7 @@ public class Local_Host extends Base_Class {
 
 		// patient info..
 		WebElement ptin = driver.findElement(By.xpath("//div[@id='patientInfo']/div[1]/span[2]"));
+		visbility(driver, ptin, 25);
 		actions("click", ptin);
 		/*
 		 * driver.findElement(By.
@@ -380,14 +397,58 @@ public class Local_Host extends Base_Class {
 		driver.findElement(By.xpath("//label[text()='Occupation']//following::div[1]/input")).sendKeys("tester");
 		WebElement savepatinfo = driver
 				.findElement(By.xpath("(//span[text()='Patient Info '])//following::div[1]/img[1]"));
+		visbility(driver, savepatinfo, 25);
 		javascriptclick(savepatinfo);
+		driver.navigate().to("https://localhost:8443/health/#list_patient");
+
+		WebElement u1 = driver.findElement(By.xpath("(//button[@id='advanceIcon'])[1]"));
+		visbility(driver, u1, 25);
+		ww.until(ExpectedConditions.elementToBeClickable(u1));
+		j.executeScript("arguments[0].click();", u1);
+		sleep(2000);
+		WebElement u2 = driver.findElement(By.xpath("(//input[@id='patient-aname'])[1]"));
+		u2.sendKeys("Akash n");
+
+		WebElement ellipse = driver.findElement(By.xpath("(//div[@id='list_patient']//following::span[3])[1]"));
+		visbility(driver, ellipse, 25);
+		ww.until(ExpectedConditions.elementToBeClickable(ellipse));
+		j.executeScript("arguments[0].click();", ellipse);
+
+		List<WebElement> u3 = driver
+				.findElements(By.xpath("(//div[@id='list_patient']//following::span[3])[1]//following::ul[1]/li"));
+		for (WebElement t : u3) {
+			if (t.getText().trim().equals("Import")) {
+
+				t.click();
+				break;
+			}
+
+		}
+		sleep(2000);
+		List<WebElement> u5 = driver
+				.findElements(By.xpath("(//ul[@class='dropdown-menu settings-buttonColor settings-heading'])[3]/li"));
+		for (WebElement w : u5) {
+			if (w.getText().trim().equals("CCD Import")) {
+				w.click();
+				break;
+			}
+
+		}
+		sleep(2000);
+
+		WebElement u6 = driver.findElement(By.xpath("//span[text()='Import Health Record']/following::div[1]/span"));
+		visbility(driver, u6, 25);
+		j.executeScript("arguments[0].click();", u6);
+		sleep(3000);
+
 	}
 
 	@Test(priority = 2)
 	private void HealthRec() throws InterruptedException, IOException {
 
 		// implicitWait(60, TimeUnit.SECONDS);
-		click(pom.getInstanceHealthRec().clickHealthRec);
+		// click(pom.getInstanceHealthRec().clickHealthRec);
+		driver.navigate().to("https://localhost:8443/health/#list_ehr");
 		sleep(3000);
 		implicitWait(60, TimeUnit.SECONDS);
 		WebElement remv = driver
@@ -407,6 +468,19 @@ public class Local_Host extends Base_Class {
 		}
 		sleep(2000);
 		driver.findElement(By.id("newMedicalRecordButton")).click();
+		WebElement elipse = driver.findElement(By.xpath("(//span[@id='list_patient_needHelp'])[1]/span"));
+		clickble(driver, elipse, 25);
+		actions("click", elipse);
+
+		List<WebElement> hh = driver
+				.findElements(By.xpath("(//span[@id='list_patient_needHelp'])[1]/span//following::ul[1]/li"));
+		for (WebElement web : hh) {
+			if (web.getText().trim().equals("Reset Setting")) {
+				web.click();
+				break;
+			}
+
+		}
 		implicitWait(30, TimeUnit.SECONDS);
 		// driver.navigate().refresh();
 		driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
@@ -438,113 +512,91 @@ public class Local_Host extends Base_Class {
 
 							actions("click", web);
 
-						}
-						if (web.getText().trim().equals("Show Alert")) {
+						} else if (web.getText().trim().equals("Show Alert")) {
 
 							actions("click", web);
 
-						}
-						if (web.getText().trim().equals("Show Social History")) {
+						} else if (web.getText().trim().equals("Show Social History")) {
 
 							actions("click", web);
 
-						}
-						if (web.getText().trim().equals("Show Family Health")) {
+						} else if (web.getText().trim().equals("Show Family Health")) {
 
 							actions("click", web);
 
-						}
-						if (web.getText().trim().equals("Show Symptoms")) {
+						} else if (web.getText().trim().equals("Show Symptoms")) {
 
 							actions("click", web);
 
-						}
-						if (web.getText().trim().equals("Show Problems")) {
+						} else if (web.getText().trim().equals("Show Problems")) {
 
 							actions("click", web);
 
-						}
-						if (web.getText().trim().equals("Show Vital")) {
+						} else if (web.getText().trim().equals("Show Vital")) {
 
 							actions("click", web);
 
-						}
-						if (web.getText().trim().equals("Show Visit Reason")) {
+						} else if (web.getText().trim().equals("Show Visit Reason")) {
 
 							actions("click", web);
 
-						}
-						if (web.getText().trim().equals("Show Procedure")) {
+						} else if (web.getText().trim().equals("Show Procedure")) {
 
 							actions("click", web);
 
-						}
-						if (web.getText().trim().equals("Show Medications")) {
+						} else if (web.getText().trim().equals("Show Medications")) {
 
 							actions("click", web);
 
-						}
-						if (web.getText().trim().equals("Show Test Order")) {
+						} else if (web.getText().trim().equals("Show Test Order")) {
 
 							actions("click", web);
 
-						}
-						if (web.getText().trim().equals("Show Note")) {
+						} else if (web.getText().trim().equals("Show Note")) {
 
 							actions("click", web);
 
-						}
-						if (web.getText().trim().equals("Show Vaccine")) {
+						} else if (web.getText().trim().equals("Show Vaccine")) {
 
 							actions("click", web);
 
-						}
-						if (web.getText().trim().equals("Show Attach File")) {
+						} else if (web.getText().trim().equals("Show Attach File")) {
 
 							actions("click", web);
 
-						}
-						if (web.getText().trim().equals("Show Inpatient")) {
+						} else if (web.getText().trim().equals("Show Inpatient")) {
 
 							actions("click", web);
 
-						}
-						if (web.getText().trim().equals("Show Referral")) {
+						} else if (web.getText().trim().equals("Show Referral")) {
 
 							actions("click", web);
 
-						}
-						if (web.getText().trim().equals("Show Custom-form")) {
+						} else if (web.getText().trim().equals("Show Custom-form")) {
 
 							actions("click", web);
 
-						}
-						if (web.getText().trim().equals("Show Goals")) {
+						} else if (web.getText().trim().equals("Show Goals")) {
 
 							actions("click", web);
 
-						}
-						if (web.getText().trim().equals("Show Amendment")) {
+						} else if (web.getText().trim().equals("Show Amendment")) {
 
 							actions("click", web);
 
-						}
-						if (web.getText().trim().equals("Show Implantable Devices")) {
+						} else if (web.getText().trim().equals("Show Implantable Devices")) {
 
 							actions("click", web);
 
-						}
-						if (web.getText().trim().equals("Show Advance Directives")) {
+						} else if (web.getText().trim().equals("Show Advance Directives")) {
 
 							actions("click", web);
 
-						}
-						if (web.getText().trim().equals("Show Physical Examination")) {
+						} else if (web.getText().trim().equals("Show Physical Examination")) {
 
 							actions("click", web);
 
-						}
-						if (web.getText().trim().equals("Show Status")) {
+						} else if (web.getText().trim().equals("Show Status")) {
 
 							actions("click", web);
 
@@ -583,29 +635,33 @@ public class Local_Host extends Base_Class {
 
 					driver.findElement(By.id("wresult")).sendKeys("55");
 
-					sleep(4000);
 					WebElement sel = driver.findElement(By.xpath("(//select[@id='unit'])[1]"));
+					ww.until(ExpectedConditions.elementToBeClickable(sel));
 					sel.click();
 					sleep(2000);
 					dropDown("text", sel, "kilograms");
-					sleep(4000);
+
 					driver.findElement(By.id("hresult")).sendKeys("7'7");
-					sleep(2000);
+
 					WebElement hdrp = driver.findElement(By.xpath("(//select[@id='unit'])[2]"));
+					ww.until(ExpectedConditions.elementToBeClickable(hdrp));
 					hdrp.click();
-					sleep(2000);
+
 					dropDown("text", hdrp, "ft-in");
-					sleep(3000);
+
 					WebElement edity = driver.findElement(By.xpath("(//button[@id='accept-btn'])[1]"));
+					ww.until(ExpectedConditions.elementToBeClickable(edity));
 					javascriptclick(edity);
 
-					sleep(3000);
+					sleep(2000);
 					WebElement edicon = driver.findElement(By.xpath("(//span[text()='55 kilograms'])[1]"));
+					ww.until(ExpectedConditions.elementToBeClickable(edicon));
+
 					actions("click", edicon);
 					sleep(2000);
 					driver.findElement(By.xpath("//input[@id='wresult']")).clear();
 					driver.findElement(By.xpath("//input[@id='wresult']")).sendKeys("59");
-					sleep(3000);
+
 					driver.findElement(By.xpath("(//button[@id='accept-btn'])[1]")).click();
 					sleep(3000);
 					/*
@@ -620,7 +676,9 @@ public class Local_Host extends Base_Class {
 					implicitWait(20, TimeUnit.SECONDS);
 
 					WebElement u = driver.findElement(By.xpath("//div[contains(@title,'Add Visit R')]"));
+
 					actions("move to element", u);
+					ww.until(ExpectedConditions.elementToBeClickable(u));
 					actions("click", u);
 					WebElement y = driver.findElement(By.xpath("//select[@id='triage-type']"));
 					y.click();
@@ -637,19 +695,22 @@ public class Local_Host extends Base_Class {
 					WebElement mj = driver
 							.findElement(By.xpath("//div[@title='Enter the description of the patient visit']"));
 					mj.sendKeys("cold");
-					sleep(2000);
+
 					WebElement svg = driver
 							.findElement(By.xpath("//div[@id='Visit_ReasonKpop2']/div[2]/div[2]/button[2]"));
 					//// div[@title='Enter the description of the patient
 					//// visit']//following::div[28]/button[2]
+					ww.until(ExpectedConditions.elementToBeClickable(svg));
 					svg.click();
 					sleep(2000);
 					WebElement afk = driver.findElement(By.xpath("(//div[text()='cold'])[1]"));
+					ww.until(ExpectedConditions.elementToBeClickable(afk));
 					actions("click", afk);
-					sleep(2000);
+
 					implicitWait(30, TimeUnit.SECONDS);
 					WebElement mjj = driver
 							.findElement(By.xpath("//div[@title='Enter the description of the patient visit']"));
+					ww.until(ExpectedConditions.elementToBeClickable(mjj));
 					mjj.clear();
 					mjj.sendKeys("KAASPRO");
 
@@ -665,26 +726,29 @@ public class Local_Host extends Base_Class {
 					sleep(3000);
 
 				} else if (tagnames.equals("alert-allergy")) {
-
+					WebElement k = driver
+							.findElement(By.xpath("(//button[contains(@title,'Add Multiple Vitals')])[1]"));
+					ScriptExecutor(k);
 					WebElement add = driver.findElement(By.xpath("//div[contains(@title,'Add Allergy')]"));
 
 					actions("move to element", add);
-					explicitWait(30, add);
+					ww.until(ExpectedConditions.elementToBeClickable(add));
 					actions("click", add);
 					WebElement se = driver.findElement(By.xpath("//select[@id='codeType']"));
+					ww.until(ExpectedConditions.elementToBeClickable(se));
 					se.click();
 					dropDown("text", se, "Food Allergy");
-					sleep(3000);
+
 					/* WebElement alcl = */ driver
 							.findElement(By.xpath("//div[@id='AllergyKpop2']/div[2]/div[1]/div[2]/div[2]/input"))
 							.sendKeys("food1");
-					//// select[@id='codeType']//following::div[3]/input
-					sleep(2000);
-					// alcl.sendKeys("food1");
 
+					sleep(2000);
 					driver.findElement(By.xpath("//input[@placeholder='Reaction']")).sendKeys("stomach pain");
 
 					WebElement rer = driver.findElement(By.xpath("//div[@id='AllergyKpop2']/div[2]/div[2]/div/button"));
+					ww.until(ExpectedConditions.elementToBeClickable(rer));
+
 					JavascriptExecutor jp = (JavascriptExecutor) driver;
 					jp.executeScript("arguments[0].click();", rer);
 					sleep(3000);
@@ -696,7 +760,7 @@ public class Local_Host extends Base_Class {
 						}
 
 					}
-					sleep(3000);
+					sleep(2000);
 					jp.executeScript("arguments[0].click();", rer);
 
 					for (WebElement w : wtw) {
@@ -723,17 +787,19 @@ public class Local_Host extends Base_Class {
 						}
 
 					}
-					sleep(5000);
+					sleep(2000);
 					WebElement mk = driver.findElement(By.xpath("//span[text()='food1']"));
+
+					ww.until(ExpectedConditions.elementToBeClickable(mk));
 					actions("click", mk);
-					sleep(3000);
+					sleep(2000);
 					WebElement jk = driver
 							.findElement(By.xpath("//div[@id='AllergyKpop2']/div[2]/div[1]/div[2]/div[2]/input"));
 					jk.clear();
 					jk.sendKeys("st");
-					sleep(3000);
-
+					sleep(2000);
 					WebElement scq = driver.findElement(By.xpath("//div[text()='Strawberry ']"));
+					ww.until(ExpectedConditions.elementToBeClickable(scq));
 					actions("click", scq);
 
 					driver.findElement(By.xpath("//div[@id='saveadd-btn']/button")).click();
@@ -745,6 +811,7 @@ public class Local_Host extends Base_Class {
 						}
 
 					}
+
 					sleep(3000);
 					/*
 					 * WebElement cc = driver.findElement(By.xpath("//span[text()='Strawberry ']"));
@@ -755,13 +822,19 @@ public class Local_Host extends Base_Class {
 
 					// Social history....
 
-					WebElement sh = driver.findElement(By.xpath("//div[contains(@title,'Add Social History')]"));
+					// WebElement sh = driver.findElement(By.xpath("//div[contains(@title,'Add
+					// Social History')]"));
+
 					/*
 					 * WebElement sctag = driver.findElement(By.xpath(
 					 * "//div[contains(@title,'Add Social History')]//parent::div[1]//parent::div//parent::div//parent::div//parent::div[@id='social-history']"
 					 * ));
 					 */
+
+					WebElement sh = ww.until(ExpectedConditions
+							.presenceOfElementLocated(By.xpath("//div[contains(@title,'Add Social History')]")));
 					actions("move to element", sh);
+					ww.until(ExpectedConditions.elementToBeClickable(sh));
 					actions("click", sh);
 					sleep(2000);
 					WebElement ssc = driver.findElement(By.xpath("//select[@id='habitType']"));
@@ -770,16 +843,18 @@ public class Local_Host extends Base_Class {
 					driver.findElement(By.xpath("//select[@id='habitType']//following::div[3]/input"))
 							.sendKeys("social histry");
 
-					sleep(3000);
 					driver.findElement(By.xpath("(//button[@id='accept-btn'])[1]")).click();
-					sleep(3000);
+					sleep(2000);
 					WebElement jj = driver.findElement(By.xpath("//div[text()='( Alcohol )']"));
+					ww.until(ExpectedConditions.elementToBeClickable(jj));
+
 					actions("click", jj);
 					sleep(2000);
 					driver.findElement(By.xpath("//select[@id='habitType']//following::div[3]/input")).clear();
 					driver.findElement(By.xpath("//select[@id='habitType']//following::div[3]/input"))
 							.sendKeys("Kaaspro");
 					driver.findElement(By.xpath("(//button[@id='accept-btn'])[1]")).click();
+
 					sleep(3000);
 
 					/*
@@ -793,12 +868,13 @@ public class Local_Host extends Base_Class {
 					WebElement a = driver.findElement(By.xpath("//div[contains(@title,'Add Family Health')]"));
 
 					actions("move to element", a);
+					ww.until(ExpectedConditions.elementToBeClickable(a));
 					actions("click", a);
 					WebElement ee = driver.findElement(By.xpath("//div[@id='Family_HealthKpop2']/div[2]/div/select"));
 					explicitWait(30, ee);
 					ee.click();
 					dropDown("text", ee, "Half Brother");
-					sleep(3000);
+
 					driver.findElement(By
 							.xpath("//div[@id='Family_HealthKpop2']/div[2]/div/select//following::div[1]/div[2]/input"))
 							.sendKeys("24781");
@@ -816,7 +892,7 @@ public class Local_Host extends Base_Class {
 					 * driver.findElement(By.xpath("//div[text()='Fear of wetting self (finding)']")
 					 * ); explicitWait(30, aq); actions("click", aq);
 					 */
-					sleep(3000);
+					sleep(2000);
 
 					WebElement atf = driver.findElement(By.xpath("//button[@id='btnSaveAdd']"));
 					javascriptclick(atf);
@@ -837,11 +913,16 @@ public class Local_Host extends Base_Class {
 					 * .findElement(By.xpath("//div[@id='Family_HealthKpop2']/div/div[2]/span[1]"));
 					 * javascriptclick(delfam); sleep(5000);
 					 */
-					sleep(5000);
+					sleep(4000);
 
 					// Alert...
-					WebElement ip = driver.findElement(By.xpath("//div[contains(@title,'Add Alert')]"));
+					// WebElement ip = driver.findElement(By.xpath("//div[contains(@title,'Add
+					// Alert')]"));
+					WebElement ip = ww.until(ExpectedConditions
+							.presenceOfElementLocated(By.xpath("//div[contains(@title,'Add Alert')]")));
+
 					actions("move to element", ip);
+					ww.until(ExpectedConditions.elementToBeClickable(ip));
 					actions("click", ip);
 
 					driver.findElement(By.xpath("//div[@title='Enter the description of the alert ']"))
@@ -850,8 +931,11 @@ public class Local_Host extends Base_Class {
 					r.click();
 					dropDown("text", r, "Only to me");
 					driver.findElement(By.xpath("//div[@id='AlertKpop2']/div[2]/div[2]/button[2]")).click();
-					sleep(3000);
-					WebElement inner = driver.findElement(By.xpath("//div[text()='hello']"));
+					sleep(2000);
+					WebElement inner = ww
+							.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//div[text()='hello']")));
+					// WebElement inner = driver.findElement(By.xpath("//div[text()='hello']"));
+					ww.until(ExpectedConditions.elementToBeClickable(inner));
 					actions("click", inner);
 					sleep(3000);
 
@@ -870,6 +954,7 @@ public class Local_Host extends Base_Class {
 
 					WebElement k = driver.findElement(By.xpath("//div[contains(@title,'Add Vaccine')]"));
 					actions("move to element", k);
+					ww.until(ExpectedConditions.elementToBeClickable(k));
 					actions("click", k);
 					WebElement x = driver.findElement(By.xpath("//select[@id='date-type']"));
 					x.click();
@@ -901,21 +986,21 @@ public class Local_Host extends Base_Class {
 					actions("click", b);
 					driver.findElement(By.id("udi")).sendKeys("(01)00844588003288");
 					driver.findElement(By.xpath("//button[@id='verify-btn']")).click();
-					sleep(6000);
+					sleep(5000);
 					driver.findElement(By.id("deviceactive"));
-					sleep(2000);
 
 					WebElement a1 = driver.findElement(By.id("deviceNote"));
 					ScriptExecutor(a1);
-					sleep(2000);
+					sleep(1000);
 					a1.sendKeys("hello123");
 					WebElement savimp = driver
 							.findElement(By.xpath("//div[@id='Implantable_DevicesKpop2']/div[2]/div[2]/button[2]"));
 					javascriptclick(savimp);
 
-					sleep(3000);
+					sleep(2000);
 					WebElement a2 = driver
 							.findElement(By.xpath("//div[text()='Coated femoral stem prosthesis, modular']"));
+					ww.until(ExpectedConditions.elementToBeClickable(a2));
 					actions("click", a2);
 					WebElement a26 = driver.findElement(By.id("deviceNote"));
 					ScriptExecutor(a26);
@@ -934,9 +1019,13 @@ public class Local_Host extends Base_Class {
 					sleep(3000);
 
 				} else if (tagnames.equals("amendment")) {
+					WebElement b = driver.findElement(By.xpath("//div[contains(@title,'Add Implantable')]"));
+					ScriptExecutor(b);
 
 					WebElement d = driver.findElement(By.xpath("//div[contains(@title,'Add Amendment')]"));
+
 					actions("move to element", d);
+					clickble(driver, d, 25);
 					actions("click", d);
 					WebElement s1 = driver.findElement(By.xpath("//select[@id='source']"));
 					s1.click();
@@ -969,21 +1058,26 @@ public class Local_Host extends Base_Class {
 
 					WebElement a3 = driver.findElement(By.xpath("//div[contains(@title,'Add Problems')]"));
 					actions("move to element", a3);
-
+					ww.until(ExpectedConditions.elementToBeClickable(a3));
 					actions("click", a3);
-					sleep(6000);
-					driver.findElement(By.xpath("//div[@id='ProblemsKpop2']/div[2]/div/div[1]/div[2]/input"))
-							.sendKeys("Cleft uvula");
+					sleep(2000);
 
-					sleep(5000);
+					WebElement ct = ww.until(ExpectedConditions.presenceOfElementLocated(
+							By.xpath("//div[@id='ProblemsKpop2']/div[2]/div/div[1]/div[2]/input")));
+					// driver.findElement(By.xpath("//div[@id='ProblemsKpop2']/div[2]/div/div[1]/div[2]/input"))
+					ct.sendKeys("Cleft uvula");
+
+					sleep(3000);
 					WebElement prbcl = driver.findElement(By.xpath("//small[text()='ICD10 : Q35.7 | SNOMED : --']"));
+					ww.until(ExpectedConditions.elementToBeClickable(prbcl));
 					actions("click", prbcl);
-					sleep(4000);
+					sleep(2000);
 
 					WebElement gg = driver.findElement(By.xpath("//button[@id='btnSaveAdd']"));
+					ww.until(ExpectedConditions.elementToBeClickable(gg));
 					JavascriptExecutor js = (JavascriptExecutor) driver;
 					js.executeScript("arguments[0].click();", gg);
-					sleep(3000);
+
 					List<WebElement> a5 = driver.findElements(By.xpath("//div[@id='saveadd-btn']/ul/li"));
 					for (WebElement w : a5) {
 						if (w.getText().trim().equals("Save")) {
@@ -994,15 +1088,18 @@ public class Local_Host extends Base_Class {
 					}
 					sleep(3000);
 					WebElement a6 = driver.findElement(By.xpath("//div[text()='Cleft uvula']"));
+					ww.until(ExpectedConditions.elementToBeClickable(a6));
 					actions("click", a6);
 					sleep(3000);
 					WebElement clr = driver.findElement(
 							By.xpath("//div[@id='ProblemsKpop2']/div[2]/div[1]/div[1]/div[2]//following::div[2]"));
+					ww.until(ExpectedConditions.elementToBeClickable(clr));
 					javascriptclick(clr);
-					sleep(2000);
 
-					driver.findElement(By.xpath("//div[@id='ProblemsKpop2']/div[2]/div/div[1]/div[2]/input"))
-							.sendKeys("test");
+					WebElement ljv = ww.until(ExpectedConditions.presenceOfElementLocated(
+							By.xpath("//div[@id='ProblemsKpop2']/div[2]/div/div[1]/div[2]/input")));
+					// driver.findElement(By.xpath("//div[@id='ProblemsKpop2']/div[2]/div/div[1]/div[2]/input"))
+					ljv.sendKeys("test");
 					sleep(2000);
 					List<WebElement> prbdrp = driver
 							.findElements(By.xpath("//div[@id='ProblemsKpop2']/div[2]/ul/li/a/div/span"));
@@ -1042,34 +1139,44 @@ public class Local_Host extends Base_Class {
 					sleep(3000);
 
 				} else if (tagnames.equals("symptom")) {
+					WebElement a3 = driver.findElement(By.xpath("//div[contains(@title,'Add Problems')]"));
+					ScriptExecutor(a3);
 
 					WebElement a7 = driver.findElement(By.xpath("//div[contains(@title,'Add Symptoms')]"));
+
 					actions("move to element", a7);
+					visbility(driver, a7, 25);
+
 					actions("click", a7);
 					driver.findElement(By.xpath("//div[@id='SymptomsKpop2']/div[2]/div/div[2]/div[2]/input"))
 							.sendKeys("R10.12:");
 					implicitWait(30, TimeUnit.SECONDS);
 					WebElement clsymi = driver
 							.findElement(By.xpath("//div[contains(text(),'R10.12: Left upper quadrant pain')]"));
+					ww.until(ExpectedConditions.elementToBeClickable(clsymi));
 					actions("click", clsymi);
 
-					sleep(3000);
-					driver.findElement(By.xpath("//div[@id='SymptomsKpop2']/div[2]/div/div[3]/div[2]/input"))
-							.sendKeys("fever");
+					sleep(2000);
+					WebElement sydes = ww.until(ExpectedConditions.presenceOfElementLocated(
+							By.xpath("//div[@id='SymptomsKpop2']/div[2]/div/div[3]/div[2]/input")));
+					// driver.findElement(By.xpath("//div[@id='SymptomsKpop2']/div[2]/div/div[3]/div[2]/input"))
+					sydes.sendKeys("fever");
 					WebElement svsymp = driver
 							.findElement(By.xpath("//div[@id='SymptomsKpop2']/div[2]/div[2]/button[2]"));
 					javascriptclick(svsymp);
 					sleep(3000);
 					WebElement a8 = driver
 							.findElement(By.xpath("//div[contains(text(),'R10.12: Left upper quadrant pain')]"));
+					ww.until(ExpectedConditions.elementToBeClickable(a8));
 					actions("click", a8);
 					driver.findElement(By.xpath("//div[@id='SymptomsKpop2']/div[2]/div/div[3]/div[2]/input")).clear();
-					sleep(3000);
+					sleep(2000);
 					driver.findElement(By.xpath("//div[@id='SymptomsKpop2']/div[2]/div/div[3]/div[2]/input"))
 							.sendKeys("covid");
-					sleep(2000);
+
 					WebElement svsymp1 = driver
 							.findElement(By.xpath("//div[@id='SymptomsKpop2']/div[2]/div[2]/button[2]"));
+					ww.until(ExpectedConditions.elementToBeClickable(svsymp1));
 					javascriptclick(svsymp1);
 					// driver.findElement(By.xpath("//div[@id='SymptomsKpop2']/div/div[2]/span[1]")).click();
 					sleep(4000);
@@ -1078,26 +1185,29 @@ public class Local_Host extends Base_Class {
 
 					WebElement b1 = driver.findElement(By.xpath("//div[contains(@title,'Add Procedure')]"));
 					actions("move to element", b1);
+					ww.until(ExpectedConditions.elementToBeClickable(b1));
 					actions("click", b1);
-					sleep(2000);
+
 					WebElement b2 = driver.findElement(By.xpath("//select[@id='codeType']"));
+					ww.until(ExpectedConditions.elementToBeClickable(b2));
 					b2.click();
 					dropDown("text", b2, "SNOMED CT");
+					WebElement ers = ww.until(ExpectedConditions.presenceOfElementLocated(
+							By.xpath("//div[@id='ProcedureKpop2']/div[2]/div[1]/div[1]/div[2]/input")));
+					// driver.findElement(By.xpath("//div[@id='ProcedureKpop2']/div[2]/div[1]/div[1]/div[2]/input"))
+					ers.sendKeys("test");
 					sleep(2000);
-					driver.findElement(By.xpath("//div[@id='ProcedureKpop2']/div[2]/div[1]/div[1]/div[2]/input"))
-							.sendKeys("test");
-					sleep(4000);
 					WebElement clprcd = driver
 							.findElement(By.xpath("//b[text()='Cytomegalovirus antigen test (procedure)']"));
 
-					sleep(3000);
+					ww.until(ExpectedConditions.elementToBeClickable(clprcd));
+					sleep(2000);
 					actions("click", clprcd);
 					driver.findElement(By.xpath("//div[@id='ProcedureKpop2']/div[2]/div/div[2]/div[2]/input"))
 							.sendKeys("gdgdg");
-					sleep(4000);
 
 					driver.findElement(By.id("btnSaveAdd")).click();
-					sleep(3000);
+					sleep(2000);
 					List<WebElement> b6 = driver.findElements(By.xpath("//div[@id='saveadd-btn']/ul/li"));
 					for (WebElement w : b6) {
 						if (w.getText().trim().equals("Save")) {
@@ -1132,28 +1242,26 @@ public class Local_Host extends Base_Class {
 					implicitWait(30, TimeUnit.SECONDS);
 					WebElement b8 = driver.findElement(By.xpath("//div[contains(@title,'Add Goals')]"));
 					actions("move to element", b8);
+					ww.until(ExpectedConditions.elementToBeClickable(b8));
 					actions("click", b8);
 					sleep(2000);
 					driver.findElement(By.xpath("//div[@title='Enter goal']")).sendKeys("goal1");
-					sleep(3000);
+
 					driver.findElement(By.xpath("//div[@id='GoalsKpop2']/div[2]/div[1]/div[2]/div/input")).click();
 					sleep(2000);
 					WebElement month = driver.findElement(By.xpath("//select[@class='ui-datepicker-month']"));
 
 					implicitWait(30, TimeUnit.SECONDS);
-					// WebElement yr =
-					// driver.findElement(By.xpath("//select[@class='ui-datepicker-year']"));
+
 					dropDown("index", month, "09");
-					implicitWait(30, TimeUnit.SECONDS);
-					// explicitWait(30, yr);
-					// sleep(3000);
-					// dropDown("text", yr, "2021");
+
 					driver.findElement(By.xpath("//a[text()='14']")).click();
 					sleep(2000);
 					WebElement hk = driver.findElement(By.xpath("//div[@id='GoalsKpop2']/div[2]/div[2]/button[2]"));
 					javascriptclick(hk);
 					sleep(3000);
 					WebElement b10 = driver.findElement(By.xpath("//div[text()='goal1']"));
+					ww.until(ExpectedConditions.elementToBeClickable(b10));
 					actions("click", b10);
 					implicitWait(20, TimeUnit.SECONDS);
 
@@ -1175,6 +1283,7 @@ public class Local_Host extends Base_Class {
 
 					WebElement c1 = driver.findElement(By.xpath("//div[contains(@title,'Add Advance directives')]"));
 					actions("move to element", c1);
+					ww.until(ExpectedConditions.elementToBeClickable(c1));
 					actions("click", c1);
 
 					WebElement c2 = driver.findElement(By.xpath("//div[@id='Assessment-div']/select"));
@@ -1202,6 +1311,7 @@ public class Local_Host extends Base_Class {
 
 					WebElement c5 = driver.findElement(By.xpath("//div[contains(@title,'Add Status')]"));
 					actions("move to element", c5);
+					ww.until(ExpectedConditions.elementToBeClickable(c5));
 					actions("click", c5);
 					WebElement c6 = driver.findElement(By.xpath("(//select[@id='statusType'])[1]"));
 					c6.click();
@@ -1213,11 +1323,13 @@ public class Local_Host extends Base_Class {
 					WebElement clsmd = driver
 							.findElement(By.xpath("//div[text()='134374006: Hearing test bilateral abnormality ']"));
 					sleep(3000);
+					ww.until(ExpectedConditions.elementToBeClickable(clsmd));
 					actions("click", clsmd);
 					driver.findElement(By.xpath("//div[@id='StatusKpop2']/div[2]/div[2]/button[2]")).click();
 					sleep(4000);
 					WebElement c7 = driver
 							.findElement(By.xpath("//div[text()='134374006: Hearing test bilateral abnormality']"));
+					ww.until(ExpectedConditions.elementToBeClickable(c7));
 					actions("click", c7);
 					sleep(3000);
 					WebElement hjj = driver
@@ -1317,12 +1429,13 @@ public class Local_Host extends Base_Class {
 					 */
 					sleep(3000);
 
-				}else if (tagnames.equals("drug")) {
+				} else if (tagnames.equals("drug")) {
 
 					WebElement ci = driver.findElement(By.xpath("(//div[contains(@title,'Add Medications')])[1]"));
 					actions("move to element", ci);
+					ww.until(ExpectedConditions.elementToBeClickable(ci));
 					actions("click", ci);
-					sleep(3000);
+					sleep(2000);
 					driver.findElement(By.id("DRUG_NAME")).sendKeys("tata");
 					driver.findElement(By.id("STRENGTH")).sendKeys("str");
 					driver.findElement(By.id("DISP_QUANTITY")).sendKeys("1");
@@ -1330,7 +1443,7 @@ public class Local_Host extends Base_Class {
 					// driver.findElement(By.id("startdateiid")).sendKeys("2022-07-20");
 					// driver.findElement(By.id("enddateiid")).sendKeys("2022-07-22");
 					driver.findElement(By.xpath("//div[@id='MedicationsKpop2']/div[2]/div[3]/div[1]/button")).click();
-					sleep(3000);
+					sleep(2000);
 					List<WebElement> d1 = driver.findElements(
 							By.xpath("//div[@id='MedicationsKpop2']/div[2]/div[3]/div[1]/button//following::ul[1]/li"));
 					for (WebElement w : d1) {
@@ -1344,6 +1457,7 @@ public class Local_Host extends Base_Class {
 
 					sleep(3000);
 					WebElement d3 = driver.findElement(By.xpath("//div[text()='dg']"));
+					ww.until(ExpectedConditions.elementToBeClickable(d3));
 					actions("click", d3);
 					sleep(2000);
 
@@ -1376,6 +1490,7 @@ public class Local_Host extends Base_Class {
 				} else if (tagnames.equals("delivery-note")) {
 					WebElement kk = driver.findElement(By.xpath("//div[contains(@title,'Add Notes')]"));
 					actions("move to element", kk);
+					ww.until(ExpectedConditions.elementToBeClickable(kk));
 					actions("click", kk);
 					driver.findElement(By.xpath("//div[@title='Enter the notes description of the patient visit']"))
 							.sendKeys("hell");
@@ -1402,15 +1517,17 @@ public class Local_Host extends Base_Class {
 
 					WebElement x1 = driver.findElement(By.xpath("//div[contains(@title,'Add Physical Examination')]"));
 					actions("move to element", x1);
+					ww.until(ExpectedConditions.elementToBeClickable(x1));
+
 					actions("click", x1);
 					driver.findElement(By.id("bodyParts")).sendKeys("hello");
 
-					sleep(3000);
 					driver.findElement(By.id("finding")).sendKeys("hw are you");
-					sleep(3000);
+					sleep(2000);
 
 					WebElement abc = driver
 							.findElement(By.xpath("//div[@id='Physical_ExaminationsKpop2']/div[2]/div[2]/div/button"));
+					ww.until(ExpectedConditions.elementToBeClickable(abc));
 					javascriptclick(abc);
 					List<WebElement> abcd = driver.findElements(By.xpath(
 							"//div[@id='Physical_ExaminationsKpop2']/div[2]/div[2]/div/button//following::ul[1]/li"));
@@ -1449,6 +1566,7 @@ public class Local_Host extends Base_Class {
 
 					WebElement lj = driver.findElement(By.xpath("//div[contains(@title,'Add Forms')]"));
 					actions("move to element", lj);
+					ww.until(ExpectedConditions.elementToBeClickable(lj));
 					actions("click", lj);
 					sleep(3000);
 
@@ -1527,6 +1645,7 @@ public class Local_Host extends Base_Class {
 
 					WebElement ar = driver.findElement(By.xpath("//div[contains(@title,'Add Attach File')]"));
 					actions("move to element", ar);
+					ww.until(ExpectedConditions.elementToBeClickable(ar));
 					actions("click", ar);
 
 					WebElement selweb = driver
@@ -1545,6 +1664,7 @@ public class Local_Host extends Base_Class {
 
 					WebElement qq = driver.findElement(By.xpath("//div[contains(@title,'Add Inpatient')]"));
 					actions("move to element", qq);
+					ww.until(ExpectedConditions.elementToBeClickable(qq));
 					actions("click", qq);
 					// driver.findElement(By.id("admissioniid")).click();
 
@@ -1564,10 +1684,10 @@ public class Local_Host extends Base_Class {
 					dropDown("text", ipmyr1, "2022");
 					driver.findElement(By.xpath("//a[text()='26']")).click();
 
-					sleep(3000);
+					sleep(2000);
 					WebElement re = driver.findElement(By.xpath("//div[@id='InpatientKpop2']/div[2]/div[1]/select"));
 					// (//select[@id='admissionType'])[1]
-
+					ww.until(ExpectedConditions.elementToBeClickable(re));
 					javascriptclick(re);
 					dropDown("text", re, "Urgent");
 					driver.findElement(By.id("rmNo")).sendKeys("777");
@@ -1630,13 +1750,95 @@ public class Local_Host extends Base_Class {
 
 		}
 		sleep(4000);
-		WebElement backtoehr = driver.findElement(By.xpath("//button[@onclick='window.history.back();']"));
-		javascriptclick(backtoehr);
+
+		// WebElement rds =
+		// driver.findElement(By.xpath("//div[text()='MEDICATION-str']"));
+		WebElement rds = ww
+				.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//div[text()='MEDICATION-str']")));
+		ww.until(ExpectedConditions.elementToBeClickable(rds));
+		actions("click", rds);
+		// WebElement =
+		// driver.findElement(By.xpath("//div[text()='MEDICATION-str']//following::div[6]/div[2]//following::div[1]/div[1]/div[5]/div[2]/input"));
+		WebElement rdss = ww.until(ExpectedConditions.presenceOfElementLocated(By.xpath(
+				"//div[text()='MEDICATION-str']//following::div[6]/div[2]//following::div[1]/div[1]/div[5]/div[2]/input")));
+		rdss.clear();
+		rdss.sendKeys("500");
+		WebElement sql = driver.findElement(By.xpath(
+				"//div[text()='MEDICATION-str']//following::div[6]/div[2]//following::div[1]/div[2]/div[1]/button[3]"));
+		javascriptclick(sql);
+
+		///
 		sleep(2000);
+
+		WebElement ee = ww
+				.until(ExpectedConditions.elementToBeClickable(By.xpath("(//button[@id='add-payment-btn'])[1]")));
+		javascriptclick(ee);
+		// driver.findElement(By.xpath("(//button[@id='add-payment-btn'])[1]")).click();
+		driver.findElement(By.xpath("(//span[@id='paymentMethodTypeSelectValue'])[2]")).click();
+		sleep(2000);
+		List<WebElement> choosepy = driver
+				.findElements(By.xpath("(//span[@id='paymentMethodTypeSelectValue'])[2]//following::ul[1]/li"));
+		for (WebElement w : choosepy) {
+			if (w.getText().trim().equals("Cash Payment")) {
+				w.click();
+				break;
+			}
+
+		}
+
+		WebElement dsp1 = driver.findElement(By.xpath(
+				"(//button[@id='paymentMethodTypeId'])[2]/span[2]//following::div[4]/div[4]//following::div[2]//following::div[1]/div[2]/textarea"));
+		actions("click", dsp1);
+		sleep(2000);
+		dsp1.sendKeys("cash pay+++++++++");
+
+		WebElement tet = driver.findElement(By.xpath("(//button[@title='Make Payment'])[3]"));
+
+		j.executeScript("arguments[0].click();", tet);
+
+		WebElement fnls = driver.findElement(By.xpath("//button[@id='finalize-bill']"));
+		ww.until(ExpectedConditions.elementToBeClickable(fnls));
+		javascriptclick(fnls);
+
+		WebElement dz = driver.findElement(By.xpath("(//button[@title='Finalize'])[1]"));
+		ww.until(ExpectedConditions.elementToBeClickable(dz));
+		javascriptclick(dz);
+		sleep(2000);
+		/*
+		 * driver.findElement(By.xpath(
+		 * "//button[@id='finalize-bill']//following::button[2]")).click(); sleep(2000);
+		 */
+		/*
+		 * WebElement delbil = driver.findElement( By.
+		 * xpath("//center[text()='Do you like to delete Invoice?']//following::div[1]/button[2]"
+		 * )); javascriptclick(delbil);
+		 */
+
+		WebElement backtoehr = driver.findElement(By.xpath("//div[@id='paymentMadeInfull']//following::button[1]"));
+		clickble(driver, backtoehr, 25);
+		javascriptclick(backtoehr);
+		WebElement complteehr = driver
+				.findElement(By.xpath("(//button[contains(@title,'Complete Health Record')])[1]/span[2]"));
+		javascriptclick(complteehr);
+		sleep(2000);
+		driver.findElement(By.xpath(
+				"(//span[contains(text(),'Past date health record entry')])[1]//parent::div//parent::div[1]/div[3]/div/div[1]/div[1]/input"))
+				.sendKeys("1");
+		WebElement cmpehr = driver.findElement(
+				By.xpath("(//span[contains(text(),'Past date health record entry')])[1]//following::div[4]/button[2]"));
+		javascriptclick(cmpehr);
+		///
+		/*
+		 * WebElement backtoehr =
+		 * driver.findElement(By.xpath("//button[@onclick='window.history.back();']"));
+		 * javascriptclick(backtoehr);
+		 */
+		sleep(3000);
 		driver.navigate().to("https://localhost:8443/health/#list_ehr");
 		implicitWait(30, TimeUnit.SECONDS);
 
 		driver.findElement(By.id("newMedicalRecordButton")).click();
+
 		sleep(3000);
 
 		// Salt options Scenarios...
@@ -1659,65 +1861,73 @@ public class Local_Host extends Base_Class {
 
 					actions("click", vitalsal);
 
-				}
-				if (tagnames.equals("visit-reason")) {
+				} else if (tagnames.equals("visit-reason")) {
 					WebElement vistsal = driver
 							.findElement(By.xpath("(//div[@id='visit-reason'])[2]/div/div[1]/div/div[2]/div[1]"));
 					actions("click", vistsal);
 
-				}
-				if (tagnames.equals("diagnosis")) {
+				} else if (tagnames.equals("diagnosis")) {
 
 					WebElement prbsal = driver.findElement(By.xpath("//div[contains(@title,'SALT Problems')]"));
 					actions("click", prbsal);
 
-				}
-				if (tagnames.equals("symptom")) {
+				} else if (tagnames.equals("symptom")) {
 
 					WebElement symsalt = driver.findElement(By.xpath("//div[contains(@title,'SALT Symptoms')]"));
 					actions("click", symsalt);
 
-				}
-				if (tagnames.equals("procedure")) {
+				} else if (tagnames.equals("procedure")) {
 
 					WebElement prosalt = driver.findElement(By.xpath("//div[contains(@title,'SALT Procedure')]"));
 					actions("click", prosalt);
-				}
-				if (tagnames.equals("goals")) {
+				} else if (tagnames.equals("goals")) {
 
 					WebElement goalsalt = driver.findElement(By.xpath("//div[contains(@title,'SALT Goals')]"));
 					actions("click", goalsalt);
-				}
-				if (tagnames.equals("directives")) {
+				} else if (tagnames.equals("directives")) {
 
 					WebElement advsalt = driver
 							.findElement(By.xpath("//div[contains(@title,'SALT Advance directives')]"));
 					actions("click", advsalt);
-				}
-				if (tagnames.equals("status-module")) {
+				} else if (tagnames.equals("status-module")) {
 
 					WebElement statussalt = driver.findElement(By.xpath("//div[contains(@title,'SALT Status')]"));
 					actions("click", statussalt);
-				}
-				if (tagnames.equals("drug")) {
+				} else if (tagnames.equals("drug")) {
 
 					WebElement medsalt = driver.findElement(By.xpath("//div[contains(@title,'SALT Medications')]"));
 					actions("click", medsalt);
-				}
-				if (tagnames.equals("delivery-note")) {
+				} else if (tagnames.equals("delivery-note")) {
 					WebElement notesalt = driver.findElement(By.xpath("//div[contains(@title,'SALT Notes')]"));
 					actions("click", notesalt);
 				}
 
 			}
 		}
-		sleep(5000);
-		implicitWait(30, TimeUnit.SECONDS);
+		sleep(3000);
+		WebElement printehr = driver.findElement(By.xpath("//i[@onclick='ehr.ehrShowPrintOptions();']"));
+		ScriptExecutor(printehr);
+		WebElement timest = driver
+				.findElement(By.xpath("//i[@onclick='ehr.ehrShowPrintOptions();']//following::span[3]"));
 
+		visbility(driver, timest, 25);
+		javascriptclick(timest);
+
+		List<WebElement> stmp = driver.findElements(
+				By.xpath("//i[@onclick='ehr.ehrShowPrintOptions();']//following::span[3]//following::ul[1]/li"));
+		for (WebElement web : stmp) {
+			if (web.getText().trim().equals("Show Timestamp")) {
+				web.click();
+				break;
+			}
+
+		}
+		implicitWait(30, TimeUnit.SECONDS);
+		sleep(2500);
 		// follow up creation...
 		j.executeScript("window.scroll(0,0)");
 		WebElement createfollowup = driver.findElement(By.xpath("(//button[@id='followUpAdd'])[1]/div[1]"));
-
+		ww.until(ExpectedConditions.elementToBeClickable(createfollowup));
 		actions("click", createfollowup);
 		sleep(4000);
 		implicitWait(30, TimeUnit.SECONDS);
@@ -1732,7 +1942,7 @@ public class Local_Host extends Base_Class {
 		driver.findElement(By.xpath("(//a[text()='6'])[3]")).click();
 		WebElement fixappo = driver.findElement(By.xpath("(//button[@id='fixAppointment'])[1]"));
 
-		sleep(4000);
+		sleep(3000);
 		javascriptclick(fixappo);
 
 		List<WebElement> tot = driver.findElements(By.xpath("(//div[@id='date-data'])[1]"));
@@ -1802,17 +2012,18 @@ public class Local_Host extends Base_Class {
 
 	private void calendar() throws InterruptedException {
 		driver.navigate().to("https://localhost:8443/health/#calendar");
+		implicitWait(30, TimeUnit.SECONDS);
 		/*
 		 * explicitWait(20, pom.getInstanceCalendar().clickCalendar);
 		 * click(pom.getInstanceCalendar().clickCalendar);
 		 */
 		driver.navigate().refresh();
-		sleep(3000);
 
-		implicitWait(30, TimeUnit.SECONDS);
-		sleep(5000);
+		WebElement clbtn = driver.findElement(By.xpath("(//button[@id='calendar-day-month'])[1]"));
 
-		driver.findElement(By.xpath("(//button[@id='calendar-day-month'])[1]")).click();
+		visbility(driver, clbtn, 25);
+		clickble(driver, clbtn, 25);
+		clbtn.click();
 		sleep(2000);
 		List<WebElement> choose = driver.findElements(By.xpath("//ul[@id='calendarul']/li"));
 
@@ -1822,7 +2033,7 @@ public class Local_Host extends Base_Class {
 				break;
 			}
 		}
-		sleep(4000);
+		sleep(2000);
 
 		List<WebElement> totalnumberrowdy = driver.findElements(By.xpath("//div[@id='date-data']"));
 		int totalr = totalnumberrowdy.size();
@@ -1897,14 +2108,17 @@ public class Local_Host extends Base_Class {
 				sleep(3000);
 
 				WebElement ut = driver.findElement(By.xpath("(//select[@id='triage-appointment'])[" + i + "]"));
+				visbility(driver, ut, 25);
 				// ut.click();
 				dropDown("text", ut, "Emergency");
 
 				WebElement qt = driver.findElement(By.xpath("(//textarea[@id='description'])[" + i + "]"));
+				visbility(driver, qt, 25);
 				qt.sendKeys("no worries...");
 				WebElement utt = driver.findElement(By.xpath("(//button[@id='statusId_dropdown'])[" + i + "]"));
+				visbility(driver, utt, 25);
 				j.executeScript("arguments[0].click();", utt);
-				sleep(3000);
+
 				List<WebElement> lop = driver.findElements(By.xpath("(//ul[@id='statusIdDropdown'])[" + i + "]/li"));
 				for (WebElement w : lop) {
 					if (w.getText().trim().equals("In Progress")) {
@@ -1913,17 +2127,32 @@ public class Local_Host extends Base_Class {
 					}
 
 				}
-				sleep(5000);
+
 				WebElement vcv = driver.findElement(By.xpath("(//button[@id='accept-btn'])[1]"));
+				visbility(driver, vcv, 25);
+				ScriptExecutor(vcv);
+				clickble(driver, vcv, 25);
 				j.executeScript("arguments[0].click();", vcv);
-				sleep(5000);
-				WebElement piper = driver.findElement(By.xpath("//span[text()='" + kpid + "']"));
-				j.executeScript("arguments[0].click();", piper);
+				sleep(1000);
+
+				WebElement ez = driver.findElement(By.xpath("//span[text()='" + kpid + "']"));
+				visbility(driver, ez, 25);
+				j.executeScript("arguments[0].click();", ez);
+				sleep(2000);
+				// goto ehr..
+				driver.findElement(By.xpath("(//button[@id='cancel-btn1'])[1]")).click();
 
 				sleep(3000);
+				driver.navigate().to("https://localhost:8443/health/#calendar");
+				driver.navigate().refresh();
+
+				WebElement pipes = driver.findElement(By.xpath("(//span[text()='" + kpid + "'])"));
+				visbility(driver, pipes, 25);
+				j.executeScript("arguments[0].click();", pipes);
+				sleep(1000);
 				WebElement wtw = driver.findElement(By.xpath("(//span[@id='del-btn'])[" + i + "]"));
 				j.executeScript("arguments[0].click();", wtw);
-				sleep(3000);
+				sleep(2000);
 
 				/*
 				 * List<WebElement> rtr = driver .findElements(By.xpath(
@@ -1937,11 +2166,10 @@ public class Local_Host extends Base_Class {
 				 * 
 				 * }
 				 */
-				
+
 				WebElement delappp = driver
 						.findElement(By.xpath("//div[@id='AppointmentCreateMessage']/div[2]/div[2]/button[2]"));
 				javascriptclick(delappp);
-				sleep(5000);
 
 				break;
 			}
@@ -1971,7 +2199,7 @@ public class Local_Host extends Base_Class {
 		clear(pom.getInstanceBilling().addQuantity); //
 
 		sendkeys(pom.getInstanceBilling().addQuantity, "2");
-		sleep(3000);
+		sleep(2000);
 		click(pom.getInstanceBilling().saveItem);
 		sleep(3000);
 		WebElement r = driver.findElement(By.xpath("//div[@id='assign-side']/div[1]/div"));
@@ -1990,20 +2218,21 @@ public class Local_Host extends Base_Class {
 				"//div[@id='assign-side']/div[3]/div/div/div[2]/div[4]/div[2]//following::div[1]/div/div[4]//following::div[1]/div/button"));
 		javascriptclick(savefav);
 		WebDriverWait wait = new WebDriverWait(driver, 30);
-		sleep(3000);
+		sleep(1500);
 		WebElement until = wait.until(ExpectedConditions.elementToBeClickable(
 				By.xpath("(//span[text()='Kaaspro']//parent::div//parent::div[1]//parent::div[1]/div[1]/span[1])[1]")));
+		ww.until(ExpectedConditions.elementToBeClickable(until));
 		actions("click", until);
 		sleep(2000);
 		WebElement edi = driver.findElement(
 				By.xpath("(//span[text()='Kaaspro']//parent::div//parent::div[1]//parent::div[1]/div[2])[1]"));
 		actions("click", edi);
-		sleep(2500);
+		sleep(2000);
 		WebElement delfav = driver
 				.findElement(By.xpath("//div[@id='assign-side']/div[3]/div/div/div[1]/div[2]/span[1]"));
 		wait.until(ExpectedConditions.elementToBeClickable(delfav));
 		actions("click", delfav);
-		sleep(3000);
+		sleep(2000);
 		WebElement itser = driver.findElement(By.xpath("//div[@id='item-code-side']/div[1]/div"));
 		wait.until(ExpectedConditions.elementToBeClickable(itser));
 		actions("click", itser);
@@ -2143,22 +2372,85 @@ public class Local_Host extends Base_Class {
 		WebElement delbil = driver.findElement(
 				By.xpath("//center[text()='Do you like to delete Invoice?']//following::div[1]/button[2]"));
 		javascriptclick(delbil);
+		sleep(2000);
+		driver.navigate().to("https://localhost:8443/health/#bill_report");
+		// driver.navigate().refresh();
+		driver.findElement(By.xpath(
+				"//div[@id='bill_report']/div[1]/div[2]//following::div[1]/div[2]/div/div[2]/div[3]/div[1]/div[1]/div[1]//following::div[1]/input"))
+				.sendKeys(kpid);
+		sleep(2000);
+
+		List<WebElement> billdrp = driver.findElements(By.xpath(
+				"//div[@id='dmain']/div[4]/div[2]//following::div[2]//following::ul[3]/li/a/table/tbody/tr/td[2]"));
+		for (WebElement we : billdrp) {
+			if (we.getText().trim().equals(kpid)) {
+				System.out.println("kpid met.");
+
+				we.click();
+				break;
+			}
+
+		}
+
+		click(pom.getInstanceBilling().clickCreateNewBill);
+		explicitWait(30, pom.getInstanceBilling().addItem);
+		sleep(2000);
+
+		click(pom.getInstanceBilling().addItem);
+		sleep(2000);
+		sendkeys(pom.getInstanceBilling().enterTheItem, "dolo"); //
+
+		sendkeys(pom.getInstanceBilling().addPrice, "10"); //
+
+		clear(pom.getInstanceBilling().addQuantity); //
+
+		sendkeys(pom.getInstanceBilling().addQuantity, "2");
+		sleep(3000);
+		click(pom.getInstanceBilling().saveItem);
+		sleep(2000);
+		String inc;
+		WebElement getinc = driver.findElement(By.xpath("//span[@id='receiptId']"));
+		inc = getinc.getText();
+		System.out.println("ivoice num:" + inc);
+
+		sleep(3000);
+		driver.navigate().to("https://localhost:8443/health/#bill_report");
+		driver.navigate().refresh();
+
+		WebElement rqs = driver.findElement(By.xpath("//div[text()='" + inc + "']"));
+		ww.until(ExpectedConditions.elementToBeClickable(rqs));
+		actions("click", rqs);
+		WebElement editit = driver.findElement(By.xpath("//div[text()='dolo']"));
+		visbility(driver, editit, 25);
+		actions("click", editit);
+		clear(pom.getInstanceBilling().enterTheItem);
+		sendkeys(pom.getInstanceBilling().enterTheItem, "Paracetamal");
+		clear(pom.getInstanceBilling().addPrice);
+		sendkeys(pom.getInstanceBilling().addPrice, "90");
+		WebElement saveit = driver.findElement(
+				By.xpath("//div[text()='dolo']//following::div[6]/div[2]//following::div[1]/div[2]/div[1]/button[3]"));
+		visbility(driver, saveit, 25);
+		javascriptclick(saveit);
+
 	}
 
 	@Test(priority = 5)
 	private void TeleDoctor() throws InterruptedException {
 
-		explicitWait(30, pom.getInstanceTeleDoctor().clickTeleDoctor);
-		sleep(5000);
+		// explicitWait(30, pom.getInstanceTeleDoctor().clickTeleDoctor);
+		visbility(driver, pom.getInstanceTeleDoctor().clickTeleDoctor, 25);
+
 		click(pom.getInstanceTeleDoctor().clickTeleDoctor);
 		driver.navigate().refresh();
 		implicitWait(30, TimeUnit.SECONDS);
-		sleep(3000);
+
 		WebElement np1 = driver.findElement(By.xpath("//button[@title='Create new Patinet']"));
+		visbility(driver, np1, 25);
 		j.executeScript("arguments[0].click();", np1);
 		driver.findElement(By.id("firstname")).sendKeys("Abigazi");
 		driver.findElement(By.id("lastname")).sendKeys("Ak");
 		WebElement gn1 = driver.findElement(By.xpath("(//button[@id='gender_dropdown'])[1]"));
+		visbility(driver, gn1, 25);
 		j.executeScript("arguments[0].click();", gn1);
 		List<WebElement> jj = driver.findElements(By.xpath("(//ul[@id='genderDropdown'])[1]/li"));
 		for (WebElement w : jj) {
@@ -2173,13 +2465,12 @@ public class Local_Host extends Base_Class {
 		WebElement cp1 = driver.findElement(By.xpath("//div[@id='createPatient']"));
 		j.executeScript("arguments[0].click();", cp1);
 
-		sleep(3000);
 		implicitWait(30, TimeUnit.SECONDS);
 		ScriptExecutor(pom.getInstanceNewPatient().deletePatient);
 		click(pom.getInstanceNewPatient().deletePatient);
+		visbility(driver, pom.getInstanceNewPatient().deletePatient, 25);
 		driver.findElement(By.xpath("//button[text()='Delete']")).click();
 
-		sleep(5000);
 		/*
 		 * click(pom.getInstanceTeleDoctor().clickTeleDoctor);
 		 * sendkeys(pom.getInstanceTeleDoctor().searchDoctor, "3523943"); sleep(3000);
@@ -2187,17 +2478,22 @@ public class Local_Host extends Base_Class {
 		 * driver.findElement(By.xpath("//td[@id='nameh']//following::td[1]"));
 		 * actions("click", srdr); sleep(3000);
 		 */
-		ww.until(ExpectedConditions.elementToBeClickable(pom.getInstanceTeleDoctor().clickTeleDoctor));
+		visbility(driver, pom.getInstanceTeleDoctor().clickTeleDoctor, 25);
+		clickble(driver, pom.getInstanceTeleDoctor().clickTeleDoctor, 25);
 		click(pom.getInstanceTeleDoctor().clickTeleDoctor);
+		visbility(driver, pom.getInstanceTeleDoctor().searchPatient, 25);
 		sendkeys(pom.getInstanceTeleDoctor().searchPatient, kpid);
-		explicitWait(25, pom.getInstanceTeleDoctor().searchPatient);
-		sleep(3000);
+
 		WebElement pstl = driver.findElement(By.xpath("//td[@id='nameh']//following::td[1]"));
+		visbility(driver, pstl, 25);
 		actions("click", pstl);
-		sleep(5000);
+
 		// ScriptExecutor(pom.getInstanceCalendar().saveAppointment);
 
-		driver.findElement(By.xpath("(//div[@title='Click to view'])[4]")).click();
+		WebElement clickpatie = driver.findElement(By.xpath("(//div[@title='Click to view'])[4]"));
+
+		visbility(driver, clickpatie, 25);
+		actions("click", clickpatie);
 
 		sleep(3000);
 
@@ -2207,22 +2503,23 @@ public class Local_Host extends Base_Class {
 	private void Message() throws InterruptedException {
 
 		explicitWait(30, pom.getInstanceMessage().clickMessage);
-		sleep(5000);
+		visbility(driver, pom.getInstanceMessage().clickMessage, 25);
 		click(pom.getInstanceMessage().clickMessage);
-		sleep(5000); //
+
 		explicitWait(20, pom.getInstanceMessage().clickComposemMessage); // //
 		click(pom.getInstanceMessage().clickComposemMessage); //
 		sendkeys(pom.getInstanceMessage().search, kpid);
 		sleep(2000); //
 		WebElement msg = driver.findElement(By.xpath("(//td[@id='nameh'])[1]//following::td[1]"));
+		visbility(driver, msg, 25);
 		actions("click", msg);
-		sleep(2000);
+		visbility(driver, pom.getInstanceMessage().enterSubject, 25);
 		sendkeys(pom.getInstanceMessage().enterSubject, "GOOD MORNING");
-		sleep(2000);
+
 		sendkeys(pom.getInstanceMessage().enterMessage, "hello welcome to chennai");
-		sleep(2000);
+		visbility(driver, pom.getInstanceMessage().sendMessage, 25);
 		click(pom.getInstanceMessage().sendMessage);
-		sleep(3000);
+		visbility(driver, pom.getInstanceMessage().seeSentMessage, 25);
 		click(pom.getInstanceMessage().seeSentMessage);
 		sleep(3000);
 
@@ -2237,7 +2534,7 @@ public class Local_Host extends Base_Class {
 			if (driver.getCurrentUrl().equals(s)) {
 				break;
 			}
-
+			driver.navigate().refresh();
 			sleep(3000);
 		}
 		implicitWait(40, TimeUnit.SECONDS);
@@ -2246,8 +2543,9 @@ public class Local_Host extends Base_Class {
 		driver.findElement(By.xpath("//button[text()='Manage your Account']")).click();
 		sleep(3000);
 		WebElement Basicinfo = driver.findElement(By.xpath("(//span[@title='Edit'])[2]"));
+		visbility(driver, Basicinfo, 25);
 		j.executeScript("arguments[0].click();", Basicinfo);
-		sleep(3000);
+
 		driver.findElement(By.id("hospitalName")).clear();
 		sleep(2000);
 		driver.findElement(By.id("hospitalName")).sendKeys("75health organisation");
@@ -2356,7 +2654,7 @@ public class Local_Host extends Base_Class {
 		 * driver.findElement(By.xpath("(//img[@id='del-btn'])[1]"));
 		 * j.executeScript("arguments[0].click();", spldel);
 		 * 
-		 */		sleep(2000);
+		 */ sleep(2000);
 
 		// patient info
 		WebElement patientinfoedit = driver.findElement(By.xpath("(//span[@id='edit-btn'])[1]"));
@@ -2854,10 +3152,11 @@ public class Local_Host extends Base_Class {
 
 		driver.findElement(By.xpath("//button[@id='form-script']")).click();
 		sleep(5000);
+
 		/*
 		 * List<WebElement> numberofformspresent = driver
 		 * .findElements(By.xpath("(//div[@class='form-pop-body'])[3]/div/div[1]")); int
-		 * ffs = numberofformspresent.size(); System.out.println(ffs);
+		 * ffs = numberofformspresent.size();
 		 * 
 		 * int u; for (int imp = 4; imp <= ffs; imp++) {
 		 * 
@@ -2869,7 +3168,9 @@ public class Local_Host extends Base_Class {
 		 * 
 		 * rtt.click(); WebElement jsp =
 		 * driver.findElement(By.xpath("(//span[@id='del-form'])[1]"));
-		 * javascriptclick(jsp);
+		 * javascriptclick(jsp); driver.navigate().refresh();
+		 * driver.findElement(By.xpath("//button[@id='form-script']")).click();
+		 * sleep(5000);
 		 * 
 		 * break;
 		 * 
@@ -2908,7 +3209,7 @@ public class Local_Host extends Base_Class {
 		 * 
 		 * }
 		 */
-		
+
 		WebElement cancelfrm = driver.findElement(By.xpath("//div[@id='FormsKpop2']/div[1]/div[2]/span"));
 		javascriptclick(cancelfrm);
 
@@ -2922,21 +3223,53 @@ public class Local_Host extends Base_Class {
 		sleep(2000);
 		WebElement df = driver.findElement(By.xpath("(//button[text()='Cancel'])[1]"));
 		js.executeScript("arguments[0].click();", df);
-		sleep(3000); // notification
+		sleep(3000);
 
-		WebElement o = driver.findElement(By.xpath("//button[@id='custom-notify']"));
-		o.click();
-		sleep(2000);
-		WebElement sd = driver.findElement(By.xpath("(//span[@class='slider1 round1'])[4]"));
-		ScriptExecutor(sd);
-		sleep(5000);
-		js.executeScript("window.scrollBy(0,0)");
+		// notification
+
+		WebElement er = driver.findElement(By.xpath("//span[text()='Edit Notification Messages']"));
+		WebElement notify = driver.findElement(By.xpath("//button[@id='custom-notify']"));
+
+		boolean b = true;
+		while (b) {
+
+			if (!notify.isDisplayed()) {
+				WebElement uip = driver.findElement(By
+						.xpath("//span[text()='Edit Notification Messages']//parent::div//parent::div[1]/label/input"));
+
+				actions("click", uip);
+
+				javascriptclick(notify);
+				WebElement sd = driver.findElement(By.xpath("(//span[@class='slider1 round1'])[4]"));
+				ScriptExecutor(sd);
+				sleep(2000);
+				js.executeScript("window.scrollBy(0,0)");
+
+			}
+
+			b = false;
+		}
+		sleep(1500);
+		// notify ehr complte...
+		WebElement ntfyehr = driver.findElement(By
+				.xpath("//span[text()='Notify user when EHR is completed.']//parent::div//parent::div[1]/label/input"));
+		ScriptExecutor(ntfyehr);
+		actions("click", ntfyehr);
+
+		// set interval time for emial...
+
+		WebElement rr = driver.findElement(By
+				.xpath("//span[text()='Set interval for receiving emails.']//parent::div//parent::div[1]/label/input"));
+
+		actions("click", rr);
 
 		// Audit Report...
 
 		sleep(3000);
 		click(pom.getInstanceSetting().clickSettings);
 		WebDriverWait wait = new WebDriverWait(driver, 20);
+		driver.navigate().refresh();
+		sleep(3000);
 		wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[@onclick='setting.audit()']")));
 		WebElement rqqa = driver.findElement(By.xpath("//button[@onclick='setting.audit()']"));
 		ScriptExecutor(rqqa);
@@ -2958,21 +3291,22 @@ public class Local_Host extends Base_Class {
 		}
 
 		sleep(3000);
-		driver.findElement(By.xpath("(//input[@id='userPartyName'])[2]"))
-				.sendKeys(ConfigManager.getconfigManager().getInstanceConfigReader().doctorKpid());
-		List<WebElement> userd = driver
-				.findElements(By.xpath("//div[@id='vvid']//following::ul[2]/li/a/table/tbody/tr[1]/td[2]"));
-
-		for (WebElement we : userd) {
-			if (we.getText().contains(ConfigManager.getconfigManager().getInstanceConfigReader().doctorKpid())) {
-
-				we.click();
-				break;
-
-			}
-
-		}
-
+		/*
+		 * driver.findElement(By.xpath("(//input[@id='userPartyName'])[2]"))
+		 * .sendKeys(ConfigManager.getconfigManager().getInstanceConfigReader().
+		 * doctorKpid()); List<WebElement> userd = driver .findElements(By.xpath(
+		 * "//div[@id='vvid']//following::ul[2]/li/a/table/tbody/tr[1]/td[2]"));
+		 * 
+		 * for (WebElement we : userd) { if
+		 * (we.getText().contains(ConfigManager.getconfigManager().
+		 * getInstanceConfigReader().doctorKpid())) {
+		 * 
+		 * we.click(); break;
+		 * 
+		 * }
+		 * 
+		 * }
+		 */
 		WebElement seldate = driver.findElement(By.xpath("//select[@id='byDate']"));
 		dropDown("text", seldate, "All");
 		sleep(4000);
@@ -2981,14 +3315,15 @@ public class Local_Host extends Base_Class {
 		sleep(3000);
 		driver.findElement(By.xpath("//button[@id='advanceSearching']")).click();
 
-		explicitWait(50, pom.getInstanceSetting().clickSettings);
+		// explicitWait(50, pom.getInstanceSetting().clickSettings);
 		sleep(9000);
 		click(pom.getInstanceSetting().clickSettings);
 		sleep(2000);
 
-		explicitWait(40, pom.getInstanceSetting().scrollTillDelete);
-		ScriptExecutor(pom.getInstanceSetting().scrollTillDelete);
-		sleep(2000);
+		/*
+		 * explicitWait(40, pom.getInstanceSetting().scrollTillDelete);
+		 * ScriptExecutor(pom.getInstanceSetting().scrollTillDelete); sleep(2000);
+		 */
 		ScriptExecutor(pom.getInstanceSetting().scrollTillTax);
 		sleep(2000);
 		ScriptExecutor(pom.getInstanceSetting().scrollTillHospitalCode);
@@ -3002,6 +3337,54 @@ public class Local_Host extends Base_Class {
 		ScriptExecutor(pom.getInstanceSetting().scrollTillAuditReport); // //
 		// JavascriptExecutor js = (JavascriptExecutor) driver; // //
 		js.executeScript("window.scroll(0,0)");
+		sleep(2000);
+
+		// Dashboard
+
+		WebElement dsbrd = driver.findElement(By.xpath("(//div[@id='option-setting'])[1]/div/img"));
+		actions("click", dsbrd);
+		List<WebElement> ths = driver
+				.findElements(By.xpath("(//div[@id='option-setting'])[1]/div/img//following::ul[1]/li"));
+
+		while (true) {
+
+			for (WebElement st : ths) {
+				if (st.getText().trim().equals("Home")) {
+					st.click();
+					sleep(1000);
+					actions("click", dsbrd);
+				} else if (st.getText().trim().equals("Dashboard")) {
+					st.click();
+					sleep(2000);
+					actions("click", dsbrd);
+				} else if (st.getText().trim().equals("Quick Tour")) {
+					st.click();
+					WebElement cncltr = driver.findElement(By.xpath("(//li[text()='NO, CANCEL TOUR'])[1]"));
+					javascriptclick(cncltr);
+					sleep(2000);
+					actions("click", dsbrd);
+				} else if (st.getText().trim().equals("Settings")) {
+					st.click();
+					sleep(2000);
+					actions("click", dsbrd);
+				} else if (st.getText().trim().equals("Migration Services")) {
+					st.click();
+					WebElement clmgr = driver
+							.findElement(By.xpath("//h4[text()='Migration Services']//parent::div/button"));
+					sleep(2000);
+					actions("click", clmgr);
+					sleep(2000);
+					actions("click", dsbrd);
+				} else if (st.getText().trim().equals("Sign out")) {
+					st.click();
+
+					break;
+				}
+
+			}
+			break;
+		}
+
 	}
 
 }

@@ -12,7 +12,7 @@ public class ConfigReader {
 
 	public ConfigReader() throws IOException {
 		File f = new File(
-				"C:\\Users\\Admin\\eclipse-workspace\\New_project\\src\\main\\java\\com\\propertyFile\\Login.properties");
+				System.getProperty("user.dir")+"\\propertyFile\\Login.properties");
 		FileInputStream fis = new FileInputStream(f);
 		p = new Properties();
 		p.load(fis);

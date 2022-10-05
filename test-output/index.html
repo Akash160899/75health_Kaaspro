@@ -49,7 +49,7 @@
               <ul>
                 <li>
                   <a href="#" panel-name="test-xml-Default_suite" class="navigator-link ">
-                    <span>C:\Users\Admin\AppData\Local\Temp\testng-eclipse-2049211232\testng-customsuite.xml</span>
+                    <span>C:\Users\Admin\AppData\Local\Temp\testng-eclipse-1030421137\testng-customsuite.xml</span>
                   </a> <!-- navigator-link  -->
                 </li>
                 <li>
@@ -172,16 +172,27 @@
                   <a name="Settings">
                   </a> <!-- Settings -->
                   <span class="method-name">Settings</span>
-                  <div class="stack-trace">org.openqa.selenium.TimeoutException: Expected condition failed: waiting for visibility of [[ChromeDriver: chrome on WINDOWS (be45680178dba096a1ae91f75c0767bb)] -&gt; xpath: //button[@id=&apos;trash-btn&apos;]] (tried for 40 second(s) with 500 milliseconds interval)
+                  <div class="stack-trace">org.openqa.selenium.ElementClickInterceptedException: element click intercepted: Element &lt;button id=&quot;edit-print-preference&quot; class=&quot;dropdown-toggle settings-heading settings-buttonColor settings-button&quot;&gt;...&lt;/button&gt; is not clickable at point (372, 592). Other element would receive the click: &lt;div class=&quot;col-xs-12 settings-heading settings-textColor&quot;&gt;...&lt;/div&gt;
+  (Session info: chrome=106.0.5249.91)
 Build info: version: &apos;3.141.59&apos;, revision: &apos;e82be7d358&apos;, time: &apos;2018-11-14T08:17:03&apos;
 System info: host: &apos;WORKPC&apos;, ip: &apos;192.168.29.72&apos;, os.name: &apos;Windows 10&apos;, os.arch: &apos;amd64&apos;, os.version: &apos;10.0&apos;, java.version: &apos;17.0.3&apos;
 Driver info: org.openqa.selenium.chrome.ChromeDriver
-Capabilities {acceptInsecureCerts: false, browserName: chrome, browserVersion: 106.0.5249.91, chrome: {chromedriverVersion: 105.0.5195.52 (412c95e51883..., userDataDir: C:\Users\Admin\AppData\Loca...}, goog:chromeOptions: {debuggerAddress: localhost:52081}, javascriptEnabled: true, networkConnectionEnabled: false, pageLoadStrategy: normal, platform: WINDOWS, platformName: WINDOWS, proxy: Proxy(), setWindowRect: true, strictFileInteractability: false, timeouts: {implicit: 0, pageLoad: 300000, script: 30000}, unhandledPromptBehavior: dismiss and notify, webauthn:extension:credBlob: true, webauthn:extension:largeBlob: true, webauthn:virtualAuthenticators: true}
-Session ID: be45680178dba096a1ae91f75c0767bb
-	at org.openqa.selenium.support.ui.WebDriverWait.timeoutException(WebDriverWait.java:95)
-	at org.openqa.selenium.support.ui.FluentWait.until(FluentWait.java:272)
-	at com.BaseClass.Base_Class.explicitWait(Base_Class.java:260)
-	at com.Runner.Local_Host.Settings(Local_Host.java:2989)
+Capabilities {acceptInsecureCerts: false, browserName: chrome, browserVersion: 106.0.5249.91, chrome: {chromedriverVersion: 105.0.5195.52 (412c95e51883..., userDataDir: C:\Users\Admin\AppData\Loca...}, goog:chromeOptions: {debuggerAddress: localhost:58154}, javascriptEnabled: true, networkConnectionEnabled: false, pageLoadStrategy: normal, platform: WINDOWS, platformName: WINDOWS, proxy: Proxy(), setWindowRect: true, strictFileInteractability: false, timeouts: {implicit: 0, pageLoad: 300000, script: 30000}, unhandledPromptBehavior: dismiss and notify, webauthn:extension:credBlob: true, webauthn:extension:largeBlob: true, webauthn:virtualAuthenticators: true}
+Session ID: c70c10c6ced044ecbebaafe96a926734
+	at java.base/jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+	at java.base/jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.base/java.lang.reflect.Constructor.newInstanceWithCaller(Constructor.java:499)
+	at java.base/java.lang.reflect.Constructor.newInstance(Constructor.java:480)
+	at org.openqa.selenium.remote.http.W3CHttpResponseCodec.createException(W3CHttpResponseCodec.java:187)
+	at org.openqa.selenium.remote.http.W3CHttpResponseCodec.decode(W3CHttpResponseCodec.java:122)
+	at org.openqa.selenium.remote.http.W3CHttpResponseCodec.decode(W3CHttpResponseCodec.java:49)
+	at org.openqa.selenium.remote.HttpCommandExecutor.execute(HttpCommandExecutor.java:158)
+	at org.openqa.selenium.remote.service.DriverCommandExecutor.execute(DriverCommandExecutor.java:83)
+	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:552)
+	at org.openqa.selenium.remote.RemoteWebElement.execute(RemoteWebElement.java:285)
+	at org.openqa.selenium.remote.RemoteWebElement.click(RemoteWebElement.java:84)
+	at com.Runner.Local_Host.Settings(Local_Host.java:3216)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
 	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
@@ -273,7 +284,7 @@ Session ID: be45680178dba096a1ae91f75c0767bb
         </div> <!-- panel Default_suite -->
         <div panel-name="test-xml-Default_suite" class="panel">
           <div class="main-panel-header rounded-window-top">
-            <span class="header-content">C:\Users\Admin\AppData\Local\Temp\testng-eclipse-2049211232\testng-customsuite.xml</span>
+            <span class="header-content">C:\Users\Admin\AppData\Local\Temp\testng-eclipse-1030421137\testng-customsuite.xml</span>
           </div> <!-- main-panel-header rounded-window-top -->
           <div class="main-panel-content rounded-window-bottom">
             <pre>
@@ -326,40 +337,40 @@ data.addRows(8);
 data.setCell(0, 0, 0)
 data.setCell(0, 1, 'HealthRec')
 data.setCell(0, 2, 'com.Runner.Local_Host')
-data.setCell(0, 3, 481380);
+data.setCell(0, 3, 416669);
 data.setCell(1, 0, 1)
 data.setCell(1, 1, 'Settings')
 data.setCell(1, 2, 'com.Runner.Local_Host')
-data.setCell(1, 3, 283063);
+data.setCell(1, 3, 162517);
 data.setCell(2, 0, 2)
 data.setCell(2, 1, 'BillingModule')
 data.setCell(2, 2, 'com.Runner.Local_Host')
-data.setCell(2, 3, 53701);
+data.setCell(2, 3, 76064);
 data.setCell(3, 0, 3)
-data.setCell(3, 1, 'HomeModule')
+data.setCell(3, 1, 'calendar')
 data.setCell(3, 2, 'com.Runner.Local_Host')
-data.setCell(3, 3, 49116);
+data.setCell(3, 3, 30283);
 data.setCell(4, 0, 4)
-data.setCell(4, 1, 'calendar')
+data.setCell(4, 1, 'PatientModule')
 data.setCell(4, 2, 'com.Runner.Local_Host')
-data.setCell(4, 3, 48343);
+data.setCell(4, 3, 24584);
 data.setCell(5, 0, 5)
-data.setCell(5, 1, 'TeleDoctor')
+data.setCell(5, 1, 'HomeModule')
 data.setCell(5, 2, 'com.Runner.Local_Host')
-data.setCell(5, 3, 32778);
+data.setCell(5, 3, 21899);
 data.setCell(6, 0, 6)
-data.setCell(6, 1, 'PatientModule')
+data.setCell(6, 1, 'TeleDoctor')
 data.setCell(6, 2, 'com.Runner.Local_Host')
-data.setCell(6, 3, 28801);
+data.setCell(6, 3, 12138);
 data.setCell(7, 0, 7)
 data.setCell(7, 1, 'Message')
 data.setCell(7, 2, 'com.Runner.Local_Host')
-data.setCell(7, 3, 25571);
+data.setCell(7, 3, 6406);
 window.suiteTableData['Default_suite']= { tableData: data, tableDiv: 'times-div-Default_suite'}
 return data;
 }
               </script>
-              <span class="suite-total-time">Total running time: 16 minutes</span>
+              <span class="suite-total-time">Total running time: 12 minutes</span>
               <div id="times-div-Default_suite">
               </div> <!-- times-div-Default_suite -->
             </div> <!-- times-div -->
@@ -392,37 +403,37 @@ return data;
               </div> <!-- configuration-class before -->
               <div class="test-method">
                 <span class="method-name">HomeModule</span>
-                <span class="method-start">22383 ms</span>
+                <span class="method-start">21467 ms</span>
               </div> <!-- test-method -->
               <div class="test-method">
                 <span class="method-name">PatientModule</span>
-                <span class="method-start">71508 ms</span>
+                <span class="method-start">43370 ms</span>
               </div> <!-- test-method -->
               <div class="test-method">
                 <span class="method-name">HealthRec</span>
-                <span class="method-start">100312 ms</span>
+                <span class="method-start">67958 ms</span>
               </div> <!-- test-method -->
               <div class="test-method">
                 <span class="method-name">calendar</span>
-                <span class="method-start">581696 ms</span>
+                <span class="method-start">484630 ms</span>
               </div> <!-- test-method -->
               <div class="test-method">
                 <span class="method-name">BillingModule</span>
-                <span class="method-start">630042 ms</span>
+                <span class="method-start">514915 ms</span>
               </div> <!-- test-method -->
               <div class="test-method">
                 <span class="method-name">TeleDoctor</span>
-                <span class="method-start">683745 ms</span>
+                <span class="method-start">590981 ms</span>
               </div> <!-- test-method -->
               <div class="test-method">
                 <span class="method-name">Message</span>
-                <span class="method-start">716528 ms</span>
+                <span class="method-start">603122 ms</span>
               </div> <!-- test-method -->
               <div class="test-method">
                 <img src="failed.png">
                 </img>
                 <span class="method-name">Settings</span>
-                <span class="method-start">742102 ms</span>
+                <span class="method-start">609531 ms</span>
               </div> <!-- test-method -->
           </div> <!-- main-panel-content rounded-window-bottom -->
         </div> <!-- panel -->

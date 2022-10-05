@@ -76,7 +76,7 @@ public class classRuner extends Base_Class {
 
 	}
 
-	@Test(priority = 0)
+	@Test(priority = 0,enabled = false)
 	private void HomeModule() throws InterruptedException {
 
 		WebElement ata = driver.findElement(By.xpath("(//span[contains(text(),'New Pa')])[4]//parent::button"));
@@ -101,8 +101,9 @@ public class classRuner extends Base_Class {
 		sleep(4000);
 		String hkpid = driver.findElement(By.xpath("//td[@id='val-kpid']")).getText();
 		driver.navigate().to("https://www.75health.com/health/#home");
-		//driver.navigate().to("https://localhost:8443/health/#home");  //localhost:8443/health/#home
-         
+		// driver.navigate().to("https://localhost:8443/health/#home");
+		// //localhost:8443/health/#home
+
 		sleep(4000);
 
 		// calendar appointment...
@@ -378,9 +379,11 @@ public class classRuner extends Base_Class {
 		WebElement savepatinfo = driver
 				.findElement(By.xpath("(//span[text()='Patient Info '])//following::div[1]/img[1]"));
 		javascriptclick(savepatinfo);
+		
+		
 	}
 
-	@Test(priority = 2)
+	@Test(priority = 2,enabled = false)
 	private void HealthRec() throws InterruptedException, IOException {
 
 		// implicitWait(60, TimeUnit.SECONDS);
@@ -681,7 +684,7 @@ public class classRuner extends Base_Class {
 
 					driver.findElement(By.xpath("//input[@placeholder='Reaction']")).sendKeys("stomach pain");
 
-					WebElement rer = driver.findElement(By.xpath("(//button[@type='button'])[18]"));
+					WebElement rer = driver.findElement(By.xpath("//div[@id='AllergyKpop2']/div[2]/div[2]/div/button"));
 					JavascriptExecutor jp = (JavascriptExecutor) driver;
 					jp.executeScript("arguments[0].click();", rer);
 					sleep(3000);
@@ -1802,7 +1805,7 @@ public class classRuner extends Base_Class {
 		sleep(4000);
 	}
 
-	@Test(priority = 3)
+	@Test(priority = 3,enabled = false)
 
 	private void calendar() throws InterruptedException {
 		driver.navigate().to("https://www.75health.com/health/#calendar");
@@ -1951,7 +1954,7 @@ public class classRuner extends Base_Class {
 
 	}
 
-	@Test(priority = 4)
+	@Test(priority = 4,enabled = false)
 	private void BillingModule() throws InterruptedException {
 
 		explicitWait(15, pom.getInstanceBilling().clickBill); //
@@ -2146,7 +2149,7 @@ public class classRuner extends Base_Class {
 		javascriptclick(delbil);
 	}
 
-	@Test(priority = 5)
+	@Test(priority = 5,enabled = false)
 	private void TeleDoctor() throws InterruptedException {
 
 		explicitWait(30, pom.getInstanceTeleDoctor().clickTeleDoctor);
@@ -2204,7 +2207,7 @@ public class classRuner extends Base_Class {
 
 	}
 
-	@Test(priority = 6)
+	@Test(priority = 6,enabled = false)
 	private void Message() throws InterruptedException {
 
 		explicitWait(30, pom.getInstanceMessage().clickMessage);
@@ -2229,7 +2232,7 @@ public class classRuner extends Base_Class {
 
 	}
 
-	@Test(priority = 7)
+	@Test(priority = 7,enabled = false)
 	private void Settings() throws InterruptedException, IOException {
 
 		while (true) {
@@ -2517,6 +2520,7 @@ public class classRuner extends Base_Class {
 				.sendKeys("R10.81: Abdominal tenderness");
 		sleep(5000);
 		WebElement clicksym = driver.findElement(By.xpath("//div[text()='R10.81: Abdominal tenderness']"));
+		ww.until(ExpectedConditions.elementToBeClickable(clicksym));
 		actions("click", clicksym);
 		sleep(3000);
 		driver.findElement(By.xpath("(//div[text()='Symptom'])[2]//following::div[1]/textarea")).sendKeys("fever");
@@ -2552,10 +2556,11 @@ public class classRuner extends Base_Class {
 		sleep(2000);
 		driver.findElement(By.xpath("(//textarea[@id='longDescription'])[4]")).sendKeys("test");
 		sleep(2000);
-		List<WebElement> prbq = driver.findElements(By.xpath("//ul[@id='ui-id-27']/li/a/div/span"));
+		List<WebElement> prbq = driver
+				.findElements(By.xpath("(//div[@id='diagnosis'])[1]/div[3]/div/div/div[2]/ul/li/a/div/small"));
 		for (WebElement web : prbq) {
 
-			if (web.getText().trim().equals("Malignant neoplasm of testis")) {
+			if (web.getText().trim().equals("ICD10 : C62 | SNOMED : --")) {
 				web.click();
 				break;
 			}
@@ -2616,9 +2621,10 @@ public class classRuner extends Base_Class {
 		sleep(2000);
 		WebElement savemed = driver.findElement(By.xpath("(//div[@id='save-btn'])[4]"));
 		j.executeScript("arguments[0].click();", savemed);
-		sleep(2000);
+		sleep(3000);
 		WebElement editmed = driver.findElement(
 				By.xpath("//div[text()='24 HR testosterone 0.0833 MG/HR Transdermal System 0.0833 MG/HR']"));
+		ww.until(ExpectedConditions.elementToBeClickable(editmed));
 		actions("click", editmed);
 
 		sleep(4000);
@@ -2806,7 +2812,7 @@ public class classRuner extends Base_Class {
 				.findElement(By.xpath("(//div[contains(@title,'Select or Enter Effective Date')])[2]/div/input"));
 		clickdatebox.click();
 		sleep(3000);
-		WebElement choosedate = driver.findElement(By.xpath("(//a[contains(text(),'13')])[2]"));
+		WebElement choosedate = driver.findElement(By.xpath("(//a[contains(text(),'13')])"));
 		choosedate.click();
 
 		WebElement savestatus = driver.findElement(By.xpath("(//div[@id='save-btn'])[12]"));
@@ -3018,6 +3024,8 @@ public class classRuner extends Base_Class {
 
 		sleep(3000);
 		click(pom.getInstanceSetting().clickSettings);
+		driver.navigate().refresh();
+		sleep(3000);
 		WebDriverWait wait = new WebDriverWait(driver, 20);
 		wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[@onclick='setting.audit()']")));
 		WebElement rqqa = driver.findElement(By.xpath("//button[@onclick='setting.audit()']"));
@@ -3093,4 +3101,5 @@ public class classRuner extends Base_Class {
 	 * 
 	 * }
 	 */
+
 }

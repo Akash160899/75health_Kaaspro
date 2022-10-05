@@ -57,9 +57,9 @@ function toggleAllBoxes() {
 <tr>
 <td>Tests passed/Failed/Skipped:</td><td>7/1/0</td>
 </tr><tr>
-<td>Started on:</td><td>Mon Oct 03 14:42:32 IST 2022</td>
+<td>Started on:</td><td>Wed Oct 05 17:58:04 IST 2022</td>
 </tr>
-<tr><td>Total time:</td><td>1025 seconds (1025179 ms)</td>
+<tr><td>Total time:</td><td>772 seconds (772064 ms)</td>
 </tr><tr>
 <td>Included groups:</td><td></td>
 </tr><tr>
@@ -76,16 +76,27 @@ function toggleAllBoxes() {
 </tr>
 <tr>
 <td title='com.Runner.Local_Host.Settings()'><b>Settings</b><br>Test class: com.Runner.Local_Host</td>
-<td><div><pre>org.openqa.selenium.TimeoutException: Expected condition failed: waiting for visibility of [[ChromeDriver: chrome on WINDOWS (be45680178dba096a1ae91f75c0767bb)] -&gt; xpath: //button[@id=&apos;trash-btn&apos;]] (tried for 40 second(s) with 500 milliseconds interval)
+<td><div><pre>org.openqa.selenium.ElementClickInterceptedException: element click intercepted: Element &lt;button id=&quot;edit-print-preference&quot; class=&quot;dropdown-toggle settings-heading settings-buttonColor settings-button&quot;&gt;...&lt;/button&gt; is not clickable at point (372, 592). Other element would receive the click: &lt;div class=&quot;col-xs-12 settings-heading settings-textColor&quot;&gt;...&lt;/div&gt;
+  (Session info: chrome=106.0.5249.91)
 Build info: version: &apos;3.141.59&apos;, revision: &apos;e82be7d358&apos;, time: &apos;2018-11-14T08:17:03&apos;
 System info: host: &apos;WORKPC&apos;, ip: &apos;192.168.29.72&apos;, os.name: &apos;Windows 10&apos;, os.arch: &apos;amd64&apos;, os.version: &apos;10.0&apos;, java.version: &apos;17.0.3&apos;
 Driver info: org.openqa.selenium.chrome.ChromeDriver
-Capabilities {acceptInsecureCerts: false, browserName: chrome, browserVersion: 106.0.5249.91, chrome: {chromedriverVersion: 105.0.5195.52 (412c95e51883..., userDataDir: C:\Users\Admin\AppData\Loca...}, goog:chromeOptions: {debuggerAddress: localhost:52081}, javascriptEnabled: true, networkConnectionEnabled: false, pageLoadStrategy: normal, platform: WINDOWS, platformName: WINDOWS, proxy: Proxy(), setWindowRect: true, strictFileInteractability: false, timeouts: {implicit: 0, pageLoad: 300000, script: 30000}, unhandledPromptBehavior: dismiss and notify, webauthn:extension:credBlob: true, webauthn:extension:largeBlob: true, webauthn:virtualAuthenticators: true}
-Session ID: be45680178dba096a1ae91f75c0767bb
-	at org.openqa.selenium.support.ui.WebDriverWait.timeoutException(WebDriverWait.java:95)
-	at org.openqa.selenium.support.ui.FluentWait.until(FluentWait.java:272)
-	at com.BaseClass.Base_Class.explicitWait(Base_Class.java:260)
-	at com.Runner.Local_Host.Settings(Local_Host.java:2989)
+Capabilities {acceptInsecureCerts: false, browserName: chrome, browserVersion: 106.0.5249.91, chrome: {chromedriverVersion: 105.0.5195.52 (412c95e51883..., userDataDir: C:\Users\Admin\AppData\Loca...}, goog:chromeOptions: {debuggerAddress: localhost:58154}, javascriptEnabled: true, networkConnectionEnabled: false, pageLoadStrategy: normal, platform: WINDOWS, platformName: WINDOWS, proxy: Proxy(), setWindowRect: true, strictFileInteractability: false, timeouts: {implicit: 0, pageLoad: 300000, script: 30000}, unhandledPromptBehavior: dismiss and notify, webauthn:extension:credBlob: true, webauthn:extension:largeBlob: true, webauthn:virtualAuthenticators: true}
+Session ID: c70c10c6ced044ecbebaafe96a926734
+	at java.base/jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+	at java.base/jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.base/java.lang.reflect.Constructor.newInstanceWithCaller(Constructor.java:499)
+	at java.base/java.lang.reflect.Constructor.newInstance(Constructor.java:480)
+	at org.openqa.selenium.remote.http.W3CHttpResponseCodec.createException(W3CHttpResponseCodec.java:187)
+	at org.openqa.selenium.remote.http.W3CHttpResponseCodec.decode(W3CHttpResponseCodec.java:122)
+	at org.openqa.selenium.remote.http.W3CHttpResponseCodec.decode(W3CHttpResponseCodec.java:49)
+	at org.openqa.selenium.remote.HttpCommandExecutor.execute(HttpCommandExecutor.java:158)
+	at org.openqa.selenium.remote.service.DriverCommandExecutor.execute(DriverCommandExecutor.java:83)
+	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:552)
+	at org.openqa.selenium.remote.RemoteWebElement.execute(RemoteWebElement.java:285)
+	at org.openqa.selenium.remote.RemoteWebElement.click(RemoteWebElement.java:84)
+	at com.Runner.Local_Host.Settings(Local_Host.java:3216)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
 	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
@@ -111,17 +122,28 @@ Session ID: be45680178dba096a1ae91f75c0767bb
 	at org.testng.remote.AbstractRemoteTestNG.run(AbstractRemoteTestNG.java:115)
 	at org.testng.remote.RemoteTestNG.initAndRun(RemoteTestNG.java:251)
 	at org.testng.remote.RemoteTestNG.main(RemoteTestNG.java:77)
-</pre></div><a href='#' onClick='toggleBox("stack-trace2049308910", this, "Click to show all stack frames", "Click to hide stack frames")'>Click to show all stack frames</a>
-<div class='stack-trace' id='stack-trace2049308910'><pre>org.openqa.selenium.TimeoutException: Expected condition failed: waiting for visibility of [[ChromeDriver: chrome on WINDOWS (be45680178dba096a1ae91f75c0767bb)] -&gt; xpath: //button[@id=&apos;trash-btn&apos;]] (tried for 40 second(s) with 500 milliseconds interval)
+</pre></div><a href='#' onClick='toggleBox("stack-trace1555348096", this, "Click to show all stack frames", "Click to hide stack frames")'>Click to show all stack frames</a>
+<div class='stack-trace' id='stack-trace1555348096'><pre>org.openqa.selenium.ElementClickInterceptedException: element click intercepted: Element &lt;button id=&quot;edit-print-preference&quot; class=&quot;dropdown-toggle settings-heading settings-buttonColor settings-button&quot;&gt;...&lt;/button&gt; is not clickable at point (372, 592). Other element would receive the click: &lt;div class=&quot;col-xs-12 settings-heading settings-textColor&quot;&gt;...&lt;/div&gt;
+  (Session info: chrome=106.0.5249.91)
 Build info: version: &apos;3.141.59&apos;, revision: &apos;e82be7d358&apos;, time: &apos;2018-11-14T08:17:03&apos;
 System info: host: &apos;WORKPC&apos;, ip: &apos;192.168.29.72&apos;, os.name: &apos;Windows 10&apos;, os.arch: &apos;amd64&apos;, os.version: &apos;10.0&apos;, java.version: &apos;17.0.3&apos;
 Driver info: org.openqa.selenium.chrome.ChromeDriver
-Capabilities {acceptInsecureCerts: false, browserName: chrome, browserVersion: 106.0.5249.91, chrome: {chromedriverVersion: 105.0.5195.52 (412c95e51883..., userDataDir: C:\Users\Admin\AppData\Loca...}, goog:chromeOptions: {debuggerAddress: localhost:52081}, javascriptEnabled: true, networkConnectionEnabled: false, pageLoadStrategy: normal, platform: WINDOWS, platformName: WINDOWS, proxy: Proxy(), setWindowRect: true, strictFileInteractability: false, timeouts: {implicit: 0, pageLoad: 300000, script: 30000}, unhandledPromptBehavior: dismiss and notify, webauthn:extension:credBlob: true, webauthn:extension:largeBlob: true, webauthn:virtualAuthenticators: true}
-Session ID: be45680178dba096a1ae91f75c0767bb
-	at org.openqa.selenium.support.ui.WebDriverWait.timeoutException(WebDriverWait.java:95)
-	at org.openqa.selenium.support.ui.FluentWait.until(FluentWait.java:272)
-	at com.BaseClass.Base_Class.explicitWait(Base_Class.java:260)
-	at com.Runner.Local_Host.Settings(Local_Host.java:2989)
+Capabilities {acceptInsecureCerts: false, browserName: chrome, browserVersion: 106.0.5249.91, chrome: {chromedriverVersion: 105.0.5195.52 (412c95e51883..., userDataDir: C:\Users\Admin\AppData\Loca...}, goog:chromeOptions: {debuggerAddress: localhost:58154}, javascriptEnabled: true, networkConnectionEnabled: false, pageLoadStrategy: normal, platform: WINDOWS, platformName: WINDOWS, proxy: Proxy(), setWindowRect: true, strictFileInteractability: false, timeouts: {implicit: 0, pageLoad: 300000, script: 30000}, unhandledPromptBehavior: dismiss and notify, webauthn:extension:credBlob: true, webauthn:extension:largeBlob: true, webauthn:virtualAuthenticators: true}
+Session ID: c70c10c6ced044ecbebaafe96a926734
+	at java.base/jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+	at java.base/jdk.internal.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.base/java.lang.reflect.Constructor.newInstanceWithCaller(Constructor.java:499)
+	at java.base/java.lang.reflect.Constructor.newInstance(Constructor.java:480)
+	at org.openqa.selenium.remote.http.W3CHttpResponseCodec.createException(W3CHttpResponseCodec.java:187)
+	at org.openqa.selenium.remote.http.W3CHttpResponseCodec.decode(W3CHttpResponseCodec.java:122)
+	at org.openqa.selenium.remote.http.W3CHttpResponseCodec.decode(W3CHttpResponseCodec.java:49)
+	at org.openqa.selenium.remote.HttpCommandExecutor.execute(HttpCommandExecutor.java:158)
+	at org.openqa.selenium.remote.service.DriverCommandExecutor.execute(DriverCommandExecutor.java:83)
+	at org.openqa.selenium.remote.RemoteWebDriver.execute(RemoteWebDriver.java:552)
+	at org.openqa.selenium.remote.RemoteWebElement.execute(RemoteWebElement.java:285)
+	at org.openqa.selenium.remote.RemoteWebElement.click(RemoteWebElement.java:84)
+	at com.Runner.Local_Host.Settings(Local_Host.java:3216)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
 	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
@@ -148,8 +170,8 @@ Session ID: be45680178dba096a1ae91f75c0767bb
 	at org.testng.remote.RemoteTestNG.initAndRun(RemoteTestNG.java:251)
 	at org.testng.remote.RemoteTestNG.main(RemoteTestNG.java:77)
 </pre></div></td>
-<td>283</td>
-<td>com.Runner.Local_Host@418c5a9c</td></tr>
+<td>162</td>
+<td>com.Runner.Local_Host@302f7971</td></tr>
 </table><p>
 <table width='100%' border='1' class='invocation-passed'>
 <tr><td colspan='4' align='center'><b>PASSED TESTS</b></td></tr>
@@ -161,38 +183,38 @@ Session ID: be45680178dba096a1ae91f75c0767bb
 <tr>
 <td title='com.Runner.Local_Host.BillingModule()'><b>BillingModule</b><br>Test class: com.Runner.Local_Host</td>
 <td></td>
-<td>53</td>
-<td>com.Runner.Local_Host@418c5a9c</td></tr>
+<td>76</td>
+<td>com.Runner.Local_Host@302f7971</td></tr>
 <tr>
 <td title='com.Runner.Local_Host.HealthRec()'><b>HealthRec</b><br>Test class: com.Runner.Local_Host</td>
 <td></td>
-<td>481</td>
-<td>com.Runner.Local_Host@418c5a9c</td></tr>
+<td>416</td>
+<td>com.Runner.Local_Host@302f7971</td></tr>
 <tr>
 <td title='com.Runner.Local_Host.HomeModule()'><b>HomeModule</b><br>Test class: com.Runner.Local_Host</td>
 <td></td>
-<td>49</td>
-<td>com.Runner.Local_Host@418c5a9c</td></tr>
+<td>21</td>
+<td>com.Runner.Local_Host@302f7971</td></tr>
 <tr>
 <td title='com.Runner.Local_Host.Message()'><b>Message</b><br>Test class: com.Runner.Local_Host</td>
 <td></td>
-<td>25</td>
-<td>com.Runner.Local_Host@418c5a9c</td></tr>
+<td>6</td>
+<td>com.Runner.Local_Host@302f7971</td></tr>
 <tr>
 <td title='com.Runner.Local_Host.PatientModule()'><b>PatientModule</b><br>Test class: com.Runner.Local_Host</td>
 <td></td>
-<td>28</td>
-<td>com.Runner.Local_Host@418c5a9c</td></tr>
+<td>24</td>
+<td>com.Runner.Local_Host@302f7971</td></tr>
 <tr>
 <td title='com.Runner.Local_Host.TeleDoctor()'><b>TeleDoctor</b><br>Test class: com.Runner.Local_Host</td>
 <td></td>
-<td>32</td>
-<td>com.Runner.Local_Host@418c5a9c</td></tr>
+<td>12</td>
+<td>com.Runner.Local_Host@302f7971</td></tr>
 <tr>
 <td title='com.Runner.Local_Host.calendar()'><b>calendar</b><br>Test class: com.Runner.Local_Host</td>
 <td></td>
-<td>48</td>
-<td>com.Runner.Local_Host@418c5a9c</td></tr>
+<td>30</td>
+<td>com.Runner.Local_Host@302f7971</td></tr>
 </table><p>
 </body>
 </html>

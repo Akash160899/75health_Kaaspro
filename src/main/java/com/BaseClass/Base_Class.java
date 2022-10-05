@@ -319,6 +319,26 @@ public class Base_Class {
 		}
 
 	}
+	
+	public static void intoRange(int x) {
+		JavascriptExecutor js = (JavascriptExecutor) wd;
+		js.executeScript("window.scrollBy(0,"+x+")", "");
+	}
+	
+
+	// Webdriver Waits...
+
+	public static void visbility(WebDriver driver, WebElement element, int seconds) {
+		WebDriverWait wait = new WebDriverWait(driver, seconds);
+		wait.until(ExpectedConditions.visibilityOf(element));
+
+	}
+
+	public static void clickble(WebDriver driver, WebElement element, int seconds) {
+		WebDriverWait wait = new WebDriverWait(driver, seconds);
+		wait.until(ExpectedConditions.elementToBeClickable(element));
+
+	}
 
 	// public static String readData(String path, int sheetIndex, int rowIndex, int
 	// cellIndex) throws Throwable {
