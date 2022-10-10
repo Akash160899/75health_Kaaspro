@@ -5,14 +5,8 @@
     <classes>
       <class name="com.Runner.Local_Host">
         <methods>
-          <include name="TeleDoctor"/>
           <include name="LaunchBrwoser"/>
-          <include name="Settings"/>
-          <include name="Message"/>
-          <include name="BillingModule"/>
-          <include name="PatientModule"/>
           <include name="HealthRec"/>
-          <include name="calendar"/>
         </methods>
       </class> <!-- com.Runner.Local_Host -->
     </classes>

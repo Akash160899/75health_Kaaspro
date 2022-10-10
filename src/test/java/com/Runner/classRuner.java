@@ -76,7 +76,7 @@ public class classRuner extends Base_Class {
 
 	}
 
-	@Test(priority = 0,enabled = false)
+	@Test(priority = 0, enabled = false)
 	private void HomeModule() throws InterruptedException {
 
 		WebElement ata = driver.findElement(By.xpath("(//span[contains(text(),'New Pa')])[4]//parent::button"));
@@ -379,11 +379,10 @@ public class classRuner extends Base_Class {
 		WebElement savepatinfo = driver
 				.findElement(By.xpath("(//span[text()='Patient Info '])//following::div[1]/img[1]"));
 		javascriptclick(savepatinfo);
-		
-		
+
 	}
 
-	@Test(priority = 2,enabled = false)
+	@Test(priority = 2, enabled = false)
 	private void HealthRec() throws InterruptedException, IOException {
 
 		// implicitWait(60, TimeUnit.SECONDS);
@@ -1805,7 +1804,7 @@ public class classRuner extends Base_Class {
 		sleep(4000);
 	}
 
-	@Test(priority = 3,enabled = false)
+	@Test(priority = 3, enabled = false)
 
 	private void calendar() throws InterruptedException {
 		driver.navigate().to("https://www.75health.com/health/#calendar");
@@ -1954,7 +1953,7 @@ public class classRuner extends Base_Class {
 
 	}
 
-	@Test(priority = 4,enabled = false)
+	@Test(priority = 4)
 	private void BillingModule() throws InterruptedException {
 
 		explicitWait(15, pom.getInstanceBilling().clickBill); //
@@ -2152,17 +2151,19 @@ public class classRuner extends Base_Class {
 	@Test(priority = 5,enabled = false)
 	private void TeleDoctor() throws InterruptedException {
 
-		explicitWait(30, pom.getInstanceTeleDoctor().clickTeleDoctor);
-		sleep(5000);
+		visbility(driver, pom.getInstanceTeleDoctor().clickTeleDoctor, 25);
+
 		click(pom.getInstanceTeleDoctor().clickTeleDoctor);
 		driver.navigate().refresh();
 		implicitWait(30, TimeUnit.SECONDS);
-		sleep(3000);
+
 		WebElement np1 = driver.findElement(By.xpath("//button[@title='Create new Patinet']"));
+		visbility(driver, np1, 25);
 		j.executeScript("arguments[0].click();", np1);
 		driver.findElement(By.id("firstname")).sendKeys("Abigazi");
 		driver.findElement(By.id("lastname")).sendKeys("Ak");
 		WebElement gn1 = driver.findElement(By.xpath("(//button[@id='gender_dropdown'])[1]"));
+		visbility(driver, gn1, 25);
 		j.executeScript("arguments[0].click();", gn1);
 		List<WebElement> jj = driver.findElements(By.xpath("(//ul[@id='genderDropdown'])[1]/li"));
 		for (WebElement w : jj) {
@@ -2177,13 +2178,12 @@ public class classRuner extends Base_Class {
 		WebElement cp1 = driver.findElement(By.xpath("//div[@id='createPatient']"));
 		j.executeScript("arguments[0].click();", cp1);
 
-		sleep(3000);
 		implicitWait(30, TimeUnit.SECONDS);
 		ScriptExecutor(pom.getInstanceNewPatient().deletePatient);
 		click(pom.getInstanceNewPatient().deletePatient);
+		visbility(driver, pom.getInstanceNewPatient().deletePatient, 25);
 		driver.findElement(By.xpath("//button[text()='Delete']")).click();
 
-		sleep(5000);
 		/*
 		 * click(pom.getInstanceTeleDoctor().clickTeleDoctor);
 		 * sendkeys(pom.getInstanceTeleDoctor().searchDoctor, "3523943"); sleep(3000);
@@ -2191,23 +2191,28 @@ public class classRuner extends Base_Class {
 		 * driver.findElement(By.xpath("//td[@id='nameh']//following::td[1]"));
 		 * actions("click", srdr); sleep(3000);
 		 */
-		ww.until(ExpectedConditions.elementToBeClickable(pom.getInstanceTeleDoctor().clickTeleDoctor));
+		visbility(driver, pom.getInstanceTeleDoctor().clickTeleDoctor, 25);
+		clickble(driver, pom.getInstanceTeleDoctor().clickTeleDoctor, 25);
 		click(pom.getInstanceTeleDoctor().clickTeleDoctor);
+		visbility(driver, pom.getInstanceTeleDoctor().searchPatient, 25);
 		sendkeys(pom.getInstanceTeleDoctor().searchPatient, kpid);
-		explicitWait(25, pom.getInstanceTeleDoctor().searchPatient);
-		sleep(3000);
+
 		WebElement pstl = driver.findElement(By.xpath("//td[@id='nameh']//following::td[1]"));
+		visbility(driver, pstl, 25);
 		actions("click", pstl);
-		sleep(5000);
+
 		// ScriptExecutor(pom.getInstanceCalendar().saveAppointment);
 
-		driver.findElement(By.xpath("(//div[@title='Click to view'])[4]")).click();
+		WebElement clickpatie = driver.findElement(By.xpath("(//div[@title='Click to view'])[4]"));
+
+		visbility(driver, clickpatie, 25);
+		actions("click", clickpatie);
 
 		sleep(3000);
 
 	}
 
-	@Test(priority = 6,enabled = false)
+	@Test(priority = 6, enabled = false)
 	private void Message() throws InterruptedException {
 
 		explicitWait(30, pom.getInstanceMessage().clickMessage);
@@ -2232,7 +2237,7 @@ public class classRuner extends Base_Class {
 
 	}
 
-	@Test(priority = 7,enabled = false)
+	@Test(priority = 7, enabled = false)
 	private void Settings() throws InterruptedException, IOException {
 
 		while (true) {

@@ -45,7 +45,7 @@ public class Local_Host extends Base_Class {
 
 				driver.findElement(By.id("proceed-link")).click();
 				sleep(4000);
-				implicitWait(30, TimeUnit.SECONDS);
+				implicitWait(60, TimeUnit.SECONDS);
 
 				break;
 			} else if (ur.equals("https://www.75health.com/login.jsp")) {
@@ -78,7 +78,7 @@ public class Local_Host extends Base_Class {
 			e.printStackTrace();
 		}
 
-		implicitWait(60, TimeUnit.SECONDS);
+		implicitWait(70, TimeUnit.SECONDS);
 
 	}
 
@@ -86,7 +86,7 @@ public class Local_Host extends Base_Class {
 	private void HomeModule() throws InterruptedException {
 
 		WebElement ata = driver.findElement(By.xpath("(//span[contains(text(),'New Pa')])[4]//parent::button"));
-		visbility(driver, ata, 25);
+		visbility(driver, ata, 60);
 		ww.until(ExpectedConditions.elementToBeClickable(ata));
 
 		j.executeScript("arguments[0].click();", ata);
@@ -106,16 +106,19 @@ public class Local_Host extends Base_Class {
 		} // Acc gets Created..
 		click(pom.getInstanceNewPatient().CreatePatient);
 
-		String hkpid = driver.findElement(By.xpath("//td[@id='val-kpid']")).getText();
-		// driver.navigate().to("https://www.75health.com/health/#home");
+		WebElement id = driver.findElement(By.xpath("//td[@id='val-kpid']"));
+		visbility(driver, id, 60);
+		String hkpid = id.getText();
+
 		driver.navigate().to("https://localhost:8443/health/#home");
-		// //localhost:8443/health/#home
+
+		implicitWait(60, TimeUnit.SECONDS);
 
 		// calendar appointment...
 
 		List<WebElement> totalnumberrowdy = driver.findElements(By.xpath("//div[@id='date-data']"));
+
 		int totalr = totalnumberrowdy.size();
-		// System.out.println("found you>>>" + totalr);
 
 		boolean cond = false;
 
@@ -123,14 +126,17 @@ public class Local_Host extends Base_Class {
 			int a = 1 + i;
 			WebElement ss = driver.findElement(By.xpath("//div[@id='date-data'][" + i + "]/div[2]/div[2]/div"));
 			if (ss.getText().equals("Doctor/User not working")) {
-				System.out.println("yes doctor not working for the:" + i);
+
 				WebElement abcd = driver.findElement(By.xpath("(//span[@id='editCalendar'])[" + a + "]"));
+				visbility(driver, abcd, 60);
 				actions("click", abcd);
 				sleep(3000);
 				WebElement checkbx = driver.findElement(By.xpath("(//input[@id='is-working-day'])[1]"));
-				System.out.println("(//input[@id='is-working-day'])[" + i + "]");
+				visbility(driver, checkbx, 60);
+
 				actions("click", checkbx);
 				WebElement ampm = driver.findElement(By.xpath("(//div[@id='thru-ampm'])[1]"));
+				visbility(driver, ampm, 60);
 				actions("click", ampm);
 				driver.findElement(By.xpath("(//div[@id='save-btn'])[1]")).click();
 				sleep(5000);
@@ -150,43 +156,43 @@ public class Local_Host extends Base_Class {
 
 				String tr = tp.getText();
 				boolean trp = tp.isDisplayed();
-				// System.out.println(tr);
-				// System.out.println(trp);
 
 				// the kpid ..
 				WebElement kp = driver.findElement(
 						By.xpath("(//div[@id='date-data'])[" + i + "]/div[2]/div[" + b + "]/div/div[2]/span[2]"));
 
 				if (kp.getText().isEmpty() && tp.isDisplayed()) {
-					// System.out.println(tp.getAttribute("id"));
+
 					cond = true;
-					// System.out.println("condtion is true");
+					visbility(driver, tp, 60);
 					javascriptclick(tp);
-					// System.out.println(i);
-					driver.findElement(By.xpath("(//input[@id='AppointmentPatientName'])[" + i + "]")).sendKeys(hkpid);
+
+					WebElement qrs = driver.findElement(By.xpath("(//input[@id='AppointmentPatientName'])[" + i + "]"));
+					visbility(driver, qrs, 60);
+					qrs.sendKeys(hkpid);
 					break;
 				}
 
 			}
 			if (cond == true) {
 				sleep(2000);
-				implicitWait(30, TimeUnit.SECONDS);
+				implicitWait(60, TimeUnit.SECONDS);
 				WebElement choosepatient = driver
 						.findElement(By.xpath("(//td[text()='" + hkpid + "'])[2]//parent::td"));
-				visbility(driver, choosepatient, 25);
+				visbility(driver, choosepatient, 60);
 				ww.until(ExpectedConditions.elementToBeClickable(choosepatient));
 				actions("click", choosepatient);
 
 				WebElement ut = driver.findElement(By.xpath("(//select[@id='triage-appointment'])[" + i + "]"));
-				visbility(driver, ut, 30);
+				visbility(driver, ut, 60);
 				// ut.click();
 				dropDown("text", ut, "Emergency");
 
 				WebElement qt = driver.findElement(By.xpath("(//textarea[@id='description'])[" + i + "]"));
-				visbility(driver, qt, 30);
+				visbility(driver, qt, 60);
 				qt.sendKeys("no worries...");
 				WebElement utt = driver.findElement(By.xpath("(//button[@id='statusId_dropdown'])[" + i + "]"));
-				clickble(driver, utt, 25);
+				clickble(driver, utt, 60);
 				j.executeScript("arguments[0].click();", utt);
 
 				List<WebElement> lop = driver.findElements(By.xpath("(//ul[@id='statusIdDropdown'])[" + i + "]/li"));
@@ -199,21 +205,22 @@ public class Local_Host extends Base_Class {
 				}
 
 				WebElement vcv = driver.findElement(By.xpath("(//button[@id='accept-btn'])[1]"));
-				clickble(driver, vcv, 25);
+				visbility(driver, vcv, 60);
+				clickble(driver, vcv, 60);
 				j.executeScript("arguments[0].click();", vcv);
 
 				WebElement pip = driver.findElement(By.xpath("//span[text()='" + hkpid + "']"));
-				visbility(driver, pip, 25);
+				visbility(driver, pip, 60);
 				j.executeScript("arguments[0].click();", pip);
 
 				sleep(2000);
 				WebElement wtw = driver.findElement(By.xpath("(//span[@id='del-btn'])[" + i + "]"));
-				clickble(driver, wtw, 25);
+				clickble(driver, wtw, 60);
 				j.executeScript("arguments[0].click();", wtw);
 
 				WebElement delapp = driver
 						.findElement(By.xpath("//div[@id='AppointmentCreateMessage']/div[2]/div[2]/button[2]"));
-				clickble(driver, delapp, 25);
+				clickble(driver, delapp, 60);
 				javascriptclick(delapp);
 
 				/*
@@ -235,31 +242,43 @@ public class Local_Host extends Base_Class {
 			}
 		}
 
-		driver.findElement(By.xpath("(//input[@id='patientPartyName'])[3]")).sendKeys(hkpid);
-		implicitWait(20, TimeUnit.SECONDS);
+		WebElement fdf = driver.findElement(By.xpath("(//input[@id='patientPartyName'])[3]"));
+		visbility(driver, fdf, 60);
+		fdf.sendKeys(hkpid);
+
+		implicitWait(50, TimeUnit.SECONDS);
 		WebElement cli = driver.findElement(By.xpath("(//td[text()='" + hkpid + "'])[2]"));
-		clickble(driver, cli, 25);
+		visbility(driver, cli, 60);
+		clickble(driver, cli, 60);
 		javascriptclick(cli);
 		sleep(2000);
 		ScriptExecutor(pom.getInstanceNewPatient().deletePatient);
+		visbility(driver, pom.getInstanceNewPatient().deletePatient, 60);
 		click(pom.getInstanceNewPatient().deletePatient);
-		driver.findElement(By.xpath("(//button[text()='Delete'])[1]")).click();
-		sleep(2000);
+
+		WebElement c = driver.findElement(By.xpath("(//button[text()='Delete'])[1]"));
+		visbility(driver, c, 65);
+		click(c);
+		sleep(3000);
 	}
 
 	@Test(priority = 1)
 	private void PatientModule() throws InterruptedException {
 		sleep(2000);
-		implicitWait(20, TimeUnit.SECONDS);
 
 		WebElement pit = driver.findElement(By.xpath("//td[text()='Patient']"));
-		visbility(driver, pit, 25);
+		visbility(driver, pit, 60);
 		j.executeScript("arguments[0].click();", pit);
+
+		implicitWait(60, TimeUnit.SECONDS);
 		WebElement ata = driver.findElement(By.xpath("(//button[@title='Add new Patient'])[1]"));
-		visbility(driver, ata, 25);
+		visbility(driver, ata, 60);
 		j.executeScript("arguments[0].click();", ata);
+		visbility(driver, pom.getInstanceNewPatient().firstName, 60);
 		sendkeys(pom.getInstanceNewPatient().firstName, "sam");
+		visbility(driver, pom.getInstanceNewPatient().lastname, 60);
 		sendkeys(pom.getInstanceNewPatient().lastname, "n");
+		visbility(driver, pom.getInstanceNewPatient().clickGenderIcon, 60);
 		click(pom.getInstanceNewPatient().clickGenderIcon);
 
 		List<WebElement> genders = driver.findElements(By.xpath("(//ul[@id='genderDropdown'])[1]/li"));
@@ -274,19 +293,23 @@ public class Local_Host extends Base_Class {
 		}
 
 		// Acc gets Created..
-
+		visbility(driver, pom.getInstanceNewPatient().CreatePatient, 60);
 		click(pom.getInstanceNewPatient().CreatePatient);
 		sleep(2000);
-		kpid = driver.findElement(By.xpath("//td[@id='val-kpid']")).getText();
+		WebElement es = driver.findElement(By.xpath("//td[@id='val-kpid']"));
+		visbility(driver, es, 60);
+		kpid = es.getText();
 		System.out.println(kpid);
 
-		driver.findElement(By.xpath("//td[text()='Patient']")).click();
+		WebElement abcd = driver.findElement(By.xpath("//td[text()='Patient']"));
+		visbility(driver, abcd, 60);
+		abcd.click();
 		WebElement s = driver.findElement(By.xpath("(//input[@id='patientPartyName'])[2]"));
-		visbility(driver, s, 25);
+		visbility(driver, s, 60);
 		s.sendKeys(kpid);
 
 		WebElement ki = driver.findElement(By.xpath("//div[text()=" + "'" + kpid + "']"));
-		visbility(driver, ki, 25);
+		visbility(driver, ki, 60);
 		javascriptclick(ki);
 
 		sleep(2000);
@@ -342,27 +365,36 @@ public class Local_Host extends Base_Class {
 
 		WebElement cnin = driver.findElement(
 				By.xpath("//div[@id='p-address-phone']/div/div/div[1]/div[1]//following::div[1]/div[1]/div"));
-		visbility(driver, cnin, 25);
+		visbility(driver, cnin, 60);
 		javascriptclick(cnin);
 
-		driver.findElement(By.xpath("//div[@id='p-address-phone']/div/div/div[2]/div/div[1]/div[2]/input[4]"))
-				.sendKeys("no 224 washington");
-		driver.findElement(By.xpath("//div[@id='p-address-phone']/div/div/div[2]/div/div[1]/div[2]/input[5]"))
-				.sendKeys("arizona");
-		driver.findElement(By.xpath("//div[@id='p-address-phone']/div/div/div[2]/div/div[1]/div[2]/input[6]"))
-				.sendKeys("los");
+		WebElement roy = driver
+				.findElement(By.xpath("//div[@id='p-address-phone']/div/div/div[2]/div/div[1]/div[2]/input[4]"));
+		visbility(driver, roy, 60);
+		roy.sendKeys("no 224 washington");
+		WebElement r1 = driver
+				.findElement(By.xpath("//div[@id='p-address-phone']/div/div/div[2]/div/div[1]/div[2]/input[5]"));
+		visbility(driver, r1, 60);
+		r1.sendKeys("arizona");
+		WebElement sr = driver
+				.findElement(By.xpath("//div[@id='p-address-phone']/div/div/div[2]/div/div[1]/div[2]/input[6]"));
+		visbility(driver, sr, 60);
+		sr.sendKeys("los");
 
 		WebElement selcntry = driver.findElement(By.xpath("//select[@class='edit-select country']"));
 		dropDown("index", selcntry, "03");
 		WebElement asd = driver.findElement(By.xpath("(//select[@class='edit-select state_province'])[2]"));
 		dropDown("index", asd, "05");
 
-		driver.findElement(By.xpath("//div[@id='p-address-phone']/div/div/div[2]/div/div[1]/div[2]/input[7]"))
-				.sendKeys("200786");
+		WebElement r2 = driver
+				.findElement(By.xpath("//div[@id='p-address-phone']/div/div/div[2]/div/div[1]/div[2]/input[7]"));
+		visbility(driver, r2, 60);
+
+		r2.sendKeys("200786");
 
 		WebElement savecon = driver.findElement(
 				By.xpath("//div[@id='p-address-phone']/div/div/div[2]/div/div[2]/div[1]/div[1]/button[2]"));
-		visbility(driver, savecon, 25);
+		visbility(driver, savecon, 60);
 
 		javascriptclick(savecon);
 
@@ -370,14 +402,17 @@ public class Local_Host extends Base_Class {
 
 		WebElement ad = driver.findElement(
 				By.xpath("(//div[@id='family-health-patient']/div/div/div[1]/div[1]//following::div[1]/div[1])[1]"));
-		visbility(driver, ad, 25);
+		visbility(driver, ad, 60);
 		javascriptclick(ad);
-		driver.findElement(By.xpath("(//span[text()='Alternate Contact'])[2]//following::input[1]")).sendKeys("Hope");
-		driver.findElement(By.xpath("(//span[text()='Alternate Contact'])[2]//following::input[2]"))
-				.sendKeys("2013550367");
+		WebElement r3 = driver.findElement(By.xpath("(//span[text()='Alternate Contact'])[2]//following::input[1]"));
+		visbility(driver, r3, 60);
+		r3.sendKeys("Hope");
+		WebElement r4 = driver.findElement(By.xpath("(//span[text()='Alternate Contact'])[2]//following::input[2]"));
+		visbility(driver, r4, 60);
+		r4.sendKeys("2013550367");
 		WebElement sa = driver
 				.findElement(By.xpath("(//span[text()='Alternate Contact'])[2]//following::div[1]/img[1]"));
-		visbility(driver, sa, 25);
+		visbility(driver, sa, 60);
 		actions("click", sa);
 
 		// care tream member..
@@ -388,30 +423,33 @@ public class Local_Host extends Base_Class {
 
 		// patient info..
 		WebElement ptin = driver.findElement(By.xpath("//div[@id='patientInfo']/div[1]/span[2]"));
-		visbility(driver, ptin, 25);
+		visbility(driver, ptin, 60);
 		actions("click", ptin);
 		/*
 		 * driver.findElement(By.
 		 * xpath("//span[text()='Patient Info ']//following::div[4]/input"))
 		 * .sendKeys("abcdef@gmail.com");
 		 */
-		driver.findElement(By.xpath("//label[text()='Occupation']//following::div[1]/input")).sendKeys("tester");
+		WebElement r6 = driver.findElement(By.xpath("//label[text()='Occupation']//following::div[1]/input"));
+		visbility(driver, r6, 60);
+		sendkeys(r6, "tester");
 		WebElement savepatinfo = driver
 				.findElement(By.xpath("(//span[text()='Patient Info '])//following::div[1]/img[1]"));
-		visbility(driver, savepatinfo, 25);
+		visbility(driver, savepatinfo, 60);
 		javascriptclick(savepatinfo);
 		driver.navigate().to("https://localhost:8443/health/#list_patient");
 
 		WebElement u1 = driver.findElement(By.xpath("(//button[@id='advanceIcon'])[1]"));
-		visbility(driver, u1, 25);
+		visbility(driver, u1, 60);
 		ww.until(ExpectedConditions.elementToBeClickable(u1));
 		j.executeScript("arguments[0].click();", u1);
 		sleep(2000);
 		WebElement u2 = driver.findElement(By.xpath("(//input[@id='patient-aname'])[1]"));
+		visbility(driver, u2, 60);
 		u2.sendKeys("Akash n");
 
 		WebElement ellipse = driver.findElement(By.xpath("(//div[@id='list_patient']//following::span[3])[1]"));
-		visbility(driver, ellipse, 25);
+		visbility(driver, ellipse, 60);
 		ww.until(ExpectedConditions.elementToBeClickable(ellipse));
 		j.executeScript("arguments[0].click();", ellipse);
 
@@ -438,7 +476,7 @@ public class Local_Host extends Base_Class {
 		sleep(2000);
 
 		WebElement u6 = driver.findElement(By.xpath("//span[text()='Import Health Record']/following::div[1]/span"));
-		visbility(driver, u6, 25);
+		visbility(driver, u6, 60);
 		j.executeScript("arguments[0].click();", u6);
 		sleep(3000);
 
@@ -454,6 +492,8 @@ public class Local_Host extends Base_Class {
 		implicitWait(60, TimeUnit.SECONDS);
 		WebElement remv = driver
 				.findElement(By.xpath("(//div[@id='ehr-search']/div[2]/div[1]/div[1]/div//following::span[4])[1]"));
+		visbility(driver, remv, 60);
+
 		javascriptclick(remv);
 
 		List<WebElement> wwe = driver
@@ -462,29 +502,36 @@ public class Local_Host extends Base_Class {
 
 			if (web.getText().trim().equals(kpid)) {
 
+				visbility(driver, web, 60);
+				clickble(driver, web, 60);
+
 				web.click();
 				break;
 			}
 
 		}
 		sleep(2000);
-		driver.findElement(By.id("newMedicalRecordButton")).click();
+
+		WebElement r7 = driver.findElement(By.id("newMedicalRecordButton"));
+		visbility(driver, r7, 60);
+		r7.click();
 		WebElement elipse = driver.findElement(By.xpath("(//span[@id='list_patient_needHelp'])[1]/span"));
-		clickble(driver, elipse, 25);
+		visbility(driver, elipse, 60);
+		clickble(driver, elipse, 60);
 		actions("click", elipse);
 
 		List<WebElement> hh = driver
 				.findElements(By.xpath("(//span[@id='list_patient_needHelp'])[1]/span//following::ul[1]/li"));
 		for (WebElement web : hh) {
 			if (web.getText().trim().equals("Reset Setting")) {
+				visbility(driver, web, 60);
 				web.click();
 				break;
 			}
 
 		}
-		implicitWait(30, TimeUnit.SECONDS);
-		// driver.navigate().refresh();
-		driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+		implicitWait(60, TimeUnit.SECONDS);
+
 		sleep(3000);
 		List<WebElement> rowfor = driver.findElements(By.xpath("(//div[@id='cols'])[2]/div"));
 
@@ -502,10 +549,12 @@ public class Local_Host extends Base_Class {
 				if (sf.isDisplayed() == false) {
 
 					bl = true;
-					driver.findElement(By.xpath("(//button[@id='options-img'])[1]")).click();
+					WebElement r8 = driver.findElement(By.xpath("(//button[@id='options-img'])[1]"));
+					visbility(driver, r8, 60);
+					r8.click();
 					List<WebElement> fin = driver.findElements(By.xpath("(//ul[@id='matchKey'])[2]/li/span/a"));
 					driver.findElement(By.xpath("(//input[@id='optionsSearch'])[2]")).sendKeys("show");
-					implicitWait(30, TimeUnit.SECONDS);
+					implicitWait(60, TimeUnit.SECONDS);
 
 					for (WebElement web : fin) {
 
@@ -612,7 +661,9 @@ public class Local_Host extends Base_Class {
 
 			}
 			if (bl == true) {
-				driver.findElement(By.xpath("/html/body/div[9]/div/div[2]/div[2]/button")).click();
+				WebElement bb2 = driver.findElement(By.xpath("/html/body/div[9]/div/div[2]/div[2]/button"));
+				visbility(driver, bb2, 60);
+				bb2.click();
 				break;
 			}
 		}
@@ -624,9 +675,9 @@ public class Local_Host extends Base_Class {
 
 				WebElement gettag = driver
 						.findElement(By.xpath("(//div[@id='cols'])[2]/div[" + i + "]/div[" + j + "]"));
+				visbility(driver, gettag, 60);
 
 				String tagnames = gettag.getAttribute("id");
-				// System.out.println(tagnames);
 
 				if (tagnames.equals("vital")) {
 					sleep(4000);
@@ -674,19 +725,21 @@ public class Local_Host extends Base_Class {
 					 */;
 
 				} else if (tagnames.equals("visit-reason")) {
-					implicitWait(20, TimeUnit.SECONDS);
+					implicitWait(60, TimeUnit.SECONDS);
 
 					WebElement u = driver.findElement(By.xpath("//div[contains(@title,'Add Visit R')]"));
 
 					actions("move to element", u);
-					ww.until(ExpectedConditions.elementToBeClickable(u));
-					actions("click", u);
+					visbility(driver, u, 60);
+					javascriptclick(u);
 					WebElement y = driver.findElement(By.xpath("//select[@id='triage-type']"));
+					visbility(driver, y, 60);
 					y.click();
 
 					List<WebElement> ff = driver.findElements(By.xpath("//select[@id='triage-type']/option"));
 					for (WebElement w : ff) {
 						if (w.getText().trim().equals("Emergency")) {
+							visbility(driver, w, 60);
 							w.click();
 							break;
 						}
@@ -695,28 +748,33 @@ public class Local_Host extends Base_Class {
 					sleep(2000);
 					WebElement mj = driver
 							.findElement(By.xpath("//div[@title='Enter the description of the patient visit']"));
+					visbility(driver, mj, 60);
 					mj.sendKeys("cold");
 
 					WebElement svg = driver
 							.findElement(By.xpath("//div[@id='Visit_ReasonKpop2']/div[2]/div[2]/button[2]"));
+					visbility(driver, svg, 60);
 					//// div[@title='Enter the description of the patient
 					//// visit']//following::div[28]/button[2]
 					ww.until(ExpectedConditions.elementToBeClickable(svg));
 					svg.click();
 					sleep(2000);
 					WebElement afk = driver.findElement(By.xpath("(//div[text()='cold'])[1]"));
+					visbility(driver, afk, 60);
 					ww.until(ExpectedConditions.elementToBeClickable(afk));
 					actions("click", afk);
 
 					implicitWait(30, TimeUnit.SECONDS);
 					WebElement mjj = driver
 							.findElement(By.xpath("//div[@title='Enter the description of the patient visit']"));
+					visbility(driver, mjj, 60);
 					ww.until(ExpectedConditions.elementToBeClickable(mjj));
 					mjj.clear();
 					mjj.sendKeys("KAASPRO");
 
 					WebElement svg1 = driver
 							.findElement(By.xpath("//div[@id='Visit_ReasonKpop2']/div[2]/div[2]/button[2]"));
+					visbility(driver, svg1, 60);
 					svg1.click();
 
 					/*
@@ -727,31 +785,35 @@ public class Local_Host extends Base_Class {
 					sleep(3000);
 
 				} else if (tagnames.equals("alert-allergy")) {
-					WebElement k = driver
-							.findElement(By.xpath("(//button[contains(@title,'Add Multiple Vitals')])[1]"));
-					ScriptExecutor(k);
+
 					WebElement add = driver.findElement(By.xpath("//div[contains(@title,'Add Allergy')]"));
 
 					actions("move to element", add);
+					visbility(driver, add, 60);
 					ww.until(ExpectedConditions.elementToBeClickable(add));
 					actions("click", add);
 					WebElement se = driver.findElement(By.xpath("//select[@id='codeType']"));
+					visbility(driver, se, 60);
 					ww.until(ExpectedConditions.elementToBeClickable(se));
 					se.click();
 					dropDown("text", se, "Food Allergy");
 
-					/* WebElement alcl = */ driver
-							.findElement(By.xpath("//div[@id='AllergyKpop2']/div[2]/div[1]/div[2]/div[2]/input"))
-							.sendKeys("food1");
+					/* WebElement alcl = */ WebElement fd1 = driver
+							.findElement(By.xpath("//div[@id='AllergyKpop2']/div[2]/div[1]/div[2]/div[2]/input"));
+					visbility(driver, fd1, 60);
+					fd1.sendKeys("food1");
 
 					sleep(2000);
-					driver.findElement(By.xpath("//input[@placeholder='Reaction']")).sendKeys("stomach pain");
+					WebElement alrgy = driver.findElement(By.xpath("//input[@placeholder='Reaction']"));
+					visbility(driver, alrgy, 60);
+					alrgy.sendKeys("stomach pain");
 
 					WebElement rer = driver.findElement(By.xpath("//div[@id='AllergyKpop2']/div[2]/div[2]/div/button"));
+					visbility(driver, rer, 60);
 					ww.until(ExpectedConditions.elementToBeClickable(rer));
 
-					JavascriptExecutor jp = (JavascriptExecutor) driver;
-					jp.executeScript("arguments[0].click();", rer);
+					javascriptclick(rer);
+
 					sleep(3000);
 					List<WebElement> wtw = driver.findElements(By.xpath("//div[@id='smore-btn']/ul/li"));
 					for (WebElement w : wtw) {
@@ -762,10 +824,12 @@ public class Local_Host extends Base_Class {
 
 					}
 					sleep(2000);
-					jp.executeScript("arguments[0].click();", rer);
+
+					javascriptclick(rer);
 
 					for (WebElement w : wtw) {
 						if (w.getText().trim().equals("Show Status")) {
+							visbility(driver, rer, 60);
 							w.click();
 							break;
 						}
@@ -779,10 +843,13 @@ public class Local_Host extends Base_Class {
 
 					dropDown("text", ss, "Inactive");
 
-					driver.findElement(By.xpath("//div[@id='saveadd-btn']/button")).click();
+					WebElement cl2 = driver.findElement(By.xpath("//div[@id='saveadd-btn']/button"));
+					visbility(driver, cl2, 60);
+					cl2.click();
 					List<WebElement> sss = driver.findElements(By.xpath("//div[@id='saveadd-btn']/ul/li"));
 					for (WebElement w : sss) {
 						if (w.getText().trim().equals("Save")) {
+							visbility(wd, w, 60);
 							w.click();
 							break;
 						}
@@ -790,23 +857,28 @@ public class Local_Host extends Base_Class {
 					}
 					sleep(2000);
 					WebElement mk = driver.findElement(By.xpath("//span[text()='food1']"));
-
+					visbility(driver, mk, 60);
 					ww.until(ExpectedConditions.elementToBeClickable(mk));
 					actions("click", mk);
 					sleep(2000);
 					WebElement jk = driver
 							.findElement(By.xpath("//div[@id='AllergyKpop2']/div[2]/div[1]/div[2]/div[2]/input"));
+					visbility(driver, jk, 60);
 					jk.clear();
 					jk.sendKeys("st");
 					sleep(2000);
 					WebElement scq = driver.findElement(By.xpath("//div[text()='Strawberry ']"));
+					visbility(driver, scq, 60);
 					ww.until(ExpectedConditions.elementToBeClickable(scq));
 					actions("click", scq);
 
-					driver.findElement(By.xpath("//div[@id='saveadd-btn']/button")).click();
+					WebElement cl5 = driver.findElement(By.xpath("//div[@id='saveadd-btn']/button"));
+					visbility(driver, cl5, 60);
+					cl5.click();
 					List<WebElement> ssss = driver.findElements(By.xpath("//div[@id='saveadd-btn']/ul/li"));
 					for (WebElement w : ssss) {
 						if (w.getText().trim().equals("Save")) {
+							visbility(driver, w, 60);
 							w.click();
 							break;
 						}
@@ -835,26 +907,38 @@ public class Local_Host extends Base_Class {
 					WebElement sh = ww.until(ExpectedConditions
 							.presenceOfElementLocated(By.xpath("//div[contains(@title,'Add Social History')]")));
 					actions("move to element", sh);
-					ww.until(ExpectedConditions.elementToBeClickable(sh));
+					visbility(driver, sh, 60);
 					actions("click", sh);
 					sleep(2000);
 					WebElement ssc = driver.findElement(By.xpath("//select[@id='habitType']"));
+					visbility(driver, ssc, 60);
 					ssc.click();
 					dropDown("text", ssc, "Alcohol");
-					driver.findElement(By.xpath("//select[@id='habitType']//following::div[3]/input"))
-							.sendKeys("social histry");
+					WebElement hbt = driver.findElement(By.xpath("//select[@id='habitType']//following::div[3]/input"));
+					visbility(driver, hbt, 60);
+					hbt.sendKeys("social histry");
 
-					driver.findElement(By.xpath("(//button[@id='accept-btn'])[1]")).click();
+					WebElement hbt2 = driver.findElement(By.xpath("(//button[@id='accept-btn'])[1]"));
+					visbility(driver, hbt2, 60);
+					hbt2.click();
 					sleep(2000);
 					WebElement jj = driver.findElement(By.xpath("//div[text()='( Alcohol )']"));
-					ww.until(ExpectedConditions.elementToBeClickable(jj));
+					visbility(driver, jj, 60);
 
 					actions("click", jj);
 					sleep(2000);
-					driver.findElement(By.xpath("//select[@id='habitType']//following::div[3]/input")).clear();
-					driver.findElement(By.xpath("//select[@id='habitType']//following::div[3]/input"))
-							.sendKeys("Kaaspro");
-					driver.findElement(By.xpath("(//button[@id='accept-btn'])[1]")).click();
+					WebElement hbt4 = driver
+							.findElement(By.xpath("//select[@id='habitType']//following::div[3]/input"));
+					visbility(driver, hbt4, 60);
+					hbt4.clear();
+					// .clear();
+					WebElement kspr = driver
+							.findElement(By.xpath("//select[@id='habitType']//following::div[3]/input"));
+					visbility(driver, kspr, 60);
+					kspr.sendKeys("Kaaspro");
+					WebElement hbt5 = driver.findElement(By.xpath("(//button[@id='accept-btn'])[1]"));
+					visbility(driver, hbt5, 60);
+					hbt5.click();
 
 					sleep(3000);
 
@@ -869,20 +953,23 @@ public class Local_Host extends Base_Class {
 					WebElement a = driver.findElement(By.xpath("//div[contains(@title,'Add Family Health')]"));
 
 					actions("move to element", a);
+					visbility(driver, a, 60);
 					ww.until(ExpectedConditions.elementToBeClickable(a));
 					actions("click", a);
 					WebElement ee = driver.findElement(By.xpath("//div[@id='Family_HealthKpop2']/div[2]/div/select"));
-					explicitWait(30, ee);
+					visbility(driver, ee, 60);
 					ee.click();
 					dropDown("text", ee, "Half Brother");
 
-					driver.findElement(By
-							.xpath("//div[@id='Family_HealthKpop2']/div[2]/div/select//following::div[1]/div[2]/input"))
-							.sendKeys("24781");
+					WebElement fh = driver.findElement(By.xpath(
+							"//div[@id='Family_HealthKpop2']/div[2]/div/select//following::div[1]/div[2]/input"));
+					visbility(driver, fh, 60);
+					fh.sendKeys("24781");
 					List<WebElement> fhkpop = driver
 							.findElements(By.xpath("//div[@id='Family_HealthKpop2']/div[2]/ul/li/a/div/small"));
 					for (WebElement web : fhkpop) {
 						if (web.getText().trim().equals("ICD10 : F40.2 | SNOMED : 247810008")) {
+							visbility(driver, web, 60);
 							web.click();
 							break;
 						}
@@ -896,11 +983,13 @@ public class Local_Host extends Base_Class {
 					sleep(2000);
 
 					WebElement atf = driver.findElement(By.xpath("//button[@id='btnSaveAdd']"));
+					visbility(driver, atf, 60);
 					javascriptclick(atf);
 					List<WebElement> rr = driver.findElements(By.xpath("//div[@id='saveadd-btn']/ul/li"));
 					for (WebElement w : rr) {
 
 						if (w.getText().trim().equals("Save")) {
+							visbility(driver, w, 60);
 							w.click();
 							break;
 						}
@@ -923,28 +1012,40 @@ public class Local_Host extends Base_Class {
 							.presenceOfElementLocated(By.xpath("//div[contains(@title,'Add Alert')]")));
 
 					actions("move to element", ip);
-					ww.until(ExpectedConditions.elementToBeClickable(ip));
+					visbility(driver, ip, 60);
 					actions("click", ip);
 
-					driver.findElement(By.xpath("//div[@title='Enter the description of the alert ']"))
-							.sendKeys("hello");
+					WebElement fh2 = driver
+							.findElement(By.xpath("//div[@title='Enter the description of the alert ']"));
+					visbility(driver, fh2, 60);
+					fh2.sendKeys("hello");
 					WebElement r = driver.findElement(By.xpath("//select[@id='visibility']"));
+
 					r.click();
 					dropDown("text", r, "Only to me");
-					driver.findElement(By.xpath("//div[@id='AlertKpop2']/div[2]/div[2]/button[2]")).click();
+					WebElement hbt6 = driver.findElement(By.xpath("//div[@id='AlertKpop2']/div[2]/div[2]/button[2]"));// .click();
+					visbility(driver, hbt6, 60);
+					hbt6.click();
 					sleep(2000);
 					WebElement inner = ww
 							.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//div[text()='hello']")));
 					// WebElement inner = driver.findElement(By.xpath("//div[text()='hello']"));
+					visbility(driver, inner, 60);
 					ww.until(ExpectedConditions.elementToBeClickable(inner));
 					actions("click", inner);
 					sleep(3000);
 
-					driver.findElement(By.xpath("//div[@title='Enter the description of the alert ']")).clear();
-					driver.findElement(By.xpath("//div[@title='Enter the description of the alert ']"))
-							.sendKeys("wELCOME");
-					driver.findElement(By.xpath("//div[@id='AlertKpop2']/div[2]/div[2]/button[2]")).click();
-
+					WebElement alrt = driver
+							.findElement(By.xpath("//div[@title='Enter the description of the alert ']"));// .clear();
+					visbility(driver, alrt, 60);
+					alrt.clear();
+					WebElement alrt2 = driver
+							.findElement(By.xpath("//div[@title='Enter the description of the alert ']"));
+					visbility(driver, alrt2, 60);
+					alrt2.sendKeys("wELCOME");
+					WebElement alrt3 = driver.findElement(By.xpath("//div[@id='AlertKpop2']/div[2]/div[2]/button[2]"));// .click();
+					visbility(driver, alrt3, 60);
+					click(alrt3);
 					/*
 					 * WebElement delalert =
 					 * driver.findElement(By.xpath("//div[@id='AlertKpop2']/div/div[2]/span[1]"));
@@ -955,60 +1056,86 @@ public class Local_Host extends Base_Class {
 
 					WebElement k = driver.findElement(By.xpath("//div[contains(@title,'Add Vaccine')]"));
 					actions("move to element", k);
+					visbility(driver, k, 60);
 					ww.until(ExpectedConditions.elementToBeClickable(k));
 					actions("click", k);
 					WebElement x = driver.findElement(By.xpath("//select[@id='date-type']"));
+					visbility(driver, x, 60);
 					x.click();
 					dropDown("text", x, "Taken Date");
-					driver.findElement(By.id("vaccine-cvx")).sendKeys("kaaspro");
-					driver.findElement(By.id("vaccineName")).sendKeys("TT");
+					WebElement vcne = driver.findElement(By.id("vaccine-cvx"));
+					visbility(driver, vcne, 60);
+					vcne.sendKeys("kaaspro");
+
+					WebElement vcne2 = driver.findElement(By.id("vaccineName"));
+					visbility(driver, vcne2, 60);
+					vcne2.sendKeys("TT");
 					WebElement sv = driver
 							.findElement(By.xpath("//div[@id='VaccineKpop2']/div[2]/div[3]/button[@id='accept-btn']"));
+					visbility(driver, sv, 60);
 					javascriptclick(sv);
 					sleep(3000);
 					WebElement l = driver.findElement(By.xpath("//div[text()='TT']"));
+					visbility(driver, l, 60);
 					actions("click", l);
-					driver.findElement(By.id("vaccineName")).clear();
-					driver.findElement(By.id("vaccineName")).sendKeys("TT INJECTION");
-					implicitWait(30, TimeUnit.SECONDS);
+
+					WebElement vcna = driver.findElement(By.id("vaccineName"));// .clear();
+					visbility(driver, vcna, 60);
+					vcna.clear();
+					WebElement vcna1 = driver.findElement(By.id("vaccineName"));// .sendKeys("TT INJECTION");
+					visbility(driver, vcna1, 60);
+					sendkeys(vcna1, "TT INJECTION");
+					implicitWait(60, TimeUnit.SECONDS);
 					/*
 					 * WebElement delvc = driver .findElement(By.xpath(
 					 * "(//div[@id='VaccineKpop2']//following::div[1]/span[1])[1]"));
 					 * javascriptclick(delvc);
 					 */
-					driver.findElement(By.xpath("//div[@id='VaccineKpop2']/div[2]/div[3]/button[@id='accept-btn']"))
-							.click();
+					WebElement vcc = driver
+							.findElement(By.xpath("//div[@id='VaccineKpop2']/div[2]/div[3]/button[@id='accept-btn']"));
+					visbility(driver, vcc, 60);
+					click(vcc);
+
 					sleep(3000);
 
 				} else if (tagnames.equals("implantable-devices")) {
 
 					WebElement b = driver.findElement(By.xpath("//div[contains(@title,'Add Implantable')]"));
 					actions("move to element", b);
+					visbility(driver, b, 60);
 					actions("click", b);
-					driver.findElement(By.id("udi")).sendKeys("(01)00844588003288");
-					driver.findElement(By.xpath("//button[@id='verify-btn']")).click();
-					sleep(5000);
+					WebElement impl = driver.findElement(By.id("udi"));// .sendKeys("(01)00844588003288");
+					visbility(driver, impl, 60);
+					sendkeys(impl, "(01)00844588003288");
+					WebElement svimpl = driver.findElement(By.xpath("//button[@id='verify-btn']"));// .click();
+					visbility(driver, svimpl, 60);
+					click(svimpl);
+					sleep(3000);
 					driver.findElement(By.id("deviceactive"));
 
 					WebElement a1 = driver.findElement(By.id("deviceNote"));
-					ScriptExecutor(a1);
+					visbility(driver, a1, 60);
 					sleep(1000);
 					a1.sendKeys("hello123");
 					WebElement savimp = driver
 							.findElement(By.xpath("//div[@id='Implantable_DevicesKpop2']/div[2]/div[2]/button[2]"));
+					visbility(driver, savimp, 60);
 					javascriptclick(savimp);
 
 					sleep(2000);
 					WebElement a2 = driver
 							.findElement(By.xpath("//div[text()='Coated femoral stem prosthesis, modular']"));
+					visbility(driver, a2, 60);
 					ww.until(ExpectedConditions.elementToBeClickable(a2));
 					actions("click", a2);
 					WebElement a26 = driver.findElement(By.id("deviceNote"));
 					ScriptExecutor(a26);
+					visbility(driver, a26, 60);
 					a26.clear();
 					a26.sendKeys("JUst Rise up..");
 					WebElement savimp1 = driver
 							.findElement(By.xpath("//div[@id='Implantable_DevicesKpop2']/div[2]/div[2]/button[2]"));
+					visbility(driver, savimp1, 60);
 					javascriptclick(savimp1);
 
 					/*
@@ -1020,37 +1147,53 @@ public class Local_Host extends Base_Class {
 					sleep(3000);
 
 				} else if (tagnames.equals("amendment")) {
-					WebElement b = driver.findElement(By.xpath("//div[contains(@title,'Add Implantable')]"));
-					ScriptExecutor(b);
 
 					WebElement d = driver.findElement(By.xpath("//div[contains(@title,'Add Amendment')]"));
 
 					actions("move to element", d);
+					visbility(driver, d, 60);
 					clickble(driver, d, 25);
 					actions("click", d);
 					WebElement s1 = driver.findElement(By.xpath("//select[@id='source']"));
+					visbility(driver, s1, 60);
 					s1.click();
 					dropDown("text", s1, "Patient");
-					driver.findElement(By.xpath("//div[@id='AmendmentKpop2']/div[2]/div/div[2]/div[2]/input"))
-							.sendKeys("Akash");
+					WebElement amd = driver
+							.findElement(By.xpath("//div[@id='AmendmentKpop2']/div[2]/div/div[2]/div[2]/input"));
+					visbility(driver, amd, 60);
+					sendkeys(amd, "Akash");// .sendKeys("Akash");
+
 					WebElement s2 = driver.findElement(By.xpath("//select[@id='status']"));
+					visbility(driver, s2, 60);
 					s2.click();
 					dropDown("text", s2, "Accept");
-					driver.findElement(By.xpath("//input[@id='reason']")).sendKeys("whats up...");
+					WebElement vs = driver.findElement(By.xpath("//input[@id='reason']"));
+					visbility(driver, vs, 60);
+					sendkeys(vs, "whats up...");// .sendKeys("whats up...");
 					WebElement svamen = driver
 							.findElement(By.xpath("//div[@id='AmendmentKpop2']/div[2]/div[2]/button[2]"));
+					visbility(driver, svamen, 60);
 
 					javascriptclick(svamen);
 					sleep(3000);
 					WebElement ac = driver.findElement(By.xpath("//div[text()='Accepted : whats up...']"));
+					visbility(driver, ac, 60);
 					actions("click", ac);
 					sleep(2000);
-					driver.findElement(By.xpath("//input[@id='reason']")).clear();
-					driver.findElement(By.xpath("//input[@id='reason']")).sendKeys("warrior");
-					driver.findElement(By.xpath("//input[@id='reason']")).sendKeys("WAR BEGINS");
+					WebElement clr = driver.findElement(By.xpath("//input[@id='reason']"));
+					visbility(driver, clr, 60);
+					clear(clr);// .clear();
 
+					WebElement ips = driver.findElement(By.xpath("//input[@id='reason']"));
+					visbility(driver, ips, 60);
+
+					sendkeys(ips, "warrior");// .sendKeys("warrior");
+					WebElement iis = driver.findElement(By.xpath("//input[@id='reason']"));// .sendKeys("WAR BEGINS");
+					visbility(driver, iis, 60);
+					sendkeys(iis, "WAR BEGINS");
 					WebElement svamen1 = driver
 							.findElement(By.xpath("//div[@id='AmendmentKpop2']/div[2]/div[2]/button[2]"));
+					visbility(driver, svamen1, 60);
 					javascriptclick(svamen1);
 					// driver.findElement(By.xpath("//div[@id='AmendmentKpop2']/div[1]/div[2]/span[1]")).click();
 					sleep(3000);
@@ -1059,29 +1202,34 @@ public class Local_Host extends Base_Class {
 
 					WebElement a3 = driver.findElement(By.xpath("//div[contains(@title,'Add Problems')]"));
 					actions("move to element", a3);
+					visbility(driver, a3, 60);
 					ww.until(ExpectedConditions.elementToBeClickable(a3));
 					actions("click", a3);
 					sleep(2000);
 
 					WebElement ct = ww.until(ExpectedConditions.presenceOfElementLocated(
 							By.xpath("//div[@id='ProblemsKpop2']/div[2]/div/div[1]/div[2]/input")));
+					visbility(driver, ct, 60);
 					// driver.findElement(By.xpath("//div[@id='ProblemsKpop2']/div[2]/div/div[1]/div[2]/input"))
 					ct.sendKeys("Cleft uvula");
 
 					sleep(3000);
 					WebElement prbcl = driver.findElement(By.xpath("//small[text()='ICD10 : Q35.7 | SNOMED : --']"));
+					visbility(driver, prbcl, 60);
 					ww.until(ExpectedConditions.elementToBeClickable(prbcl));
 					actions("click", prbcl);
 					sleep(2000);
 
 					WebElement gg = driver.findElement(By.xpath("//button[@id='btnSaveAdd']"));
+					visbility(driver, gg, 60);
 					ww.until(ExpectedConditions.elementToBeClickable(gg));
-					JavascriptExecutor js = (JavascriptExecutor) driver;
-					js.executeScript("arguments[0].click();", gg);
+
+					javascriptclick(gg);
 
 					List<WebElement> a5 = driver.findElements(By.xpath("//div[@id='saveadd-btn']/ul/li"));
 					for (WebElement w : a5) {
 						if (w.getText().trim().equals("Save")) {
+							visbility(driver, w, 60);
 							w.click();
 							break;
 						}
@@ -1089,17 +1237,20 @@ public class Local_Host extends Base_Class {
 					}
 					sleep(3000);
 					WebElement a6 = driver.findElement(By.xpath("//div[text()='Cleft uvula']"));
+					visbility(driver, a6, 60);
 					ww.until(ExpectedConditions.elementToBeClickable(a6));
 					actions("click", a6);
 					sleep(3000);
 					WebElement clr = driver.findElement(
 							By.xpath("//div[@id='ProblemsKpop2']/div[2]/div[1]/div[1]/div[2]//following::div[2]"));
+					visbility(driver, clr, 60);
 					ww.until(ExpectedConditions.elementToBeClickable(clr));
 					javascriptclick(clr);
 
 					WebElement ljv = ww.until(ExpectedConditions.presenceOfElementLocated(
 							By.xpath("//div[@id='ProblemsKpop2']/div[2]/div/div[1]/div[2]/input")));
 					// driver.findElement(By.xpath("//div[@id='ProblemsKpop2']/div[2]/div/div[1]/div[2]/input"))
+					visbility(driver, ljv, 60);
 					ljv.sendKeys("test");
 					sleep(2000);
 					List<WebElement> prbdrp = driver
@@ -1107,6 +1258,7 @@ public class Local_Host extends Base_Class {
 					for (WebElement web : prbdrp) {
 
 						if (web.getText().trim().equals("Malignant neoplasm of testis")) {
+							visbility(driver, web, 60);
 							web.click();
 							break;
 						}
@@ -1120,12 +1272,14 @@ public class Local_Host extends Base_Class {
 					 */
 
 					WebElement gg1 = driver.findElement(By.xpath("//button[@id='btnSaveAdd']"));
-					JavascriptExecutor js12 = (JavascriptExecutor) driver;
-					js.executeScript("arguments[0].click();", gg1);
+					visbility(driver, gg1, 60);
+
+					javascriptclick(gg1);
 					sleep(3000);
 					List<WebElement> a56 = driver.findElements(By.xpath("//div[@id='saveadd-btn']/ul/li"));
 					for (WebElement w : a56) {
 						if (w.getText().trim().equals("Save")) {
+							visbility(driver, w, 60);
 							w.click();
 							break;
 						}
@@ -1140,20 +1294,21 @@ public class Local_Host extends Base_Class {
 					sleep(3000);
 
 				} else if (tagnames.equals("symptom")) {
-					WebElement a3 = driver.findElement(By.xpath("//div[contains(@title,'Add Problems')]"));
-					ScriptExecutor(a3);
 
 					WebElement a7 = driver.findElement(By.xpath("//div[contains(@title,'Add Symptoms')]"));
 
 					actions("move to element", a7);
-					visbility(driver, a7, 25);
+					visbility(driver, a7, 60);
 
 					actions("click", a7);
-					driver.findElement(By.xpath("//div[@id='SymptomsKpop2']/div[2]/div/div[2]/div[2]/input"))
-							.sendKeys("R10.12:");
+					WebElement prsend = driver
+							.findElement(By.xpath("//div[@id='SymptomsKpop2']/div[2]/div/div[2]/div[2]/input"));
+					visbility(driver, prsend, 60);
+					sendkeys(prsend, "R10.12:");// .sendKeys("R10.12:");
 					implicitWait(30, TimeUnit.SECONDS);
 					WebElement clsymi = driver
 							.findElement(By.xpath("//div[contains(text(),'R10.12: Left upper quadrant pain')]"));
+					visbility(driver, clsymi, 60);
 					ww.until(ExpectedConditions.elementToBeClickable(clsymi));
 					actions("click", clsymi);
 
@@ -1161,22 +1316,32 @@ public class Local_Host extends Base_Class {
 					WebElement sydes = ww.until(ExpectedConditions.presenceOfElementLocated(
 							By.xpath("//div[@id='SymptomsKpop2']/div[2]/div/div[3]/div[2]/input")));
 					// driver.findElement(By.xpath("//div[@id='SymptomsKpop2']/div[2]/div/div[3]/div[2]/input"))
+					visbility(driver, sydes, 60);
 					sydes.sendKeys("fever");
 					WebElement svsymp = driver
 							.findElement(By.xpath("//div[@id='SymptomsKpop2']/div[2]/div[2]/button[2]"));
+					visbility(driver, svsymp, 60);
 					javascriptclick(svsymp);
 					sleep(3000);
 					WebElement a8 = driver
 							.findElement(By.xpath("//div[contains(text(),'R10.12: Left upper quadrant pain')]"));
+					visbility(driver, a8, 60);
 					ww.until(ExpectedConditions.elementToBeClickable(a8));
 					actions("click", a8);
-					driver.findElement(By.xpath("//div[@id='SymptomsKpop2']/div[2]/div/div[3]/div[2]/input")).clear();
+					WebElement smp1 = driver
+							.findElement(By.xpath("//div[@id='SymptomsKpop2']/div[2]/div/div[3]/div[2]/input"));
+					visbility(driver, smp1, 60);
+					clear(smp1);// .clear();
+
 					sleep(2000);
-					driver.findElement(By.xpath("//div[@id='SymptomsKpop2']/div[2]/div/div[3]/div[2]/input"))
-							.sendKeys("covid");
+					WebElement smp2 = driver
+							.findElement(By.xpath("//div[@id='SymptomsKpop2']/div[2]/div/div[3]/div[2]/input"));
+					visbility(driver, smp2, 60);
+					sendkeys(smp2, "covid");// .sendKeys("covid");
 
 					WebElement svsymp1 = driver
 							.findElement(By.xpath("//div[@id='SymptomsKpop2']/div[2]/div[2]/button[2]"));
+					visbility(driver, svsymp1, 60);
 					ww.until(ExpectedConditions.elementToBeClickable(svsymp1));
 					javascriptclick(svsymp1);
 					// driver.findElement(By.xpath("//div[@id='SymptomsKpop2']/div/div[2]/span[1]")).click();
@@ -1186,50 +1351,72 @@ public class Local_Host extends Base_Class {
 
 					WebElement b1 = driver.findElement(By.xpath("//div[contains(@title,'Add Procedure')]"));
 					actions("move to element", b1);
+					visbility(driver, b1, 60);
 					ww.until(ExpectedConditions.elementToBeClickable(b1));
 					actions("click", b1);
 
 					WebElement b2 = driver.findElement(By.xpath("//select[@id='codeType']"));
+					visbility(driver, b2, 60);
 					ww.until(ExpectedConditions.elementToBeClickable(b2));
 					b2.click();
 					dropDown("text", b2, "SNOMED CT");
 					WebElement ers = ww.until(ExpectedConditions.presenceOfElementLocated(
 							By.xpath("//div[@id='ProcedureKpop2']/div[2]/div[1]/div[1]/div[2]/input")));
+					visbility(driver, ers, 60);
 					// driver.findElement(By.xpath("//div[@id='ProcedureKpop2']/div[2]/div[1]/div[1]/div[2]/input"))
 					ers.sendKeys("test");
 					sleep(2000);
 					WebElement clprcd = driver
 							.findElement(By.xpath("//b[text()='Cytomegalovirus antigen test (procedure)']"));
+					visbility(driver, clprcd, 60);
 
 					ww.until(ExpectedConditions.elementToBeClickable(clprcd));
 					sleep(2000);
 					actions("click", clprcd);
-					driver.findElement(By.xpath("//div[@id='ProcedureKpop2']/div[2]/div/div[2]/div[2]/input"))
-							.sendKeys("gdgdg");
+					WebElement smp3 = driver
+							.findElement(By.xpath("//div[@id='ProcedureKpop2']/div[2]/div/div[2]/div[2]/input"));
+					visbility(driver, smp3, 60);
+					sendkeys(smp3, "gdgdg");// .sendKeys("gdgdg");
 
-					driver.findElement(By.id("btnSaveAdd")).click();
+					WebElement svprcd1 = driver.findElement(By.id("btnSaveAdd"));
+					visbility(driver, svprcd1, 60);
+					click(svprcd1);// .click();
 					sleep(2000);
 					List<WebElement> b6 = driver.findElements(By.xpath("//div[@id='saveadd-btn']/ul/li"));
 					for (WebElement w : b6) {
 						if (w.getText().trim().equals("Save")) {
+							visbility(driver, w, 60);
 							w.click();
+							
 							break;
 						}
 
 					}
 					sleep(3000);
-					WebElement b7 = driver.findElement(By.xpath("//div[text()='gdgdg']"));
-					actions("click", b7);
+					WebElement b7 = driver.findElement(
+							By.xpath("//div[text()='134287002: Cytomegalovirus antigen test (procedure)']"));
+					visbility(driver, b7, 60);
+					javascriptclick(b7);
+					// actions("click", b7);
 					sleep(2000);
-					driver.findElement(By.xpath("//div[@id='ProcedureKpop2']/div[2]/div/div[2]/div[2]/input")).clear();
-					driver.findElement(By.xpath("//div[@id='ProcedureKpop2']/div[2]/div/div[2]/div[2]/input"))
-							.sendKeys("LARA");
+					WebElement clrprc = driver
+							.findElement(By.xpath("//div[@id='ProcedureKpop2']/div[2]/div/div[2]/div[2]/input"));
+					visbility(driver, clrprc, 60);
+					clear(clrprc);// .clear();
+					WebElement prcd3 = driver
+							.findElement(By.xpath("//div[@id='ProcedureKpop2']/div[2]/div/div[2]/div[2]/input"));
+					visbility(driver, prcd3, 60);
 
-					driver.findElement(By.id("btnSaveAdd")).click();
+					sendkeys(prcd3, "LARA");// .sendKeys("LARA");
+
+					WebElement prcd4 = driver.findElement(By.id("btnSaveAdd"));
+					visbility(driver, prcd4, 60);
+					click(prcd4);// .click();
 					sleep(3000);
 					List<WebElement> b64 = driver.findElements(By.xpath("//div[@id='saveadd-btn']/ul/li"));
 					for (WebElement w : b64) {
 						if (w.getText().trim().equals("Save")) {
+							visbility(driver, w, 60);
 							w.click();
 							break;
 						}
@@ -1243,12 +1430,18 @@ public class Local_Host extends Base_Class {
 					implicitWait(30, TimeUnit.SECONDS);
 					WebElement b8 = driver.findElement(By.xpath("//div[contains(@title,'Add Goals')]"));
 					actions("move to element", b8);
+					visbility(driver, b8, 60);
 					ww.until(ExpectedConditions.elementToBeClickable(b8));
 					actions("click", b8);
 					sleep(2000);
-					driver.findElement(By.xpath("//div[@title='Enter goal']")).sendKeys("goal1");
+					WebElement gl1 = driver.findElement(By.xpath("//div[@title='Enter goal']"));
+					visbility(driver, gl1, 60);
+					sendkeys(gl1, "goal1");// .sendKeys("goal1");
 
-					driver.findElement(By.xpath("//div[@id='GoalsKpop2']/div[2]/div[1]/div[2]/div/input")).click();
+					WebElement gl2 = driver
+							.findElement(By.xpath("//div[@id='GoalsKpop2']/div[2]/div[1]/div[2]/div/input"));// .click();
+					visbility(driver, gl2, 60);
+					click(gl2);
 					sleep(2000);
 					WebElement month = driver.findElement(By.xpath("//select[@class='ui-datepicker-month']"));
 
@@ -1256,20 +1449,29 @@ public class Local_Host extends Base_Class {
 
 					dropDown("index", month, "09");
 
-					driver.findElement(By.xpath("//a[text()='14']")).click();
+					WebElement uyr = driver.findElement(By.xpath("//a[text()='14']"));// .click();
+					visbility(driver, uyr, 60);
+					click(uyr);
 					sleep(2000);
 					WebElement hk = driver.findElement(By.xpath("//div[@id='GoalsKpop2']/div[2]/div[2]/button[2]"));
+					visbility(driver, hk, 60);
 					javascriptclick(hk);
 					sleep(3000);
 					WebElement b10 = driver.findElement(By.xpath("//div[text()='goal1']"));
+					visbility(driver, b10, 60);
 					ww.until(ExpectedConditions.elementToBeClickable(b10));
 					actions("click", b10);
-					implicitWait(20, TimeUnit.SECONDS);
+					implicitWait(60, TimeUnit.SECONDS);
 
-					driver.findElement(By.xpath("//div[@title='Enter goal']")).clear();
-					driver.findElement(By.xpath("//div[@title='Enter goal']")).sendKeys("HELLO THIS IS GOALS MODULE.");
-
+					WebElement ft = driver.findElement(By.xpath("//div[@title='Enter goal']"));// .clear();
+					visbility(driver, ft, 60);
+					clear(ft);
+					WebElement glr1 = driver.findElement(By.xpath("//div[@title='Enter goal']"));
+					// .sendKeys("HELLO THIS IS GOALS MODULE.");
+					visbility(driver, glr1, 60);
+					sendkeys(glr1, "HELLO THIS IS GOALS MODULE.");
 					WebElement hk1 = driver.findElement(By.xpath("//div[@id='GoalsKpop2']/div[2]/div[2]/button[2]"));
+					visbility(driver, hk1, 60);
 					javascriptclick(hk1);
 
 					/*
@@ -1284,22 +1486,33 @@ public class Local_Host extends Base_Class {
 
 					WebElement c1 = driver.findElement(By.xpath("//div[contains(@title,'Add Advance directives')]"));
 					actions("move to element", c1);
+					visbility(driver, c1, 60);
 					ww.until(ExpectedConditions.elementToBeClickable(c1));
 					actions("click", c1);
 
 					WebElement c2 = driver.findElement(By.xpath("//div[@id='Assessment-div']/select"));
+					visbility(driver, c2, 60);
 					c2.click();
 					dropDown("text", c2, "Assessment");
-					driver.findElement(By.xpath("//input[@id='directive_desc']")).sendKeys("lets hope");
-					driver.findElement(By.xpath("//div[@id='Advance_DirectivesKpop2']/div[2]/div[2]/button[2]"))
-							.click();
+					WebElement cc1 = driver.findElement(By.xpath("//input[@id='directive_desc']"));
+					visbility(driver, cc1, 60);
+					sendkeys(cc1, "lets hope");// .sendKeys("lets hope");
+					WebElement cc2 = driver
+							.findElement(By.xpath("//div[@id='Advance_DirectivesKpop2']/div[2]/div[2]/button[2]"));
+					visbility(driver, cc2, 60);
+					click(cc2);// .click();
 					sleep(3000);
 					WebElement c4 = driver.findElement(By.xpath("//div[text()='lets hope']"));
+					visbility(driver, c4, 60);
 					actions("click", c4);
 					sleep(2000);
-					driver.findElement(By.xpath("//input[@id='directive_desc']")).sendKeys("Advance directives");
-					driver.findElement(By.xpath("//div[@id='Advance_DirectivesKpop2']/div[2]/div[2]/button[2]"))
-							.click();
+					WebElement cc5 = driver.findElement(By.xpath("//input[@id='directive_desc']"));
+					visbility(driver, cc5, 60);
+					sendkeys(cc5, "Advance directives");// .sendKeys("Advance directives");
+					WebElement cc6 = driver
+							.findElement(By.xpath("//div[@id='Advance_DirectivesKpop2']/div[2]/div[2]/button[2]"));
+					visbility(driver, cc6, 60);
+					click(cc6);// .click();
 
 					/*
 					 * WebElement deladvfac = driver .findElement(By.xpath(
@@ -1312,38 +1525,49 @@ public class Local_Host extends Base_Class {
 
 					WebElement c5 = driver.findElement(By.xpath("//div[contains(@title,'Add Status')]"));
 					actions("move to element", c5);
+					visbility(driver, c5, 60);
 					ww.until(ExpectedConditions.elementToBeClickable(c5));
 					actions("click", c5);
 					WebElement c6 = driver.findElement(By.xpath("(//select[@id='statusType'])[1]"));
+					visbility(driver, c6, 60);
 					c6.click();
 					dropDown("text", c6, "Cognitive status");
-					driver.findElement(By
-							.xpath("//div[@id='StatusKpop2']/div[2]/div[1]/select[1]//following::div[1]/div[2]/input"))
-							.sendKeys("test");
+					WebElement cc7 = driver.findElement(By
+							.xpath("//div[@id='StatusKpop2']/div[2]/div[1]/select[1]//following::div[1]/div[2]/input"));
+					visbility(driver, cc7, 60);
+					sendkeys(cc7, "test");// .sendKeys("test");
 					sleep(2000);
 					WebElement clsmd = driver
 							.findElement(By.xpath("//div[text()='134374006: Hearing test bilateral abnormality ']"));
+					visbility(driver, clsmd, 60);
 					sleep(3000);
 					ww.until(ExpectedConditions.elementToBeClickable(clsmd));
 					actions("click", clsmd);
-					driver.findElement(By.xpath("//div[@id='StatusKpop2']/div[2]/div[2]/button[2]")).click();
+					WebElement cc8 = driver.findElement(By.xpath("//div[@id='StatusKpop2']/div[2]/div[2]/button[2]"));// .click();
+					visbility(driver, cc8, 60);
+					click(cc8);
 					sleep(4000);
 					WebElement c7 = driver
 							.findElement(By.xpath("//div[text()='134374006: Hearing test bilateral abnormality']"));
+					visbility(driver, c7, 60);
 					ww.until(ExpectedConditions.elementToBeClickable(c7));
 					actions("click", c7);
 					sleep(3000);
 					WebElement hjj = driver
 							.findElement(By.xpath("//div[@id='StatusKpop2']/div[2]/div[1]/select//following::span[5]"));
+					visbility(driver, hjj, 60);
 					actions("click", hjj);
-					driver.findElement(By
-							.xpath("//div[@id='StatusKpop2']/div[2]/div[1]/select[1]//following::div[1]/div[2]/input"))
-							.sendKeys("yang");
+					WebElement cc9 = driver.findElement(By
+							.xpath("//div[@id='StatusKpop2']/div[2]/div[1]/select[1]//following::div[1]/div[2]/input"));
+					visbility(driver, cc9, 60);
+					sendkeys(cc9, "yang");// .sendKeys("yang");
 					sleep(2000);
 					WebElement yng = driver.findElement(By.xpath("//div[text()='370534002: Yang deficiency ']"));
+					visbility(driver, yng, 60);
 					actions("click", yng);
-					driver.findElement(By.xpath("//div[@id='StatusKpop2']/div[2]/div[2]/button[2]")).click();
-
+					WebElement cc10 = driver.findElement(By.xpath("//div[@id='StatusKpop2']/div[2]/div[2]/button[2]"));// .click();
+					visbility(driver, cc10, 60);
+					click(cc10);
 					/*
 					 * WebElement delsmd =
 					 * driver.findElement(By.xpath("//div[@id='StatusKpop2']/div[1]/div[2]/span[1]")
@@ -1434,6 +1658,7 @@ public class Local_Host extends Base_Class {
 
 					WebElement ci = driver.findElement(By.xpath("(//div[contains(@title,'Add Medications')])[1]"));
 					actions("move to element", ci);
+					visbility(driver, ci, 60);
 					ww.until(ExpectedConditions.elementToBeClickable(ci));
 					actions("click", ci);
 					sleep(2000);
@@ -1443,13 +1668,17 @@ public class Local_Host extends Base_Class {
 					driver.findElement(By.id("SIG_DIRECTIONS")).sendKeys("dg");
 					// driver.findElement(By.id("startdateiid")).sendKeys("2022-07-20");
 					// driver.findElement(By.id("enddateiid")).sendKeys("2022-07-22");
-					driver.findElement(By.xpath("//div[@id='MedicationsKpop2']/div[2]/div[3]/div[1]/button")).click();
+					WebElement dd1 = driver
+							.findElement(By.xpath("//div[@id='MedicationsKpop2']/div[2]/div[3]/div[1]/button"));// .click();
+					visbility(driver, dd1, 60);
+					click(dd1);
 					sleep(2000);
 					List<WebElement> d1 = driver.findElements(
 							By.xpath("//div[@id='MedicationsKpop2']/div[2]/div[3]/div[1]/button//following::ul[1]/li"));
 					for (WebElement w : d1) {
 
 						if (w.getText().trim().equals("Save")) {
+							visbility(driver, w, 60);
 							w.click();
 							break;
 						}
@@ -1458,6 +1687,7 @@ public class Local_Host extends Base_Class {
 
 					sleep(3000);
 					WebElement d3 = driver.findElement(By.xpath("//div[text()='dg']"));
+					visbility(driver, d3, 60);
 					ww.until(ExpectedConditions.elementToBeClickable(d3));
 					actions("click", d3);
 					sleep(2000);
@@ -1469,12 +1699,14 @@ public class Local_Host extends Base_Class {
 					 */
 					WebElement rqw = driver.findElement(By.xpath(
 							"//div[@id='MedicationsKpop2']/div[2]/div[1]/div[1]/div[3]/table/tbody/tr/td[2]/div"));
+					visbility(driver, rqw, 60);
 					javascriptclick(rqw);
 					sleep(2000);
 					driver.findElement(By.id("DRUG_NAME")).sendKeys("MEDICATION");
 
 					WebElement ry = driver
 							.findElement(By.xpath("//div[@id='MedicationsKpop2']/div[2]/div[2]/button[2]"));
+					visbility(driver, ry, 60);
 					javascriptclick(ry);
 					// sleep(3000);
 					/*
@@ -1491,20 +1723,30 @@ public class Local_Host extends Base_Class {
 				} else if (tagnames.equals("delivery-note")) {
 					WebElement kk = driver.findElement(By.xpath("//div[contains(@title,'Add Notes')]"));
 					actions("move to element", kk);
+					visbility(driver, kk, 60);
 					ww.until(ExpectedConditions.elementToBeClickable(kk));
 					actions("click", kk);
-					driver.findElement(By.xpath("//div[@title='Enter the notes description of the patient visit']"))
-							.sendKeys("hell");
+					WebElement kk1 = driver
+							.findElement(By.xpath("//div[@title='Enter the notes description of the patient visit']"));
+					visbility(driver, kk1, 60);
+					sendkeys(kk1, "hell");// .sendKeys("hell");
 					WebElement zv = driver.findElement(By.xpath("//div[@id='NotesKpop2']/div[2]/div[2]/button[2]"));
+					visbility(driver, zv, 60);
 					javascriptclick(zv);
 					sleep(3000);
 					WebElement jl = driver.findElement(By.xpath("//div[text()='hell']"));
+					visbility(driver, jl, 60);
 					actions("click", jl);
-					driver.findElement(By.xpath("//div[@title='Enter the notes description of the patient visit']"))
-							.clear();
-					driver.findElement(By.xpath("//div[@title='Enter the notes description of the patient visit']"))
-							.sendKeys("NOTES--MMM");
+					WebElement kk2 = driver
+							.findElement(By.xpath("//div[@title='Enter the notes description of the patient visit']"));
+					visbility(driver, kk2, 60);
+					clear(kk2);// .clear();
+					WebElement kk3 = driver
+							.findElement(By.xpath("//div[@title='Enter the notes description of the patient visit']"));
+					visbility(driver, kk3, 60);
+					sendkeys(kk3, "NOTES--MMM");// .sendKeys("NOTES--MMM");
 					WebElement zv1 = driver.findElement(By.xpath("//div[@id='NotesKpop2']/div[2]/div[2]/button[2]"));
+					visbility(driver, zv1, 60);
 					javascriptclick(zv1);
 
 					/*
@@ -1518,22 +1760,29 @@ public class Local_Host extends Base_Class {
 
 					WebElement x1 = driver.findElement(By.xpath("//div[contains(@title,'Add Physical Examination')]"));
 					actions("move to element", x1);
+					visbility(driver, x1, 60);
 					ww.until(ExpectedConditions.elementToBeClickable(x1));
 
 					actions("click", x1);
-					driver.findElement(By.id("bodyParts")).sendKeys("hello");
+					WebElement x2 = driver.findElement(By.id("bodyParts"));
+					visbility(driver, x2, 60);
+					sendkeys(x2, "hello");// .sendKeys("hello");
 
-					driver.findElement(By.id("finding")).sendKeys("hw are you");
+					WebElement x3 = driver.findElement(By.id("finding"));
+					visbility(driver, x3, 60);
+					sendkeys(x3, "hw are you");// .sendKeys("hw are you");
 					sleep(2000);
 
 					WebElement abc = driver
 							.findElement(By.xpath("//div[@id='Physical_ExaminationsKpop2']/div[2]/div[2]/div/button"));
+					visbility(driver, abc, 60);
 					ww.until(ExpectedConditions.elementToBeClickable(abc));
 					javascriptclick(abc);
 					List<WebElement> abcd = driver.findElements(By.xpath(
 							"//div[@id='Physical_ExaminationsKpop2']/div[2]/div[2]/div/button//following::ul[1]/li"));
 					for (WebElement w : abcd) {
 						if (w.getText().trim().equals("Show Notes")) {
+							visbility(driver, w, 60);
 							w.click();
 							break;
 						}
@@ -1541,14 +1790,18 @@ public class Local_Host extends Base_Class {
 					}
 
 					sleep(2000);
-					driver.findElement(By.xpath("//input[@id='notes']")).sendKeys("lets goo");
+					WebElement x5 = driver.findElement(By.xpath("//input[@id='notes']"));
+					visbility(driver, x5, 60);
+					sendkeys(x5, "lets goo");// .sendKeys("lets goo");
 					//// div[@id='Physical_ExaminationsKpop2']/div[2]/div[1]/div[5]/div[2]/input
 					sleep(2000);
 					WebElement nn = driver
 							.findElement(By.xpath("//div[@id='Physical_ExaminationsKpop2']/div[2]/div[3]/button[2]"));
+					visbility(driver, nn, 60);
 					javascriptclick(nn);
 					sleep(3000);
 					WebElement et = driver.findElement(By.xpath("//div[text()='lets goo']"));
+					visbility(driver, et, 60);
 					actions("click", et);
 					/*
 					 * WebElement sf = driver .findElement(By.xpath(
@@ -1556,10 +1809,15 @@ public class Local_Host extends Base_Class {
 					 * javascriptclick(sf);
 					 */
 
-					driver.findElement(By.xpath("//input[@id='notes']")).clear();
-					driver.findElement(By.xpath("//input[@id='notes']")).sendKeys("physical condition");
+					WebElement x7 = driver.findElement(By.xpath("//input[@id='notes']"));
+					visbility(driver, x7, 60);
+					clear(x7);// .clear();
+					WebElement x8 = driver.findElement(By.xpath("//input[@id='notes']"));
+					visbility(driver, x8, 60);
+					sendkeys(x8, "physical condition");// .sendKeys("physical condition");
 					WebElement nnn = driver
 							.findElement(By.xpath("//div[@id='Physical_ExaminationsKpop2']/div[2]/div[3]/button[2]"));
+					visbility(driver, nnn, 60);
 					javascriptclick(nnn);
 					sleep(4000);
 
@@ -1567,6 +1825,7 @@ public class Local_Host extends Base_Class {
 
 					WebElement lj = driver.findElement(By.xpath("//div[contains(@title,'Add Forms')]"));
 					actions("move to element", lj);
+					visbility(driver, lj, 60);
 					ww.until(ExpectedConditions.elementToBeClickable(lj));
 					actions("click", lj);
 					sleep(3000);
@@ -1585,9 +1844,10 @@ public class Local_Host extends Base_Class {
 						// System.out.println(rtt.getText());
 
 						if (rtt.getText().trim().equals("form5")) {
-
+							visbility(driver, rtt, 60);
 							rtt.click();
 							WebElement js = driver.findElement(By.xpath("(//span[@id='del-form'])[2]"));
+							visbility(driver, js, 60);
 							javascriptclick(js);
 
 							break;
@@ -1598,10 +1858,12 @@ public class Local_Host extends Base_Class {
 					sleep(3000);
 
 					WebElement addfrm = driver.findElement(By.xpath("//div[@id='FormsKpop2']/div[1]/span"));
-
+					visbility(driver, addfrm, 60);
 					actions("click", addfrm);
-					driver.findElement(By.xpath("(//label[text()='Form Title*'])[2]//following::input[1]"))
-							.sendKeys("form5");
+					WebElement x9 = driver
+							.findElement(By.xpath("(//label[text()='Form Title*'])[2]//following::input[1]"));
+					visbility(driver, x9, 60);
+					sendkeys(x9, "form5");// .sendKeys("form5");
 
 					List<WebElement> drk = driver
 							.findElements(By.xpath("(//div[@id='build-wrap'])[2]/div[1]/div[2]/ul/li"));
@@ -1625,6 +1887,7 @@ public class Local_Host extends Base_Class {
 							implicitWait(30, TimeUnit.SECONDS);
 							WebElement addit = driver
 									.findElement(By.xpath("//span[text()='form5']//following::div[1]/span"));
+							visbility(driver, addit, 60);
 							actions("click", addit);
 							sleep(6000);
 							WebElement ytt = driver.findElement(By.xpath("//div[@id='FormsKpop2']/div[1]/div[2]/span"));
@@ -1646,18 +1909,21 @@ public class Local_Host extends Base_Class {
 
 					WebElement ar = driver.findElement(By.xpath("//div[contains(@title,'Add Attach File')]"));
 					actions("move to element", ar);
+					visbility(driver, ar, 60);
 					ww.until(ExpectedConditions.elementToBeClickable(ar));
 					actions("click", ar);
 
 					WebElement selweb = driver
 							.findElement(By.xpath("//div[@id='Attach_FileKpop2']/div[2]/div[1]/select"));
+					visbility(driver, selweb, 60);
 					dropDown("text", selweb, "Web link");
-					driver.findElement(
-							By.xpath("(//div[@id='Attach_FileKpop2']/div[2]/div[1]//following::div[3]/input[1])[1]"))
-							.sendKeys("https://www.75health.com/");
+					WebElement y1 = driver.findElement(
+							By.xpath("(//div[@id='Attach_FileKpop2']/div[2]/div[1]//following::div[3]/input[1])[1]"));
+					visbility(driver, y1, 60);
+					sendkeys(y1, "https://www.75health.com/");// .sendKeys("https://www.75health.com/");
 					WebElement ps1 = driver
 							.findElement(By.xpath("//div[@id='Attach_FileKpop2']/div[2]/div[3]/button[2]"));
-
+					visbility(driver, ps1, 60);
 					javascriptclick(ps1);
 					sleep(3000);
 
@@ -1665,35 +1931,47 @@ public class Local_Host extends Base_Class {
 
 					WebElement qq = driver.findElement(By.xpath("//div[contains(@title,'Add Inpatient')]"));
 					actions("move to element", qq);
+					visbility(driver, qq, 60);
 					ww.until(ExpectedConditions.elementToBeClickable(qq));
 					actions("click", qq);
 					// driver.findElement(By.id("admissioniid")).click();
 
 					WebElement inpmnth = driver.findElement(By.xpath("//select[@class='ui-datepicker-month']"));
+					visbility(driver, inpmnth, 60);
 					dropDown("index", inpmnth, "08");
 
 					WebElement ipmyr = driver.findElement(By.xpath("//select[@class='ui-datepicker-year']"));
+					visbility(driver, ipmyr, 60);
 					dropDown("text", ipmyr, "2022");
-					driver.findElement(By.xpath("//a[text()='21']")).click();
+					WebElement y2 = driver.findElement(By.xpath("//a[text()='21']"));// .click();
+					visbility(driver, y2, 60);
+					click(y2);
 
 					sleep(2000);
 					driver.findElement(By.id("dischargeiid")).click();
 					WebElement inpmnth1 = driver.findElement(By.xpath("//select[@class='ui-datepicker-month']"));
-
+					visbility(driver, inpmnth1, 60);
 					dropDown("index", inpmnth1, "10");
 					WebElement ipmyr1 = driver.findElement(By.xpath("//select[@class='ui-datepicker-year']"));
+					visbility(driver, ipmyr1, 60);
 					dropDown("text", ipmyr1, "2022");
-					driver.findElement(By.xpath("//a[text()='26']")).click();
+					WebElement y3 = driver.findElement(By.xpath("//a[text()='26']"));
+					visbility(driver, y3, 60);
+					click(y3);// .click();
 
 					sleep(2000);
 					WebElement re = driver.findElement(By.xpath("//div[@id='InpatientKpop2']/div[2]/div[1]/select"));
+					visbility(driver, re, 60);
 					// (//select[@id='admissionType'])[1]
 					ww.until(ExpectedConditions.elementToBeClickable(re));
 					javascriptclick(re);
 					dropDown("text", re, "Urgent");
 					driver.findElement(By.id("rmNo")).sendKeys("777");
-					driver.findElement(By.id("dischargeSummary")).sendKeys("okay");
+					WebElement y4 = driver.findElement(By.id("dischargeSummary"));
+					visbility(driver, y4, 60);
+					sendkeys(y4, "okay");// .sendKeys("okay");
 					WebElement yt = driver.findElement(By.xpath("//div[@id='InpatientKpop2']/div[2]/div[2]/button[2]"));
+					visbility(driver, yt, 60);
 					javascriptclick(yt);
 
 					sleep(3000);
@@ -1740,11 +2018,13 @@ public class Local_Host extends Base_Class {
 		implicitWait(30, TimeUnit.SECONDS);
 		sleep(2000);
 		WebElement gnbill = driver.findElement(By.xpath("(//div[@id='generate_bill'])[1]/button[2]"));
+		visbility(driver, gnbill, 60);
 		javascriptclick(gnbill);
 		List<WebElement> yjj = driver
 				.findElements(By.xpath("(//div[@id='generate_bill'])[1]/button[2]//following::ul[1]/li"));
 		for (WebElement we : yjj) {
 			if (we.getText().trim().equals("Generate Bill from EHR")) {
+				visbility(driver, we, 60);
 				we.click();
 				break;
 			}
@@ -1756,16 +2036,19 @@ public class Local_Host extends Base_Class {
 		// driver.findElement(By.xpath("//div[text()='MEDICATION-str']"));
 		WebElement rds = ww
 				.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//div[text()='MEDICATION-str']")));
+		visbility(driver, rds, 60);
 		ww.until(ExpectedConditions.elementToBeClickable(rds));
 		actions("click", rds);
 		// WebElement =
 		// driver.findElement(By.xpath("//div[text()='MEDICATION-str']//following::div[6]/div[2]//following::div[1]/div[1]/div[5]/div[2]/input"));
 		WebElement rdss = ww.until(ExpectedConditions.presenceOfElementLocated(By.xpath(
 				"//div[text()='MEDICATION-str']//following::div[6]/div[2]//following::div[1]/div[1]/div[5]/div[2]/input")));
+	visbility(driver, rdss, 60);
 		rdss.clear();
 		rdss.sendKeys("500");
 		WebElement sql = driver.findElement(By.xpath(
 				"//div[text()='MEDICATION-str']//following::div[6]/div[2]//following::div[1]/div[2]/div[1]/button[3]"));
+		visbility(driver, sql, 60);
 		javascriptclick(sql);
 
 		///
@@ -1773,14 +2056,18 @@ public class Local_Host extends Base_Class {
 
 		WebElement ee = ww
 				.until(ExpectedConditions.elementToBeClickable(By.xpath("(//button[@id='add-payment-btn'])[1]")));
+		visbility(driver, ee, 60);
 		javascriptclick(ee);
 		// driver.findElement(By.xpath("(//button[@id='add-payment-btn'])[1]")).click();
-		driver.findElement(By.xpath("(//span[@id='paymentMethodTypeSelectValue'])[2]")).click();
+		WebElement ddr = driver.findElement(By.xpath("(//span[@id='paymentMethodTypeSelectValue'])[2]"));
+		visbility(driver, ddr, 60);
+		click(ddr);//.click();
 		sleep(2000);
 		List<WebElement> choosepy = driver
 				.findElements(By.xpath("(//span[@id='paymentMethodTypeSelectValue'])[2]//following::ul[1]/li"));
 		for (WebElement w : choosepy) {
 			if (w.getText().trim().equals("Cash Payment")) {
+				visbility(driver, w, 60);
 				w.click();
 				break;
 			}
@@ -2009,7 +2296,7 @@ public class Local_Host extends Base_Class {
 		sleep(4000);
 	}
 
-	@Test(priority = 3)
+	@Test(priority = 3, enabled = false)
 
 	private void calendar() throws InterruptedException {
 		driver.navigate().to("https://localhost:8443/health/#calendar");
@@ -2179,14 +2466,16 @@ public class Local_Host extends Base_Class {
 
 	}
 
-	@Test(priority = 4)
+	@Test(priority = 4, enabled = false)
 	private void BillingModule() throws InterruptedException {
 
-		explicitWait(15, pom.getInstanceBilling().clickBill); //
+		// explicitWait(15, pom.getInstanceBilling().clickBill); //
+		visbility(driver, pom.getInstanceBilling().clickBill, 25);
 		click(pom.getInstanceBilling().clickBill);
+
 		driver.navigate().refresh();
 		implicitWait(30, TimeUnit.SECONDS);
-		sleep(5000);
+		sleep(3000);
 		explicitWait(15, pom.getInstanceBilling().clickCreateNewBill);
 		click(pom.getInstanceBilling().clickCreateNewBill);
 		explicitWait(30, pom.getInstanceBilling().addItem);
@@ -2208,15 +2497,17 @@ public class Local_Host extends Base_Class {
 		actions("click", r);
 		WebElement addiconfav = driver
 				.findElement(By.xpath("//div[@id='assign-side']/div[2]/div[1]/div/table/tbody/tr/td[4]/span[2]"));
-
+		visbility(driver, addiconfav, 25);
 		javascriptclick(addiconfav);
 		WebElement favdes = driver
 				.findElement(By.xpath("//div[@id='assign-side']/div[3]/div/div/div[2]/div[3]/div[2]/div/input"));
+		visbility(driver, favdes, 25);
 		favdes.sendKeys("Kaaspro");
 		driver.findElement(By.xpath("//div[@id='assign-side']/div[3]/div/div/div[2]/div[4]/div[2]/input"))
 				.sendKeys("3");
 		WebElement savefav = driver.findElement(By.xpath(
 				"//div[@id='assign-side']/div[3]/div/div/div[2]/div[4]/div[2]//following::div[1]/div/div[4]//following::div[1]/div/button"));
+		visbility(driver, savefav, 25);
 		javascriptclick(savefav);
 		WebDriverWait wait = new WebDriverWait(driver, 30);
 		sleep(1500);
@@ -2435,7 +2726,7 @@ public class Local_Host extends Base_Class {
 
 	}
 
-	@Test(priority = 5)
+	@Test(priority = 5, enabled = false)
 	private void TeleDoctor() throws InterruptedException {
 
 		// explicitWait(30, pom.getInstanceTeleDoctor().clickTeleDoctor);
@@ -2500,7 +2791,7 @@ public class Local_Host extends Base_Class {
 
 	}
 
-	@Test(priority = 6)
+	@Test(priority = 6, enabled = false)
 	private void Message() throws InterruptedException {
 
 		explicitWait(30, pom.getInstanceMessage().clickMessage);
@@ -2526,7 +2817,7 @@ public class Local_Host extends Base_Class {
 
 	}
 
-	@Test(priority = 7)
+	@Test(priority = 7, enabled = false)
 	private void Settings() throws InterruptedException, IOException {
 
 		while (true) {
@@ -3154,66 +3445,71 @@ public class Local_Host extends Base_Class {
 		driver.findElement(By.xpath("//button[@id='form-script']")).click();
 		sleep(5000);
 
+		List<WebElement> numberofformspresent = driver
+				.findElements(By.xpath("(//div[@class='form-pop-body'])[1]/div/div[1]"));
+		int ffs = numberofformspresent.size();
+
+		int u;
+		for (int imp = 3; imp <= ffs; imp++) {
+
+			// u = 1 + i;
+			WebElement rtt = driver.findElement(
+					By.xpath("(//div[@class='form-pop-body'])[1]/div[" + imp + "]//following::div[5]/span[2]"));
+
+			if (rtt.getText().trim().equals("form100")) {
+
+				rtt.click();
+				WebElement jsp = driver.findElement(By.xpath("(//span[@id='del-form'])[1]"));
+				visbility(driver, jsp, 25);
+				javascriptclick(jsp);
+
+				break;
+
+			}
+
+		}
+		sleep(3000);
+
+		driver.navigate().refresh();
+		WebElement jsp = driver.findElement(By.xpath("//button[@id='form-script']"));
+		visbility(driver, jsp, 25);
+		javascriptclick(jsp);
+
+		WebElement addfrm = driver.findElement(By.xpath("//div[@id='FormsKpop2']/div[1]/span"));
+		visbility(driver, addfrm, 25);
+
+		actions("click", addfrm);
+		sleep(4000);
+		driver.findElement(By.xpath("(//label[text()='Form Title*'])[1]//following::input[1]")).sendKeys("form100");
+
+		List<WebElement> drk = driver.findElements(By.xpath("(//div[@id='build-wrap'])[1]/div[1]/div[2]/ul/li"));
+
+		for (WebElement web : drk) {
+
+			if (web.getText().trim().equals("Checkbox Group")) {
+
+				WebElement drop = driver.findElement(
+						By.xpath("(//div[contains(@data-content,'Drag a field from the right to this area')])[1]/ul"));
+
+				Actions ac = new Actions(driver);
+				ac.dragAndDrop(web, drop).build().perform();
+				driver.findElement(By.xpath("//label[text()='Label']//following::div[1]/input")).clear();
+				driver.findElement(By.xpath("//label[text()='Label']//following::div[1]/input"))
+						.sendKeys("Kaaspro Enterprise");
+				driver.findElement(By.xpath("(//div[@id='build-wrap'])[1]/div[1]/div[2]/ul//following::div[1]/button"))
+						.click();
+				sleep(3000);
+
+				break;
+			}
+
+		}
+
 		/*
-		 * List<WebElement> numberofformspresent = driver
-		 * .findElements(By.xpath("(//div[@class='form-pop-body'])[3]/div/div[1]")); int
-		 * ffs = numberofformspresent.size();
-		 * 
-		 * int u; for (int imp = 4; imp <= ffs; imp++) {
-		 * 
-		 * // u = 1 + i; WebElement rtt = driver
-		 * .findElement(By.xpath("(//div[@class='form-pop-body'])[3]/div[" + imp +
-		 * "]/div/div[1]/span[2]"));
-		 * 
-		 * if (rtt.getText().trim().equals("form100")) {
-		 * 
-		 * rtt.click(); WebElement jsp =
-		 * driver.findElement(By.xpath("(//span[@id='del-form'])[1]"));
-		 * javascriptclick(jsp); driver.navigate().refresh();
-		 * driver.findElement(By.xpath("//button[@id='form-script']")).click();
-		 * sleep(5000);
-		 * 
-		 * break;
-		 * 
-		 * }
-		 * 
-		 * } sleep(3000);
-		 * 
-		 * WebElement addfrm =
-		 * driver.findElement(By.xpath("//div[@id='FormsKpop2']/div[1]/span"));
-		 * 
-		 * actions("click", addfrm); sleep(4000); driver.findElement(By.
-		 * xpath("(//label[text()='Form Title*'])[1]//following::input[1]")).sendKeys(
-		 * "form100");
-		 * 
-		 * List<WebElement> drk = driver.findElements(By.xpath(
-		 * "(//div[@id='build-wrap'])[1]/div[1]/div[2]/ul/li"));
-		 * 
-		 * for (WebElement web : drk) {
-		 * 
-		 * if (web.getText().trim().equals("Checkbox Group")) {
-		 * 
-		 * WebElement drop = driver.findElement( By.
-		 * xpath("(//div[contains(@data-content,'Drag a field from the right to this area')])[1]/ul"
-		 * ));
-		 * 
-		 * Actions ac = new Actions(driver); ac.dragAndDrop(web,
-		 * drop).build().perform(); driver.findElement(By.xpath(
-		 * "//label[text()='Label']//following::div[1]/input")).clear();
-		 * driver.findElement(By.xpath(
-		 * "//label[text()='Label']//following::div[1]/input"))
-		 * .sendKeys("Kaaspro Enterprise"); driver.findElement(By.xpath(
-		 * "(//div[@id='build-wrap'])[1]/div[1]/div[2]/ul//following::div[1]/button"))
-		 * .click(); sleep(3000);
-		 * 
-		 * break; }
-		 * 
-		 * }
+		 * WebElement cancelfrm =
+		 * driver.findElement(By.xpath("//div[@id='FormsKpop2']/div[1]/div[2]/span"));
+		 * javascriptclick(cancelfrm);
 		 */
-
-		WebElement cancelfrm = driver.findElement(By.xpath("//div[@id='FormsKpop2']/div[1]/div[2]/span"));
-		javascriptclick(cancelfrm);
-
 		sleep(3000); // edit preference....
 
 		driver.findElement(By.xpath("//button[@id='edit-print-preference']")).click();
